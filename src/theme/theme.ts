@@ -70,7 +70,7 @@ export const themeSettings = () => {
         // palette values for light mode
         primary: {
           main: colors.primary[600],
-          dark:colors.primary[900]
+          dark: colors.primary[900],
         },
         secondary: {
           main: colors.greenAccent[500],
@@ -83,133 +83,125 @@ export const themeSettings = () => {
         background: {
           default: "#f8fafc",
         },
-        white:"#fff",
-
+        white: "#fff",
       },
     },
     typography: {
       fontSize: 12,
+      // ? Why less than default
       allVariants: {
         fontFamily: ["Readex Pro", "sans-serif"].join(","),
-        color:colors.grey[800],
+        color: colors.grey[800],
       },
       h1: {
         fontSize: 40,
-        fontWeight:700
-    },
-    h2: {
+        fontWeight: 700,
+      },
+      h2: {
         fontSize: 32,
-        fontWeight:500
-    },
-    h3: {
+        fontWeight: 500,
+      },
+      h3: {
         fontSize: 24,
-    },
-    h4: {
+      },
+      h4: {
         fontSize: 20,
-        fontWeight:300
-    },
-    h5: {
+        fontWeight: 300,
+      },
+      h5: {
         fontSize: 16,
-        fontWeight:300
-    },
-    h6: {
+        fontWeight: 300,
+      },
+      h6: {
         fontSize: 14,
-        fontWeight:300
-    },
-    body2:{
-        color:colors.grey[300]
-
-    },
-    caption:{
-        color:colors.grey[200]
-    }
+        fontWeight: 300,
+      },
+      body2: {
+        color: colors.grey[300],
+      },
+      caption: {
+        color: colors.grey[200],
+      },
     },
     components: {
-        MuiButton:{
-            defaultProps:{
-                sx:{
-                    p:1,
-                    borderRadius:10
-                },
-                disableRipple:true,
+      MuiButton: {
+        defaultProps: {
+          sx: {
+            p: 1,
+            borderRadius: 10,
+          },
+          disableRipple: true,
+        },
+        variants: [
+          {
+            props: { variant: "outlined" },
+            style: {
+              backgroundColor: tokens().greenAccent[200],
+              borderWidth: 0,
+              color: "#31cb81 !important",
+              ":hover": {
+                backgroundColor: tokens().greenAccent[200],
+                borderWidth: 0,
+                color: "#31cb81 !important",
+              },
             },
-            variants: [
-                {
-                    props: { variant: 'outlined' },
-                    style: {
-                        backgroundColor:tokens().greenAccent[200],
-                        borderWidth:0,
-                        color:"#31cb81 !important",
-                        ":hover":{
-                            backgroundColor:tokens().greenAccent[200],
-                            borderWidth:0,
-                            color:"#31cb81 !important",
-
-                        }
-                    },                
-                },
-                {
-                    props: { variant: 'contained' },
-                    style: {
-                        backgroundColor:tokens().greenAccent[500],
-                        borderWidth:0,
-                        color:"#fff !important",
-                        boxShadow:8,
-                        ":hover":{
-                            backgroundColor:tokens().greenAccent[400],
-                            borderWidth:0,
-                            color:"#31cb81 !important",
-                            boxShadow:10
-
-                        }
-                    },                
-                },
-
-            ],
-        },
-        MuiTextField:{
-            variants:[
-                {
-                    props:{variant:"outlined"},
-                    style:{
-                        color:`${colors.greenAccent[700]} !important`,
-                        borderWidth:0,
-                        fontSize:'18px',
-                    },
-
-
-                }
-            ]
-        },
-        MuiIcon:{
-            defaultProps:{
-                sx:{
-                    cursor:"pointer",
-                    color:colors.greenAccent[500]
-                }
-            }
-        },
-        MuiIconButton:{
-            defaultProps:{
-                sx:{
-                    p:1,
-                    fontSize:14,
-                },
-                disableRipple:true,
-            }
-        },
-        MuiPaper:{
-            defaultProps:{
-                sx:{
-                    borderRadius:1,
-                    p:1,
-                    borderWidth:1,
-                },
-                elevation:10
-                
+          },
+          {
+            props: { variant: "contained" },
+            style: {
+              backgroundColor: tokens().greenAccent[500],
+              borderWidth: 0,
+              color: "#fff !important",
+              boxShadow: "8",
+              ":hover": {
+                backgroundColor: tokens().greenAccent[400],
+                borderWidth: 0,
+                color: "#31cb81 !important",
+                boxShadow: 10,
+              },
             },
-
-        }
+          },
+        ],
+      },
+      MuiTextField: {
+        variants: [
+          {
+            props: { variant: "outlined" },
+            style: {
+              color: `${colors.greenAccent[700]} !important`,
+              borderWidth: 0,
+              fontSize: "18px",
+            },
+          },
+        ],
+      },
+      MuiIcon: {
+        defaultProps: {
+          sx: {
+            cursor: "pointer",
+            color: colors.greenAccent[500],
+          },
+        },
+      },
+      MuiIconButton: {
+        defaultProps: {
+          sx: {
+            p: 1,
+            fontSize: 14,
+          },
+          disableRipple: true,
+        },
+      },
+      MuiPaper: {
+        defaultProps: {
+          sx: {
+            borderRadius: 1,
+            p: 1,
+            borderWidth: 1,
+          },
+          elevation: 10,
+        },
+      },
     },
   });
 };
