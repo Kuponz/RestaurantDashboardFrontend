@@ -1,16 +1,23 @@
 import {
+  BottomNavigation,
+  BottomNavigationAction,
   Box,
   Button,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
+  FormControl,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Typography,
 } from "@mui/material";
 import styles from "./waiter.module.css";
 import React from "react";
 import PersonIcon from "@mui/icons-material/Person";
+import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 
 const CustomCardFree = () => {
   return (
@@ -42,8 +49,36 @@ const CustomCardRes = () => {
 export const Waiter = () => {
   return (
     <div className={styles.container}>
+      <div className={styles.floor}>
+        <FormControl fullWidth>
+          <InputLabel>Floor</InputLabel>
+          <Select label="Floor">
+            <MenuItem value={1}>I Floor</MenuItem>
+            <MenuItem value={2}>II Floor</MenuItem>
+            <MenuItem value={3}>III Floor</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
       <div className={styles.tables}>
         <CustomCardRes />
+        <CustomCardRes />
+        <CustomCardRes />
+        <CustomCardFree />
+        <CustomCardFree />
+        <CustomCardFree />
+        <CustomCardRes />
+        <CustomCardFree />
+        <CustomCardFree />
+        <CustomCardFree />
+        <CustomCardRes />
+        <CustomCardRes />
+        <CustomCardFree />
+        <CustomCardFree />
+        <CustomCardFree />
+        <CustomCardRes />
+        <CustomCardFree />
+        <CustomCardFree />
+        <CustomCardFree />
         <CustomCardRes />
         <CustomCardRes />
         <CustomCardFree />
@@ -63,20 +98,37 @@ export const Waiter = () => {
       </div>
       <div className={styles.legend}>
         <div className={styles.flex}>
-          <Paper sx={{ width: "2rem", height: "2rem" }} variant="free" />
+          <Paper sx={{ width: "1rem", height: "1rem" }} variant="free" />
           <span>Free</span>
         </div>
         <div className={styles.flex}>
-          <Paper sx={{ width: "2rem", height: "2rem" }} variant="reserved" />
+          <Paper sx={{ width: "1rem", height: "1rem" }} variant="reserved" />
           <span>Reserved</span>
         </div>
       </div>
-      <div className={styles.base}>
-        <Button variant="contained">Table Reservation</Button>
+      {/* <div className={styles.base}> */}
+      {/* <Paper> */}
+      {/* <Button variant="contained">Table Reservation</Button>
         <Button variant="contained">
           <PersonIcon />
-        </Button>
-      </div>
+        </Button> */}
+
+      <BottomNavigation
+        showLabels
+        sx={{ height: "100%" }}
+        // value={value}
+        // onChange={(event, newValue) => {
+        //   setValue(newValue);
+        // }
+      >
+        <BottomNavigationAction
+          label="Reservation"
+          icon={<RestaurantMenuIcon />}
+        />
+        <BottomNavigationAction label="User Profile" icon={<PersonIcon />} />
+      </BottomNavigation>
+      {/* </div> */}
+      {/* </Paper> */}
     </div>
   );
 };
