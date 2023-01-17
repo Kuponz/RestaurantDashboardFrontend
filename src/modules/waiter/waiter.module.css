@@ -1,0 +1,36 @@
+.container {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 80fr 8fr 12fr;
+    /* padding: 10px; */
+}
+
+.tables {
+    height: calc(80vh - 1rem);
+    padding: 1rem;
+    /* margin: 1rem 0; */
+    gap: 1rem;
+    overflow-y: scroll;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* grid-template-rows: repeat(2, auto); */
+    grid-auto-rows: max-content;
+    /* justify-items: center; */
+    /* align-items: center; */
+}
+
+.base {
+    display: grid;
+    padding: 1rem;
+    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+}
+.legend{
+    display: grid;
+    padding: 0 1rem;
+}
+
+.flex{
+    display: flex;
+    gap: 1rem;
+}

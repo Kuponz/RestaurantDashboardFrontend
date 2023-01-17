@@ -1,6 +1,12 @@
 import { createContext, useState, useMemo } from "react";
 import { createTheme } from "@mui/material/styles";
 import { type } from "os";
+declare module "@mui/material/Paper" {
+  interface PaperPropsVariantOverrides {
+    free: true;
+    reserved: true;
+  }
+}
 
 // color design tokens export
 export const tokens = () => ({
@@ -201,6 +207,40 @@ export const themeSettings = () => {
           },
           elevation: 10,
         },
+        variants: [
+          {
+            props: { variant: "free" },
+            style: {
+              padding: 0,
+              background: tokens().greenAccent[500],
+            },
+          },
+          {
+            props: { variant: "reserved" },
+            style: {
+              padding: 0,
+              background: "#e53935",
+            },
+          },
+        ],
+      },
+      MuiCard: {
+        variants: [
+          {
+            props: { variant: "free" },
+            style: {
+              padding: 0,
+              background: tokens().greenAccent[500],
+            },
+          },
+          {
+            props: { variant: "reserved" },
+            style: {
+              padding: 0,
+              background: "#e53935",
+            },
+          },
+        ],
       },
     },
   });
