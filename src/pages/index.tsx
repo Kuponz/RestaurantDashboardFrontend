@@ -1,5 +1,6 @@
 import Head from "next/head";
-import { Waiter } from "modules/waiter";
+import { AuthPage } from "modules/auth";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -15,7 +16,8 @@ export default function Home() {
       </Head>
       <div>
         {/* Auth Stuff Here */}
-        <Waiter />
+        <Link href="/auth">Login</Link>
+        {/* <Waiter /> */}
       </div>
     </>
   );

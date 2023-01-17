@@ -1,6 +1,5 @@
-import { createContext, useState, useMemo } from "react";
+"use client";
 import { createTheme } from "@mui/material/styles";
-import { type } from "os";
 
 // color design tokens export
 export const tokens = () => ({
@@ -74,6 +73,7 @@ export const themeSettings = () => {
         },
         secondary: {
           main: colors.greenAccent[500],
+          light: colors.greenAccent[200],
         },
         neutral: {
           dark: colors.grey[700],
@@ -131,6 +131,7 @@ export const themeSettings = () => {
             borderRadius: 10,
           },
           disableRipple: true,
+          variant:"contained"
         },
         variants: [
           {
