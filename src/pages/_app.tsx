@@ -7,7 +7,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const theme = useMode();
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline/>
+      <CssBaseline />
       <Component {...pageProps} />
     </ThemeProvider>
   )
