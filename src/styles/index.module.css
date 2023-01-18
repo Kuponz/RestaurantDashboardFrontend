@@ -1,0 +1,49 @@
+.menuDiv {
+    background-color: rgb(213, 223, 223);
+    box-shadow: 2px 4px 4px 2px rgb(240, 238, 238);
+    width: 98%;
+    height: 12vh;
+    margin-left: 1%;
+    margin-top: 4%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.input {
+    border: none;
+    font-size: 17px;
+    width: 70%;
+    align-items: center;
+    height: 40px;
+    margin-left: 15%;
+    border-radius: 15px;
+    padding-left: 5%;
+    box-shadow: 1px 1px 1px 1px gray;
+
+}
+
+.menuDetails {
+    display: flex;
+    align-items: center;
+}
+
+.img {
+    width: 100%;
+}
+
+.button {
+    width: 80%;
+    margin-left: 10%;
+    position: fixed;
+    top: 92%;
+}
+
+.btn {
+    display: flex;
+    flex-direction: row;
+    gap: 4;
+    overflow-y: auto;
+    overflow-x: scroll;
+    white-space: nowrap;
+}
