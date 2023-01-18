@@ -18,9 +18,10 @@
 .base {
   gap: 1rem;
 }
+
 .legend {
-  display: grid;
-  gap: 5px;
+  display: flex;
+  gap: 1rem;
   padding: 10px 0;
 }
 
@@ -34,4 +35,19 @@
   justify-content: center;
   align-items: center;
   padding: 10px 2rem;
+}
+
+.tables::-webkit-scrollbar {
+  width: 0px;
+}
+
+.tables::-webkit-scrollbar-track {
+  margin-block: 10px;
+  border-radius: 80px;
+  background-color: #f8fafc;
+}
+
+.tables::-webkit-scrollbar-thumb {
+  border-radius: 80px;
+  background-color: hsl(0, 0%, 60%);
 }

@@ -115,7 +115,7 @@ export const Waiter = () => {
 
       <BottomNavigation
         showLabels
-        sx={{ height: "100%" }}
+        sx={{ height: "100%",backgroundColor:"#f8fafc" }}
         // value={value}
         // onChange={(event, newValue) => {
         //   setValue(newValue);
@@ -123,9 +123,12 @@ export const Waiter = () => {
       >
         <BottomNavigationAction
           label="Reservation"
-          icon={<RestaurantMenuIcon />}
+          icon={<RestaurantMenuIcon sx={{ fontSize: "2rem" }} />}
         />
-        <BottomNavigationAction label="User Profile" icon={<PersonIcon />} />
+        <BottomNavigationAction
+          label="User Profile"
+          icon={<PersonIcon sx={{ fontSize: "2rem" }} />}
+        />
       </BottomNavigation>
       {/* </div> */}
       {/* </Paper> */}
