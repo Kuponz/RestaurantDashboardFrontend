@@ -1,11 +1,12 @@
 import Head from "next/head";
 import { Waiter } from "modules/waiter";
+import HomeStructure from "modules/home/HomeStructure";
 
 export default function Home() {
   return (
     <>
       <Head>
-        <title>Kuponz</title>
+        <title>etoPOS</title>
         <meta
           name="description"
           content="India's first paperless and Innovative POS with minimum investments and Maximum returns"
@@ -15,7 +16,8 @@ export default function Home() {
       </Head>
       <div>
         {/* Auth Stuff Here */}
-        <Waiter />
+        {/* <Waiter /> */}
+        <HomeStructure/>
       </div>
     </>
   );

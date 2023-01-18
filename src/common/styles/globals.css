@@ -9,6 +9,7 @@ body,
   height: 100%;
   width: 100%;
   font-family: "Readex Pro", sans-serif;
+  overflow: hidden;
 }
 
 .app {
