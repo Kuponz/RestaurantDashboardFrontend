@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import styles from "./waiter.module.css";
-import React from "react";
+import React, { useEffect } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 
