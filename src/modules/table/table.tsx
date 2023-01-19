@@ -18,10 +18,14 @@ import styles from "./waiter.module.css";
 import React, { useEffect } from "react";
 import PersonIcon from "@mui/icons-material/Person";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
+import { Router, useRouter } from "next/router";
 
-const CustomCardFree = () => {
+const CustomCardFree = ({}) => {
+  const router = useRouter();
   return (
-    <Card variant="free">
+    <Card variant="free" onClick={()=>{
+      router.push(`/restaurant/table/menu?table=${3}`)
+    }}>
       <CardActionArea>
         <CardContent>
           <Typography variant="h5" component="div">
@@ -47,6 +51,7 @@ const CustomCardRes = () => {
 };
 
 export const Waiter = () => {
+  const router = useRouter();
   return (
     <div className={styles.container}>
       <div className={styles.floor}>
@@ -60,7 +65,7 @@ export const Waiter = () => {
         </FormControl>
       </div>
       <div className={styles.tables}>
-        <CustomCardRes />
+        <CustomCardRes/>
         <CustomCardRes />
         <CustomCardRes />
         <CustomCardFree />

@@ -5,10 +5,13 @@ import { flexBox, size } from "theme/defaultFunction";
 import { useRouter } from "next/router";
 import Display from "modules/menu/Display";
 import Checkout from "modules/checkoout/Checkout";
+import MobileCheckout from "modules/checkoout/MobileCheckout";
 
-export default function attendance() {
+export default function menu() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
+  const {table} = router.query;
+  console.log({table})
   return (
     <>
       <Head>
@@ -54,6 +57,14 @@ export default function attendance() {
               }
             }}>
               <Checkout/>
+            </Stack>
+            <Stack sx={{
+              display:{
+                xs:"flex",
+                md:"none"
+              }
+            }}>
+              <MobileCheckout/>
             </Stack>
           </Stack>
 
