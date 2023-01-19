@@ -6,7 +6,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import { flexBox } from "theme/defaultFunction";
 import { useRouter } from "next/router";
 
-export default function Home() {
+export default function table() {
   const router = useRouter();
   return (
     <>
@@ -23,21 +23,9 @@ export default function Home() {
         {/* Auth Stuff Here */}
         {/* <Waiter /> */}
         <HomeStructure>
-          <Typography variant="h2">Stay Tuned</Typography>
-          <Typography variant="body2">Construction in Progress!</Typography>
-          <Stack direction={"column"} sx={{
-              py:5,
-
-          }}>
-              <Typography pb={3}>Meanwhile You can Book Table: </Typography>
-              <Button variant={"outlined"} onClick={()=>{
-                  router.push("/restaurant/table")
-              }} sx={{...flexBox(), gap:1}}>Book Tables <EastOutlinedIcon/></Button>
-          </Stack>
-
+          <Waiter/>
         </HomeStructure>
       </div>
     </>
   );
 }
-
