@@ -1,11 +1,9 @@
 
-import { makeStyles } from "@material-ui/core/styles";
-import { Box, Paper, Stack } from "@mui/material";
-import { Button, Icon, IconButton, InputBase, TextField, Typography } from '@mui/material'
+import { Box, Paper, Stack, Button, IconButton, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import { flexBox, size } from "theme/defaultFunction";
+import { flexBox } from "theme/defaultFunction";
 
 const MenuCard = ({ items }) => {
     const { id, title, price } = items;
@@ -93,7 +91,7 @@ const MenuCard = ({ items }) => {
                     }}>
                         <TextField value={val} onChange={e=>{
                             if(e.target.value == ""){
-                                setValue(parseInt(0))
+                                setValue(0)
 
                             }
                             setValue(parseInt(e.target.value))
