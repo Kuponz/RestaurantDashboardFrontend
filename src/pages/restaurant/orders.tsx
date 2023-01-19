@@ -6,7 +6,7 @@ import { Button, Stack, Typography } from "@mui/material";
 import { flexBox } from "theme/defaultFunction";
 import { useRouter } from "next/router";
 
-export default function dashboard() {
+export default function orders() {
   const router = useRouter();
   return (
     <>

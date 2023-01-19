@@ -80,11 +80,13 @@ export const themeSettings = () => {
         },
         secondary: {
           main: colors.greenAccent[500],
+          light: colors.greenAccent[300],
         },
         neutral: {
           dark: colors.grey[700],
           main: colors.grey[500],
           light: colors.grey[100],
+          default:colors.grey[300]
         },
         background: {
           default: "#f8fafc",
@@ -192,8 +194,18 @@ export const themeSettings = () => {
       MuiIconButton: {
         defaultProps: {
           sx: {
-            p: 1,
-            fontSize: 14,
+            backgroundColor:colors.greenAccent[200],
+            color:colors.greenAccent[500],
+            boxShadow:3,
+            ":focus":{
+              backgroundColor:colors.greenAccent[700],
+              color:colors.greenAccent[100],
+              boxShadow:10,
+            },
+            ":hover":{
+              backgroundColor:colors.greenAccent[700],
+              color:colors.greenAccent[100],
+            }
           },
           disableRipple: true,
         },

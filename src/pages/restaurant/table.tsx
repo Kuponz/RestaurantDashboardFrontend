@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Waiter } from "modules/waiter";
+import { Waiter } from "modules/table";
 import HomeStructure from "modules/home/HomeStructure";
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import { Button, Stack, Typography } from "@mui/material";

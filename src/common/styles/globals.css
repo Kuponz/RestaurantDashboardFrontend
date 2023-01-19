@@ -35,3 +35,7 @@ body,
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.css-o4b71y-MuiAccordionSummary-content{
+  width: 100%;
+}

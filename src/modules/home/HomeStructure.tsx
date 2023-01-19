@@ -20,26 +20,34 @@ const HomeStructure = ({children}) => {
     };
 
     const userState = useUserStore(state=>state.user);
-    useEffect(() => {
-      if(!userState?.login){
-        router.push("/auth")
-      }
-    }, [router, userState?.login])
-    useEffect(()=>{
-        if(userState?.login && userState.role == "WAITER"){
-            router.push("/table")
-        }
-    },[router, userState?.login , userState?.role])
+    // useEffect(() => {
+    //   if(!userState?.login){
+    //     router.push("/auth")
+    //   }
+    // }, [router, userState?.login])
+    // useEffect(()=>{
+    //     if(userState?.login && userState.role == "WAITER"){
+    //         router.push("/table")
+    //     }
+    // },[router, userState?.login , userState?.role])
   
    
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', height:"100vh", width:"100vw", overflowY:"hidden" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          padding:{
+            xs:0,
+            md:1
+          },
+          height:{
+            xs:"50px",
+            md:"70px"
+          }
         }}
       >
         <Toolbar>
@@ -75,9 +83,15 @@ const HomeStructure = ({children}) => {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
+        sx={{ flexGrow: 1,  
+        height:"100vh",
+        width:"100vw",
+        ...flexBox("column"),
+        overflow:"hidden",
+        // border:"12px solid blue"
+       }}
       >
-        <Toolbar />
+        <Toolbar/>
         {children}
         
       </Box>

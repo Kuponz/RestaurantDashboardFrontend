@@ -1,4 +1,4 @@
-import { Waiter } from 'modules/waiter'
+import { Waiter } from 'modules/table'
 import Head from 'next/head'
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react'

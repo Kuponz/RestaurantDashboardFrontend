@@ -1,8 +1,8 @@
-import MenuCard from '../MenuListPage/Menucard';
+import MenuCard from './Menucard';
 const menu = [
     {
         id: 1,
-        title: 'Double Cheese Burger',
+        title: 'Double Cheese BurgerCheeseCheeseCheeseCheeseCheeseCheeseCheeseCheese',
         category: 'Burger',
         price: 149,
     },

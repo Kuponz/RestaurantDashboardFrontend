@@ -97,13 +97,15 @@ export const Waiter = () => {
         <CustomCardFree />
       </div>
       <div className={styles.legend}>
-        <div className={styles.flex}>
-          <Paper sx={{ width: "1rem", height: "1rem" }} variant="free" />
-          <span>Free</span>
-        </div>
-        <div className={styles.flex}>
-          <Paper sx={{ width: "1rem", height: "1rem" }} variant="reserved" />
-          <span>Reserved</span>
+        <div className={styles.legendFlex}>
+          <div className={styles.flex}>
+            <Paper sx={{ width: "1rem", height: "1rem" }} variant="free" />
+            <span>Free</span>
+          </div>
+          <div className={styles.flex}>
+            <Paper sx={{ width: "1rem", height: "1rem" }} variant="reserved" />
+            <span>Reserved</span>
+          </div>
         </div>
       </div>
       {/* <div className={styles.base}> */}
@@ -113,7 +115,7 @@ export const Waiter = () => {
           <PersonIcon />
         </Button> */}
 
-      <BottomNavigation
+      {/* <BottomNavigation
         showLabels
         sx={{ height: "100%" }}
         // value={value}
@@ -126,7 +128,7 @@ export const Waiter = () => {
           icon={<RestaurantMenuIcon />}
         />
         <BottomNavigationAction label="User Profile" icon={<PersonIcon />} />
-      </BottomNavigation>
+      </BottomNavigation> */}
       {/* </div> */}
       {/* </Paper> */}
     </div>

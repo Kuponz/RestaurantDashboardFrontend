@@ -46,7 +46,11 @@ export default function AvatarMenu({userState}) {
           aria-controls={open ? 'basic-menu' : undefined}
           aria-haspopup="true"
           aria-expanded={open ? 'true' : undefined}
-          onClick={handleClick}>
+          onClick={handleClick}
+          sx={{
+            backgroundColor:"transparent",
+          }}
+          >
             <Tooltip title={"Click to Logout"}>
               <Avatar  {...stringAvatar(userState?.name)}/>
             </Tooltip>
