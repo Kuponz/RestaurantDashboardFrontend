@@ -1,18 +1,31 @@
-import { Button, Stack, Typography } from '@mui/material'
+import { Button, IconButton, Stack, Typography } from '@mui/material'
 import React from 'react'
-import { size } from 'theme/defaultFunction'
+import { flexBox, size } from 'theme/defaultFunction'
 import CheckoutItem from './CheckoutItem'
+import { Router, useRouter } from 'next/router'
+import { CloseOutlined } from '@mui/icons-material'
 
-const Checkout = () => {
+const Checkout = ({setOpen = true}) => {
+    const router = useRouter();
   return (
     <Stack sx={{
         p:{
+            xs:0,
             md:2
         },
         ...size("100%", "100%"),
     }}>
-        <Stack>
+        <Stack sx={{
+            ...flexBox("row", "space-between"),
+            py:1
+        }}>
             <Typography variant="h3">Checkout Items</Typography>
+            <IconButton sx={{
+                display:{
+                    xs:"inline-block",
+                    md:"none"
+                }
+            }} onClick={()=>{setOpen(false)}}><CloseOutlined/></IconButton>
         </Stack>
         <Stack sx={{
             overflowY:"auto",
@@ -31,14 +44,17 @@ const Checkout = () => {
 
             }}>
                 
-                <Button>Cancel</Button>
-                <Button>KOT</Button>
+                <Button onClick={()=>{
+                    setOpen(false)
+                }}>Cancel</Button>
+                <Button onClick={()=>{
+                    router.push("/restaurant/table/order")
+                }}>KOT</Button>
                 <Button>Generate Bill</Button>
                 <Button>Print Bill</Button>
             </Stack>
             <Stack>
                 <Button>Collect Payment</Button>
-
             </Stack>
         </Stack>
         

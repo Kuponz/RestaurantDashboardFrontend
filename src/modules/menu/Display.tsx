@@ -80,7 +80,8 @@ const Display = () => {
                 flexDirection:{
                     xs:"column",
                     md:"row",
-                }
+                },
+                pb:25
             }}>
                 {
                     items.map((item, key) => <MenuCard key={key} items={item}/>)

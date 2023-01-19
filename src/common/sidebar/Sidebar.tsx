@@ -141,7 +141,8 @@ export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen})
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            height:"100%",
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth,  height:"100%" },
           }}
         >
           {drawer}
@@ -150,7 +151,7 @@ export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen})
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, height:"100%" },
           }}
           open
         >

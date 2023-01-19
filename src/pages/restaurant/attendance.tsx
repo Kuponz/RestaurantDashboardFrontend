@@ -5,6 +5,7 @@ import { flexBox, size } from "theme/defaultFunction";
 import { useRouter } from "next/router";
 import Display from "modules/menu/Display";
 import Checkout from "modules/checkoout/Checkout";
+import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 
 export default function attendance() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -24,7 +25,7 @@ export default function attendance() {
         {/* Auth Stuff Here */}
         {/* <Waiter /> */}
         <HomeStructure>
-          {/* <Typography variant="body2">Construction in Progress!</Typography>
+         <Typography variant="body2">Construction in Progress!</Typography>
           <Stack direction={"column"} sx={{
               py:5,
 
@@ -33,29 +34,7 @@ export default function attendance() {
               <Button variant={"outlined"} onClick={()=>{
                   router.push("/restaurant/table")
               }} sx={{...flexBox(), gap:1}}>Book Tables <EastOutlinedIcon/></Button>
-          </Stack> */}
-          <Stack direction={{
-            xs:"column",
-            md:"row"
-          }}
-          sx={{
-            height:"100%",
-            width:"100%",
-            p:2,
-            overflow:"hidden"
-          }}
-          >
-            <Display/>
-            <Stack sx = {{
-              ...size("100%", "30%"),
-              display:{
-                xs:"none",
-                md:"flex"
-              }
-            }}>
-              <Checkout/>
-            </Stack>
-          </Stack>
+          </Stack> 
 
         </HomeStructure>
       </div>
