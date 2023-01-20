@@ -5,7 +5,11 @@ import { SeperateOrder } from './SeperateOrder'
 const Orders = () => {
   return (
     <Stack sx={{
-        height:"100%",
+      height:"100%",
+      pb:10,
+      overflowY:"auto",
+      p:2,
+      pt:0
     }}>
         {"Lorem ipsum dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor sit amet consectetur adipisicing  Unde.".split(" ").map(()=>{
             return (

@@ -21,7 +21,7 @@ const SumValue = () => {
         },
     ]
   return (
-    <Stack  p={3} height={"100%"}>
+    <Stack p={2} height={"90%"}>
         {JSONData.map((data, index)=>{
             return (
                 <Stack direction={"row"} key={index} justifyContent={"space-between"} alignItems={"center"} py={1}>

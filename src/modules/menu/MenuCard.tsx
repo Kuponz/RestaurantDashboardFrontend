@@ -5,7 +5,7 @@ import { Button, Icon, IconButton, InputBase, TextField, Typography } from '@mui
 import { useState } from "react";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
-import { flexBox, size } from "theme/defaultFunction";
+import { flexBox } from "theme/defaultFunction";
 
 const MenuCard = ({ items }) => {
     const { id, title, price } = items;
@@ -24,7 +24,7 @@ const MenuCard = ({ items }) => {
     }
     return (
         <>
-        <Paper sx={{
+        <Paper variant="outlined" sx={{
             display:"flex",
             justifyContent:"space-between",
             alignItems:"center",
