@@ -11,24 +11,33 @@ const ModalSupport = () => {
             columnGap:2,
             m:0.5
         }}>
-            <Paper sx={{ width: "1rem", height: "1rem" }} variant="free" />
-            <Typography>Free</Typography>
+            <Paper sx={{ width: "1rem", height: "1rem" }} variant="outlined" />
+            <Typography>Vacant [Free can be used to Book]</Typography>
         </Stack>
         <Stack direction={"row"} alignItems={"center"} sx={{
             columnGap:2,
             m:0.5
         }}>
             <Paper sx={{ width: "1rem", height: "1rem" }} variant="inprogress" />
-            <Typography>In Progress</Typography>
+            <Typography>In Progress [Menu Getting Ordered]</Typography>
         </Stack>
         <Stack direction={"row"} alignItems={"center"} sx={{
             columnGap:2,
             m:0.5
         }}>
             <Paper sx={{ width: "1rem", height: "1rem" }} variant="reserved" />
-            <Typography> Reserved</Typography>
+            <Typography> Reserved [KOT Done]</Typography>
         </Stack>
-        <Stack direction={"row"} py={2}>
+        <Stack direction={"row"} alignItems={"center"} sx={{
+            columnGap:2,
+            m:0.5
+        }}>
+            <Paper sx={{ width: "1rem", height: "1rem" }} variant="free" />
+            <Typography>Billing [ Bill Generated... About to get Vacant]</Typography>
+        </Stack>
+        
+        
+        <Stack direction={"row"} py={2} justifyContent={"center"}>
             <Typography>Need More Support &nbsp;</Typography>
             <Link href={"callto:8766968741"}><MUIlink>
                 <Stack sx={{...flexBox()}}>
