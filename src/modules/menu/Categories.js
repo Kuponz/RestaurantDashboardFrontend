@@ -3,7 +3,9 @@ import { Button, Icon, IconButton, InputBase, TextField, Typography } from '@mui
 import { Box, Paper, Stack } from "@mui/material";
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md'
 import { size } from "theme/defaultFunction";
+import { tokens } from "theme/theme";
 const Categories = ({ categories, filterItems, activeCategory }) => {
+    console.log({categories})
     return (
 
 
@@ -16,16 +18,22 @@ const Categories = ({ categories, filterItems, activeCategory }) => {
             overflowX: 'auto',
             whiteSpace: 'nowrap'
         }}>
+            <Button variant='outlined' color={activeCategory._id == "ALL" ? "primary":"secondary"} 
+                onClick={() => filterItems({
+                    _id:"ALL",
+                    categoryName:"All"
+                })}> 
+                All
+            </Button>
             {
-                categories.map((category, index) => {
-                    
+                categories?.map((category, index) => {    
                     return (
                         <>
                             <Box>
-                                <Button variant='outlined' value={`${activeCategory === category ? "filter-btn active" : "filter-btn"
-                                    }`}
+                                <Button variant='outlined'  color={ activeCategory._id ==  category._id ? "primary":"secondary"} 
                                     key={index}
-                                    onClick={() => filterItems(category)}> {category}
+                                    onClick={() => filterItems(category)}> 
+                                    {category?.categoryName}
                                 </Button>
                             </Box>
                         </>

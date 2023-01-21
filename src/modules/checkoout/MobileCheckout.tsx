@@ -43,7 +43,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 export default function MobileCheckout(props: Props) {
-  const { window } = props;
+  const { window, val, setValue, variableip } = props;
   const router = useRouter();
   const [open, setOpen] = React.useState(false);
   // const toggleDrawer = (newOpen: boolean) => () => {
@@ -86,7 +86,7 @@ export default function MobileCheckout(props: Props) {
             md:"none"
           }
         }}>
-          <Checkout setOpen={setOpen} />
+          <Checkout setOpen={setOpen} variableip={variableip} val={val} setValue={setValue} />
         </Stack>
       </Drawer >
     </Root>

@@ -4,24 +4,24 @@ import React from 'react'
 import { flexBox } from 'theme/defaultFunction'
 import { tokens } from 'theme/theme'
 
-const CustomCard = () => {
+const CustomCard = ({tableData}) => {
     const router = useRouter();
-    const dummyData={
-        status:"VACANT",
-        order:{
-            total:"$500",
-            items:5,
-        },
-        tableName:"Table Number 3",
-        tableId:"13384"
-    }
+    // const dummyData={
+    //     status:"VACANT",
+    //     order:{
+    //         total:"$500",
+    //         items:5,
+    //     },
+    //     tableName:"Table Number 3",
+    //     tableId:"13384"
+    // }
     const varaint={
         "VACANT":"outlined",
         "ORDERING":"inprogress",
         "OCCUPIED":"reserved",
         "BILLING":"free"
     }
-    const varaintSelection=dummyData.status
+    const varaintSelection=tableData.status
   return (
     <Tooltip title={varaintSelection}>
       <Paper 
@@ -38,16 +38,16 @@ const CustomCard = () => {
         cursor:"pointer"
       }}
       onClick={()=>{
-        router.push(`/restaurant/table/menu?table=${dummyData?.tableId}`)
+        router.push(`/restaurant/table/menu?table=${tableData?._id}`)
       }}
       >
           <Typography variant="body1" component="div" sx={{
                 color:varaintSelection=="VACANT"?tokens().greenAccent[500]:"white"
             }}>
-              {dummyData.tableName}
+              {tableData.TableName}
           </Typography>
           {
-              dummyData.order &&  (dummyData.order.total)?
+              tableData.order &&  (tableData.order.total)?
                <Stack
                     direction="row"
                     divider={<Divider orientation="vertical" flexItem />}
@@ -56,16 +56,16 @@ const CustomCard = () => {
                 >
                     <Typography variant='caption' sx={{
                         color:varaintSelection=="VACANT"?tokens().grey[300]:"white"
-                    }}>{dummyData.order.total}</Typography>
+                    }}>{tableData.order.total}</Typography>
                     <Typography variant='caption' sx={{
                         color:varaintSelection=="VACANT"?tokens().grey[300]:"white"
-                    }}>{dummyData.order.items}</Typography>
+                    }}>{tableData.order.items}</Typography>
                 
                 </Stack>
                 :
                 <Stack direction={"row"}>
 
-                    <Typography variant='caption'>{dummyData.status}</Typography>
+                    <Typography variant='caption'>{tableData.status}</Typography>
                 </Stack>
 
             }

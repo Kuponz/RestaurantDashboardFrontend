@@ -32,7 +32,9 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { flexBox } from 'theme/defaultFunction';
-export default function SimpleAccordion() {
+import { stringify } from 'querystring';
+export default function SimpleAccordion({orderValue, variableip}) {
+  console.log({orderValue})
   return (
       <Accordion TransitionProps={{ unmountOnExit: true }} sx={{ 
         width:"100%",
@@ -57,34 +59,24 @@ export default function SimpleAccordion() {
                 whiteSpace: "nowrap",
                 textOverflow:"ellipsis",
                  }}>
-                Paneer Butter masala Kulcha
-                Paneer Butter masala Kulcha
-                Paneer Butter masala Kulcha
-                Paneer Butter masala Kulcha
-                Paneer Butter masala Kulcha
-                Paneer Butter masala Kulcha
-                Paneer Butter masala Kulcha
-                Paneer Butter masala Kulcha
-                Paneer Butter masala Kulcha
-                Paneer Butter masala Kulcha
-                Paneer Butter masala Kulcha
+                {orderValue?.item?.itemName}
             </Typography>
             <Stack direction={"row"} sx={{gap:5}}>
-                <Typography sx={{ color: 'text.secondary' }}>x5</Typography>
-                <Typography sx={{ color: 'text.secondary' }}>Total: Rs: 500</Typography>
+                <Typography sx={{ color: 'text.secondary' }}> x &nbsp;{orderValue.quantity}</Typography>
+                <Typography sx={{ color: 'text.secondary' }}>Total &#8377; {String(parseInt(orderValue?.item?.price)*orderValue.quantity)}</Typography>
 
             </Stack>
           </Stack>
         </AccordionSummary>
         <AccordionDetails>
             <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
-                <IconButton><AddIcon/></IconButton>
+                <IconButton onClick={()=>{return variableip(orderValue.item, "+")}}><AddIcon/></IconButton>
                 <Stack sx={{
                         width:"4rem"
                     }}>
-                        <TextField />
+                        <TextField value={orderValue.quantity} onChange={e=>variableip(orderValue.item, "*", e.target.value)}/>
                     </Stack>
-                <IconButton><RemoveIcon/></IconButton>
+                <IconButton onClick={()=>{return variableip(orderValue.item, "-")}}><RemoveIcon/></IconButton>
                 <IconButton color='error'><DeleteIcon/></IconButton>
             </Stack>
           <Typography>

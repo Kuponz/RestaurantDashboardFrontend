@@ -1,28 +1,73 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Categories from "./Categories";
 import items from "./data";
 import MenuCard from "./MenuCard";
 import { Stack, TextField } from "@mui/material";
 import { flexBox, size } from "theme/defaultFunction";
-const allCategories = ["all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all","all", ...new Set(items.map((item) => item.category))];
 
-const Display = () => {
+const Display = ({val, setValue, variableip, menuInfo, setmenuInfo}) => {
 
-    const [menuItems, setMenuItems] = useState(items);
-    const [activeCategory, setActiveCategory] = useState("");
-    const [categories, setCategories] = useState(allCategories);
-
+    const [activeCategory, setActiveCategory] = useState({
+        _id:"ALL",
+        categoryName:"All"
+    });
+    
+    const [menuItems, setMenuItems] = useState(()=>{
+        let newMenu:any[] =[];
+        menuInfo.categories.forEach(cate=>{
+            newMenu.concat(cate.menu);
+        })
+        return newMenu;
+    });
     const filterItems = (category) => {
-        setActiveCategory(category);
-        if (category === "all") {
-            setMenuItems(items);
-            return;
-        }
 
-        const newItems = items.filter((item) => item.category === category);
-        setMenuItems(newItems);
+        setActiveCategory(category);
+        if (category._id == "ALL") {
+            let newMenu:any[] =[];
+            for(let i = 0;i<menuInfo?.categories?.length;i++){
+                newMenu.concat(menuInfo?.categories[i]?.menu);
+            }
+            setMenuItems(newMenu);
+        }else{
+            // let newItems= menuInfo.categories.filter(cate=>{
+            //     if(cate._id == category._id){
+            //         return cate.menu;
+            //     }
+            // })
+            let newMenu=[];
+            // console.log(newMenu, menuInfo, category);
+            for(let i = 0;i<menuInfo?.categories?.length;i++){
+                if(menuInfo?.categories[i]?._id==category._id){
+                    newMenu = [...newMenu, ...menuInfo?.categories[i]?.menu];
+                }
+            }
+            setMenuItems(newMenu);
+
+        }
     };
 
+
+    
+    useEffect(()=>{
+        // console.log("useEffect Called", menuInfo, activeCategory);
+        if (activeCategory._id == "ALL") {
+            let newMenu:any[] =[];
+            for(let i = 0;i<menuInfo?.categories?.length;i++){
+                newMenu = [...newMenu, ...menuInfo?.categories[i]?.menu];
+            }
+            setMenuItems(newMenu);
+        }else{
+            let newMenu=[];
+            // console.log(newMenu, menuInfo, activeCategory);
+            for(let i = 0;i<menuInfo?.categories?.length;i++){
+                if(menuInfo?.categories[i]?._id==activeCategory._id){
+                    newMenu = [...newMenu, ...menuInfo?.categories[i]?.menu];
+                }
+            }
+            setMenuItems(newMenu);
+
+        }
+    },[activeCategory, menuInfo.categories])
     return (
         <Stack sx={{
             // border:"4px solid green",
@@ -57,7 +102,7 @@ const Display = () => {
                 width:"100%",
             }}>
                 <Categories
-                    categories={categories}
+                    categories={menuInfo.categories}
                     activeCategory={activeCategory}
                     filterItems={filterItems}
                 />
@@ -84,7 +129,7 @@ const Display = () => {
                 pb:25
             }}>
                 {
-                    items.map((item, key) => <MenuCard key={key} items={item}/>)
+                    menuItems?.map((item, key) => <MenuCard variableip={variableip}  val={val} setValue={setValue} key={key} items={item}/>)
                 }
                 {/* <MenuCard items={menuItems} /> */}
             </Stack>

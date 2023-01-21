@@ -27,44 +27,41 @@ import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import BasicModal from "common/modalGenerator/Modal";
 import ModalSupport from "./ModalSupport";
 import CustomCard from "./CustomCard";
+import { userestaurantStore } from "store/restaurant/restaurantStore";
+import FloorStructure from "./FloorStructure";
+import FloorWiseTable from "./FloorWiseTable";
+import { useQuery } from "@tanstack/react-query";
+import { getTables } from "store/api/axiosSetup";
+import { useUserStore } from "store/user/userzustandstore";
 
-  // <Card variant="free" onClick={()=>{
-  //   router.push(`/restaurant/table/menu?table=${3}`)
-  // }}>
-  //   <CardActionArea>
-  //     <CardContent>
-  //     </CardContent>
-  //   </CardActionArea>
-  // </Card>
-// const CustomCardRes = () => {
-//   return (
-//     <Card variant="reserved">
-//       <CardActionArea>
-//         <CardContent>
-//           <Typography variant="h5" component="div">
-//             # Table No {"3"}
-//           </Typography>
-//         </CardContent>
-//       </CardActionArea>
-//     </Card>
-//   );
-// };
 
 export const Waiter = () => {
   const [openModel, setOpenModel]  = useState(false);
+  
   const router = useRouter();
+  const restroDetails = userestaurantStore(state=>state);
+  const userDetails = useUserStore(state=>state.user);
+  const [infoSelected, setinfoSelected] = useState({
+    table:"",
+    floor:"ALL"  
+  });
+  const { isLoading, isError, data, error } = useQuery(
+    {
+      queryKey:['getTable'], 
+      queryFn:()=>getTables(
+      userDetails?.jwtToken,userDetails?.restaurantLinked
+      ),
+      onSuccess:(data)=>{
+        restroDetails.setFloors(data?.data?.data)
+      }
+  })
+  console.log({
+    isLoading, isError, data:data?.data?.data, error,restroDetails
+  })
   return (
     <div className={styles.container}>
       <div className={styles.floor}>
-        <FormControl fullWidth>
-          <InputLabel>Floor</InputLabel>
-          <Select label="Floor" defaultValue={0}>
-            <MenuItem value={0}>All</MenuItem>
-            <MenuItem value={1}>I Floor</MenuItem>
-            <MenuItem value={2}>II Floor</MenuItem>
-            <MenuItem value={3}>III Floor</MenuItem>
-          </Select>
-        </FormControl>
+        <FloorStructure infoSelected={infoSelected} setinfoSelected={setinfoSelected} restroDetails={restroDetails?.restaurant?.floors}/>
         <IconButton onClick={()=>setOpenModel(true)}><QuestionMarkIcon/></IconButton>
       </div>
       
@@ -76,17 +73,10 @@ export const Waiter = () => {
         pb:15,
         flexDirection:"row",
         flexWrap:"wrap",
+        justifyContent:"flex-start",
         gap:2
       }}>
-      <Divider sx={{
-        width:"100%"
-      }}>
-        I FLOOR
-      </Divider>
-       {
-       "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel, nisi quasi architecto hic laborum est eos soluta esse accusantium nesciunt, mollitia veniam autem accusamus voluptate, sequi illum. Ipsum in illum eligendi alias perspiciatis debitis suscipit quos ipsam distinctio. Magni, id aut. Doloremque eos quaerat nobis!"
-       .split(" ").map(elm=>(<CustomCard key={elm}/>))
-       }
+        <FloorWiseTable infoSelected={infoSelected} restroDetails={restroDetails?.restaurant?.floors}/>
       </Stack>
       <BasicModal title={"Representations"} open={openModel} setOpen={setOpenModel}>
         <ModalSupport/>

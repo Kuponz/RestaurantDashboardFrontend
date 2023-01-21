@@ -5,8 +5,11 @@ import CheckoutItem from './CheckoutItem'
 import { Router, useRouter } from 'next/router'
 import { CloseOutlined } from '@mui/icons-material'
 
-const Checkout = ({setOpen = true}) => {
+const Checkout = ({setOpen = true, val, setValue, variableip}) => {
     const router = useRouter();
+    console.log({
+        val
+    })
   return (
     <Stack sx={{
         p:{
@@ -34,10 +37,9 @@ const Checkout = ({setOpen = true}) => {
             gap:1,
             px:2
         }}>
-            {"    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam praesentium eos ab, et sit blanditiis quos quis quas consequuntur, at id eius dolor sunt, provident iure! Itaque sit eos unde tenetur sint quis repudiandae quas ullam deserunt, libero, accusantium cupiditate placeat vitae atque officiis ipsum maxime ipsam vero consectetur rerum eum dolores nobis. Saepe fugiat recusandae hic, vel, libero cum dolorum, totam quos corrupti eum culpa necessitatibus perferendis asperiores nobis doloribus delectus. Repellat, quis assumenda? Corporis, similique doloribus."
-                .split(" ").map((elm, key)=>(<CheckoutItem key={key}/>))
+            {
+                val?.map((orderValue, key)=>(<CheckoutItem key={key} orderValue={orderValue} variableip={variableip}/>))
             }
-        <CheckoutItem/>
         </Stack>
         <Stack>
             <Stack direction={"row"} sx={{
