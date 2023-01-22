@@ -9,6 +9,7 @@ import { useUserStore } from 'store/user/userzustandstore'
 import { useQuery } from '@tanstack/react-query'
 import { getMenu } from 'store/api/axiosSetup'
 import { SUBRESOURCE_INTEGRITY_MANIFEST } from 'next/dist/shared/lib/constants'
+import { useRouter } from 'next/router'
 
 const MainMenu = () => {
     const [menuInfo, setmenuInfo] = useState({
@@ -16,8 +17,8 @@ const MainMenu = () => {
       search:"" 
     });
     const [val, setValue] = useState([]);
-
-    const restaurant = userestaurantStore(state=>state);
+    const router = useRouter();
+    const { table } = router.query;
     const userDetails = useUserStore(state=>state.user);
     const { isLoading, isError, data, error } = useQuery(
       {
@@ -82,7 +83,7 @@ const MainMenu = () => {
             md:"flex"
             }
         }}>
-            <Checkout val={val} setValue={setValue} variableip={variableip} />
+            <Checkout tableId={table} val={val} setValue={setValue} variableip={variableip} />
         </Stack>
         <Stack sx={{
             display:{
@@ -90,7 +91,7 @@ const MainMenu = () => {
             md:"none"
             }
         }}>
-            <MobileCheckout val={val} setValue={setValue} variableip={variableip} />
+            <MobileCheckout tableId={table} val={val} setValue={setValue} variableip={variableip} />
         </Stack>
   </>
   )

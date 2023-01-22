@@ -1,22 +1,40 @@
-import { Stack } from '@mui/material'
+import { Stack, Typography } from '@mui/material'
 import React from 'react'
 import { SeperateOrder } from './SeperateOrder'
+import { flexBox } from 'theme/defaultFunction'
 
-const Orders = () => {
+const Orders = ({order}) => {
   return (
-    <Stack sx={{
-      height:"100%",
-      pb:10,
-      overflowY:"auto",
-      p:2,
-      pt:0
-    }}>
-        {"Lorem ipsum dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor dolor sit amet consectetur adipisicing  Unde.".split(" ").map(()=>{
-            return (
-                <SeperateOrder/>
-            )
-        })}
-    </Stack>
+    <>
+      <Stack direction={"row"} sx={{
+        width:"100%",
+        justifyContent:"space-between"
+      }}>
+        <Stack sx={{
+              width:"30%"
+          }}>
+            <Typography variant='body2'>Item Name</Typography>
+        </Stack>
+        <Stack direction={"row"} gap={5} sx={{
+          width:{
+            md:"50%"
+          },
+          justifyContent:"space-between"
+        }}>
+          <Stack direction={"row"} gap={1}>
+            <Typography variant='body2'>
+              Price
+            </Typography>
+            <Typography variant='body2'> Quantity</Typography>
+          </Stack>
+            <Typography variant='body2'>Total</Typography>
+        </Stack>
+      </Stack>
+      {order?.details?.order?.map((orderVal, orderINdex)=>(
+        <SeperateOrder orderVal={orderVal} key={orderINdex}/>
+      ))}
+      
+    </>
   )
 }
 

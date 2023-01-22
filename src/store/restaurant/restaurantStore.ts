@@ -6,7 +6,9 @@ const restaurantStore = (set:any)=>({
     restaurant:{
         floors:[],
         categories:[],
-        
+        restaurantInfo:{
+
+        }
     },
     setFloors:(data:any)=>set((state:any)=>({
         restaurant:{
@@ -20,6 +22,12 @@ const restaurantStore = (set:any)=>({
             categories:[...data]
         }
     })),
+    setRestaurantDetails:(data:any)=>set((state:any)=>({
+        restaurant:{
+            ...state.restaurant,
+            restaurantInfo:data
+        }
+    }))
 })
 
 export const userestaurantStore = create(devtools(persist(restaurantStore,{

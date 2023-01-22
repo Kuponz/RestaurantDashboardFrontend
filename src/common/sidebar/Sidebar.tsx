@@ -51,15 +51,15 @@ export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen})
 
         },
         {
-            title:"Dashboard",
-            icons:<DashboardIcon/>,
-            url:"/restaurant/dashboard"
-        },
-        {
             title:"Book Table",
             icons:<TableRestaurantIcon/>,
             url:"/restaurant/table"
 
+        },
+        {
+            title:"Dashboard",
+            icons:<DashboardIcon/>,
+            url:"/restaurant/dashboard"
         },
         {
             title:"Inventory",

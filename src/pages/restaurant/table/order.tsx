@@ -1,11 +1,36 @@
 import { Button, Stack, Toolbar, Typography } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 import HomeStructure from 'modules/home/HomeStructure'
 import Orders from 'modules/orders/Orders'
 import SumValue from 'modules/orders/SumValue'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import { getorderById } from 'store/api/axiosSetup'
+import { useorderStore } from 'store/order/orderStore'
+import { userestaurantStore } from 'store/restaurant/restaurantStore'
+import { useUserStore } from 'store/user/userzustandstore'
 import { size } from 'theme/defaultFunction'
 
-const order = () => {
+const Order = () => {
+    const router = useRouter();
+  const [Selection, setSelection] = useState(true);
+  const query  = router.query;
+  const userDetails = useUserStore(state=>state.user);
+  const restro = userestaurantStore(state=>state.restaurant);
+  const {order, setOrder} = useorderStore(state=>state);
+  console.log(query)
+  const { isLoading, isError, data, error } = useQuery(
+    {
+      queryKey:['getRestaurantById'], 
+      enabled: !!query?.orderId,
+      queryFn:()=>getorderById(userDetails?.jwtToken, query?.orderId,restro?.restaurantInfo?._id),
+      onSuccess:(data)=>{
+          console.log({data:data?.data?.data?.orderInfo})
+          console.log({userDetails,restro})
+        //   setRestaurantDetails(data?.data?.data?.restaurantInfo)
+        setOrder(data?.data?.data?.orderInfo)
+      }
+  })
   return (
     <HomeStructure>
         <Stack sx={{
@@ -30,10 +55,9 @@ const order = () => {
                 overflow:"hidden"
             }}>
                 <Stack sx={{
-                    height:"75vh",
                     width:{
                         xs:"100%",
-                        md:"60%"
+                        md:"45%"
                     },
                     overflow:"hidden",
                     p:{
@@ -53,23 +77,19 @@ const order = () => {
                         <Button variant={"text"}>Print Bill</Button>
                         <Button variant={"text"}>Cancel</Button>
                     </Stack>
-                    <SumValue/>
+                    <SumValue order={order} />
                 </Stack>
                 <Stack sx={{
-                    height:"100%",
+                    height:{
+                        xs:"30vh",
+                        md:"100%"
+                    },
                     width:"100%",
-                    overflow:"hidden"
-                }}>
-                <Stack sx={{
-                    height:50,
-                    py:2,
-                    gap:1,
-                    px:2,
                     flex:1,
-                    overflow:"hidden",
+                    overflowY:"auto",
+                    p:2
                 }}>
-                    <Orders/>
-                </Stack>
+                    <Orders order={order}/>
                 </Stack>
                 
             </Stack>
@@ -78,4 +98,4 @@ const order = () => {
   )
 }
 
-export default order
+export default Order

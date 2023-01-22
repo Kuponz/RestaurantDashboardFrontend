@@ -33,8 +33,9 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { flexBox } from 'theme/defaultFunction';
 import { stringify } from 'querystring';
-export default function SimpleAccordion({orderValue, variableip}) {
-  console.log({orderValue})
+export default function SimpleAccordion({orderValue,setValue, val, variableip, index}) {
+  const [specialOpen, setSpecialOpen] = React.useState(false);
+  const specialInstruction = React.useRef("");
   return (
       <Accordion TransitionProps={{ unmountOnExit: true }} sx={{ 
         width:"100%",
@@ -79,12 +80,29 @@ export default function SimpleAccordion({orderValue, variableip}) {
                 <IconButton onClick={()=>{return variableip(orderValue.item, "-")}}><RemoveIcon/></IconButton>
                 <IconButton color='error'><DeleteIcon/></IconButton>
             </Stack>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-            <Button>Add Special Instruction</Button>
-            <TextField label={"Instructions"}  rows={7} multiline fullWidth/>
-          </Typography>
+            <Stack>
+              <Typography my={0.5}>
+              {orderValue?.item?.itemName}
+              </Typography>
+              <Typography color={"primary.main"} my={0.5}>
+                {orderValue?.specialInstruction}
+              </Typography>
+            </Stack>
+            <TextField label={"Instructions"} sx={{
+              display:specialOpen?"flex":"none",
+              my:1
+            }}  
+            onChange={e=>specialInstruction.current = e.target.value}
+            rows={7} multiline fullWidth/>
+            <Button variant='outlined'  sx={{
+              display:specialOpen?"none":"flex"
+            }} onClick={()=>{setSpecialOpen(true)}}>Add Special Instruction</Button>
+            <Button variant='outlined' sx={{
+              display:specialOpen?"flex":"none"
+            }}  onClick={()=>{
+              setSpecialOpen(false)
+              val[index].specialInstruction= specialInstruction.current;
+            }}>Save</Button>
         </AccordionDetails>
       </Accordion>
   );

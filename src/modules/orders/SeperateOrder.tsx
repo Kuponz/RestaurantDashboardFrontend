@@ -1,17 +1,28 @@
 import { Stack, Typography } from '@mui/material'
 import React from 'react'
 
-export const SeperateOrder = () => {
+export const SeperateOrder = ({orderVal}) => {
   return (
     <Stack direction={"row"} justifyContent={"space-between"}>
         <Stack sx={{
             width:"50%"
         }}>
-            <Typography>Item Name</Typography>
+            <Typography>{orderVal?.menuId?.itemName}</Typography>
         </Stack>
-        <Stack direction={"row"} gap={5}>
-            <Typography>1</Typography>
-            <Typography>Rs. 50</Typography>
+        <Stack direction={"row"} gap={5} sx={{
+          width:"50%",
+          justifyContent:"space-between"
+        }}>
+          <Stack direction={"row"} gap={1}>
+            <Typography>
+              {orderVal.menuId.price} 
+            </Typography>
+            <Typography>
+              x
+            </Typography>
+            <Typography> {orderVal.quantity}</Typography>
+          </Stack>
+            <Typography>Rs. {orderVal?.cost}</Typography>
         </Stack>
     </Stack>
   )
