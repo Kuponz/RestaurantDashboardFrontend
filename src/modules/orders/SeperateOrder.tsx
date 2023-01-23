@@ -15,7 +15,7 @@ export const SeperateOrder = ({orderVal}) => {
         }}>
           <Stack direction={"row"} gap={1}>
             <Typography>
-              {orderVal.menuId.price} 
+              {orderVal?.menuId?.price} 
             </Typography>
             <Typography>
               x

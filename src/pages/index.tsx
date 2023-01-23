@@ -60,52 +60,12 @@ export default function Home() {
           <Stack
           direction="column"
           // gap={2}
-          sx={{ width: "100%", height: "100vh", py: 3, overflowX: "scroll" }}
+          sx={{ width: "100%", height: "100vh", py: 3, overflowX: "scroll", ...flexBox("column") }}
         >
-          <Stack direction="row" justifyContent="center" spacing={5} p={2}>
-            <Button
-              onClick={() => {
-                if (!Selection) {
-                  setSelection(!Selection);
-                }
-              }}
-              sx={{ p: 1 }}
-              variant="contained"
-            >
-              Incoming Orders
-            </Button>
-            <Button
-              onClick={() => {
-                if (Selection) {
-                  setSelection(!Selection);
-                }
-              }}
-              sx={{ p: 1 }}
-              variant="contained"
-            >
-              Completed Orders
-            </Button>
-          </Stack>
-
-          {/* Component */}
-          {/* <Stack p={1}> */}
-          <Grid
-            container
-            p={1}
-            justifyContent="center"
-            spacing={{ xs: 2, md: 3 }}
-          >
-            {"Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis officia voluptatibus doloribus sint possimus veniam. Dicta nesciunt minima rem eos, iusto mollitia ipsa facere optio aut earum beatae, iure maiores."
-              .split(" ")
-              .map(() => {
-                if (Selection) {
-                  return <OrderContainer />;
-                } else {
-                  return <CompleteOrders />;
-                }
-              })}
-          </Grid>
-          {/* </Stack> */}
+          <Typography variant="h2">Welcome to etoPOS</Typography>
+          <Typography p={1} pb={3} variant="body2">Construction in Progress</Typography>
+          <Button variant="contained" onClick={()=>{router.push("/restaurant/table")}}>Book Table</Button>
+          
         </Stack>
         </HomeStructure>
       </div>

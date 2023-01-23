@@ -1,5 +1,8 @@
-import { Avatar, Button, IconButton, Menu, MenuItem, Tooltip } from "@mui/material";
+import { Avatar, Button, CircularProgress, IconButton, Menu, MenuItem, Stack, Tooltip } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import { useRouter } from "next/router";
 import React from "react";
+import { logoutuserfunction } from "store/api/axiosSetup";
 
 function stringAvatar(name: string) {
     return {
@@ -30,16 +33,36 @@ function stringAvatar(name: string) {
   }
   
 
-export default function AvatarMenu({userState}) {
+export default function AvatarMenu({userState, logout}) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const router = useRouter();
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       setAnchorEl(event.currentTarget);
     };
+    const {mutate, isLoading} = useMutation(logoutuserfunction, {
+      onSuccess:(data, variables, context)=> {
+
+          console.log({
+              data:data.data.data,
+              variables,
+              context,
+              userState
+          })
+        
+        localStorage.clear();
+        logout();
+        router.push("/auth")
+      },
+  })
     const handleClose = () => {
       setAnchorEl(null);
+      mutate(userState?.jwtToken)
     };
-  
+    if(isLoading)
+    {
+      return <Stack><CircularProgress/></Stack>
+    }
     return (
       <div>
         <IconButton id="basic-button"

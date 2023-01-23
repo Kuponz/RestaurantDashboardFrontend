@@ -30,6 +30,7 @@ import { Icon, Stack, Tooltip } from '@mui/material';
 import { flexBox } from 'theme/defaultFunction';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import { useRouter } from 'next/router';
 import HookSidebar from './HookSidebar';
 const drawerWidth = 240;
@@ -39,21 +40,26 @@ export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen})
     const router = useRouter();
     const tabJSON = [
         {
+            title:"Home",
+            icons:<HomeRoundedIcon/>,
+            url:"/"
+        },
+        {
+            title:"Book Table",
+            icons:<TableRestaurantIcon/>,
+            url:"/restaurant/table"
+
+        },
+        {
             title: "Current Orders",
             icons:<LocalMallIcon/>,
-            url:"/"
+            url:"/restaurant/currentOrder"
 
         },
         {
             title: "Orders",
             icons:<ViewListIcon/>,
             url:"/restaurant/orders"
-
-        },
-        {
-            title:"Book Table",
-            icons:<TableRestaurantIcon/>,
-            url:"/restaurant/table"
 
         },
         {

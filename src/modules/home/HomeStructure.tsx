@@ -6,6 +6,7 @@ import { flexBox, size } from 'theme/defaultFunction';
 import MenuIcon from '@mui/icons-material/Menu';
 import SideBar from 'common/sidebar/Sidebar';
 import AvatarMenu from 'common/sidebar/Avatar';
+import { userestaurantStore } from 'store/restaurant/restaurantStore';
 
 
 
@@ -20,6 +21,9 @@ const HomeStructure = ({children}) => {
     };
 
     const userState = useUserStore(state=>state.user);
+    const logout = useUserStore(state=>state.logout);
+    const restaurant = userestaurantStore(state=>state.restaurant);
+
     // useEffect(() => {
     //   if(!userState?.login){
     //     router.push("/auth")
@@ -61,13 +65,13 @@ const HomeStructure = ({children}) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h3" noWrap component="div" color={"white"}>
-            Restaurant Name
+            {restaurant?.restaurantInfo?.restaurantName}
           </Typography>
           <Box sx={{
             flex:1,
             ...flexBox("row", "flex-end")
           }}>
-            <AvatarMenu userState={userState}/>
+            <AvatarMenu userState={userState} logout={logout}/>
             {/*  */}
           </Box>
         </Toolbar>

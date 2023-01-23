@@ -19,6 +19,14 @@ authApi.defaults.headers.common['Content-Type'] = 'application/json';
     const response = await authApi.post('user/login', user);
     return response;
   };
+  export const logoutuserfunction = async (headerAuth: any) => {
+    const response = await authApi.post('user/logOut', {},{
+      headers:{
+        Authorization: 'Bearer ' + headerAuth //the token is a variable which holds the token
+      }
+    });
+    return response;
+  };
   
   export const getTables= async (headerAuth, restaurantId)=> {
     let reId = restaurantId.length != 0 ?restaurantId[0]:"";
@@ -29,9 +37,9 @@ authApi.defaults.headers.common['Content-Type'] = 'application/json';
     });
     return response;
   }
-  export const getMenu= async (restaurantId)=> {
+  export const getMenu= async (table, restaurantId)=> {
     let reId = restaurantId.length != 0 ?restaurantId[0]:"";
-    const response = await authApi.get(`menu/getAllMenuByRestaurantId?restaurantId=${reId}`, {
+    const response = await authApi.get(`menu/getAllMenuByRestaurantId?tableId=${table}&restaurantId=${reId}`, {
     });
     return response;
   }
@@ -39,6 +47,15 @@ authApi.defaults.headers.common['Content-Type'] = 'application/json';
 export const getRestaurantById = async (headerAuth, restaurantId)=>{
   let reId = restaurantId.length != 0 ?restaurantId[0]:"";
   const response = await authApi.get(`restaurant/getRestaurant?restaurantId=${reId}`, {
+    headers:{
+      Authorization: 'Bearer ' + headerAuth //the token is a variable which holds the token
+    }
+  });
+  return response;
+}
+export const getCurrentOrderByRestaurantId = async (headerAuth, restaurantId)=>{
+  let reId = restaurantId.length != 0 ?restaurantId[0]:"";
+  const response = await authApi.get(`order/getCurrentOrder?restaurantId=${reId}`, {
     headers:{
       Authorization: 'Bearer ' + headerAuth //the token is a variable which holds the token
     }

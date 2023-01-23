@@ -46,29 +46,9 @@ const CustomCard = ({tableData}) => {
             }}>
               {tableData.TableName}
           </Typography>
-          {
-              tableData.order &&  (tableData.order.total)?
-               <Stack
-                    direction="row"
-                    divider={<Divider orientation="vertical" flexItem />}
-                    spacing={2}
-                    
-                >
-                    <Typography variant='caption' sx={{
-                        color:varaintSelection=="VACANT"?tokens().grey[300]:"white"
-                    }}>{tableData.order.total}</Typography>
-                    <Typography variant='caption' sx={{
-                        color:varaintSelection=="VACANT"?tokens().grey[300]:"white"
-                    }}>{tableData.order.items}</Typography>
-                
-                </Stack>
-                :
-                <Stack direction={"row"}>
-
-                    <Typography variant='caption'>{tableData.status}</Typography>
-                </Stack>
-
-            }
+              <Typography variant='caption' sx={{
+                  color:varaintSelection=="VACANT"?tokens().grey[300]:"white"
+              }}>{tableData.waiter?tableData.waiter.name : tableData.status}</Typography>
       </Paper>
     </Tooltip>
   )

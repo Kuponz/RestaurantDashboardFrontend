@@ -1,9 +1,10 @@
 import React from "react";
-import { Paper, Stack, Grid, Button } from "@mui/material";
+import { Paper, Stack, Grid, Button, Divider } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { OrderItems } from "modules/orders/OrderItems";
-
-export const OrderContainer = () => {
+import moment, {} from "moment"
+export const OrderContainer = ({order}) => {
+  console.log({order})
   return (
     <Grid item direction="column" sx={{ display: "grid" }}>
       <Paper>
@@ -11,10 +12,12 @@ export const OrderContainer = () => {
           <Stack direction="row" justifyContent="center" alignItems="center">
             <Stack direction="column">
               <Typography variant="h4" fontWeight={600} color="white">
-                Table Number
+                {order?.table?.TableName}
               </Typography>
               <Typography variant="button" color={"white"}>
-                Time
+                {
+                  moment.utc(order?.updatedAt).local().startOf('seconds').fromNow()
+                }
               </Typography>
             </Stack>
             <Button
@@ -26,18 +29,20 @@ export const OrderContainer = () => {
                 color: "#000 !important",
               }}
             >
-              Status
+              Ready
             </Button>
           </Stack>
         </Paper>
         <Paper elevation={0}>
           {/*  */}
 
-          {"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum, quas!"
-            .split(" ")
-            .map(() => {
-              return <OrderItems />;
+          {order?.order?.map((menuData, idn) => {
+              return <OrderItems menuData={menuData} key={idn}/>;
             })}
+            {
+              order?.specialInstruction && <Divider>Instructions: {order?.specialInstruction}</Divider>
+
+            }
         </Paper>
       </Paper>
     </Grid>
@@ -66,11 +71,7 @@ export const CompleteOrders = () => {
           </Stack>
         </Paper>
         <Paper elevation={0}>
-          {"Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum, quas!"
-            .split(" ")
-            .map(() => {
-              return <OrderItems />;
-            })}
+          <Typography>Construction in Progress</Typography>
         </Paper>
       </Paper>
     </Grid>

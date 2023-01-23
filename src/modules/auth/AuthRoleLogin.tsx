@@ -11,25 +11,7 @@ import { SupportAgentOutlined } from '@mui/icons-material';
 import { useUserStore } from 'store/user/userzustandstore';
 import { useMutation } from '@tanstack/react-query';
 import { loginUserFn } from 'store/api/axiosSetup';
-const InputJson = [
-    {
-        variant:"filled",
-        type:"number",
-        label:"Mobile Number",
-        name:"mobileNumber",
-        placeholder:"8459162509",
-        fullWidth:true
-    },
-    {
-        variant:"filled",
-        type:"password",
-        label:"Pin",
-        name:"pin",
-        placeholder:"123456",
-        fullWidth:true,
-        
-    },
-]
+
 
 
 const AuthRoleLogin = () => {
@@ -79,6 +61,27 @@ const AuthRoleLogin = () => {
             }
         },
     })
+    const InputJson = [
+        {
+            variant:"filled",
+            type:"number",
+            label:"Mobile Number",
+            name:"mobileNumber",
+            placeholder:"8459162509",
+            fullWidth:true,
+            disabled:isLoading
+        },
+        {
+            variant:"filled",
+            type:"password",
+            label:"Pin",
+            name:"pin",
+            placeholder:"123456",
+            fullWidth:true,
+            disabled:isLoading
+            
+        },
+    ]
       // const router = useRouter();
     const handleClose = ()=>setOpen(false);
     const submitLogin = (e:any)=>{
@@ -86,10 +89,10 @@ const AuthRoleLogin = () => {
         mutate(userObj)
     }
     useEffect(()=>{
-        if(userState.user.login){
+        if(userState.user.login && userState.user.jwtToken && userState.user._id){
             router.push("/");
         }
-    },[userState.user])
+    },[userState.user, router])
     return (
         <Stack sx={{
             background: 'linear-gradient(306deg, rgba(155,230,194,1) 12%, rgba(69,226,151,1) 36%, rgba(155,230,194,1) 89%)',

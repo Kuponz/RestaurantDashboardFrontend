@@ -1,7 +1,7 @@
 import Checkout from 'modules/checkoout/Checkout'
 import React, { useState } from 'react'
 import Display from './Display'
-import { CircularProgress, Stack } from '@mui/material'
+import { CircularProgress, Stack, Typography } from '@mui/material'
 import { flexBox, size } from 'theme/defaultFunction'
 import MobileCheckout from 'modules/checkoout/MobileCheckout'
 import { userestaurantStore } from 'store/restaurant/restaurantStore'
@@ -10,6 +10,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getMenu } from 'store/api/axiosSetup'
 import { SUBRESOURCE_INTEGRITY_MANIFEST } from 'next/dist/shared/lib/constants'
 import { useRouter } from 'next/router'
+import { useorderStore } from 'store/order/orderStore'
 
 const MainMenu = () => {
     const [menuInfo, setmenuInfo] = useState({
@@ -20,16 +21,25 @@ const MainMenu = () => {
     const router = useRouter();
     const { table } = router.query;
     const userDetails = useUserStore(state=>state.user);
+    const setOrder = useorderStore(state=>state.setOrder);
     const { isLoading, isError, data, error } = useQuery(
       {
         queryKey:['getCategoryMenu'], 
-        queryFn:()=>getMenu(userDetails?.restaurantLinked),
+        queryFn:()=>getMenu(table, userDetails?.restaurantLinked),
         onSuccess:(data)=>{
             console.log({data:data?.data?.data?.category})
-            setmenuInfo({
-                ...menuInfo,
-                categories:data?.data?.data?.category
-            })
+            if(data?.data?.data?.tableReserved){
+                setOrder(data?.data?.data?.tableDetails?.orderId)
+                if(data?.data?.data?.tableDetails?.status && data?.data?.data?.tableDetails?.orderId._id){
+                    router.push(`/restaurant/table/order?orderId=${data?.data?.data?.tableDetails?.orderId._id}`)
+                }
+            }else{
+
+                setmenuInfo({
+                    ...menuInfo,
+                    categories:data?.data?.data?.category
+                })
+            }
 
         }
     })
@@ -37,6 +47,14 @@ const MainMenu = () => {
         return (
             <Stack sx={{...flexBox(), ...size("100%", "100%")}}>
                 <CircularProgress />
+            </Stack>
+        )
+    }
+    if(isError){
+          return (
+            <Stack sx={{...flexBox(), ...size("100%", "100%")}}>
+                {console.log(isError)}
+                <Typography>Error</Typography> 
             </Stack>
         )
     }

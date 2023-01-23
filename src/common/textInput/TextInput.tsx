@@ -16,7 +16,8 @@ interface inputFields{
   setUserObj ?: any
   ,errorM?:Boolean,
   errorP?:Boolean,
-  erroRef:any
+  erroRef:any,
+  disabled:Boolean
 }
 
 const TextInput = ({fields, erroRef, userObj, setUserObj, errorM, errorP}:inputFields) => {
@@ -31,6 +32,7 @@ const TextInput = ({fields, erroRef, userObj, setUserObj, errorM, errorP}:inputF
         type={fields.type}
         margin="dense"
         error={(fields.name == "pin"?errorP:errorM)}
+        disabled={fields.disabled}
         onChange={(e)=>{
           erroRef.current ={
             errorM:false,
