@@ -18,17 +18,20 @@ const MainMenu = () => {
       search:"" 
     });
     const [val, setValue] = useState([]);
+    const [oldOrderId, setoldOrderId] = useState("");
     const router = useRouter();
-    const { table } = router.query;
+    let { table, edit } = router.query;
     const userDetails = useUserStore(state=>state.user);
     const setOrder = useorderStore(state=>state.setOrder);
     const { isLoading, isError, data, error } = useQuery(
       {
+        enabled: !!table,
         queryKey:['getCategoryMenu'], 
-        queryFn:()=>getMenu(table, userDetails?.restaurantLinked),
+        queryFn:()=>getMenu(table, userDetails?.restaurantLinked, edit),
         onSuccess:(data)=>{
             console.log({data:data?.data?.data?.category})
-            if(data?.data?.data?.tableReserved){
+            edit = edit == undefined?false:true;
+            if(data?.data?.data?.tableReserved && !edit){
                 setOrder(data?.data?.data?.tableDetails?.orderId)
                 if(data?.data?.data?.tableDetails?.status && data?.data?.data?.tableDetails?.orderId._id){
                     router.push(`/restaurant/table/order?orderId=${data?.data?.data?.tableDetails?.orderId._id}`)
@@ -39,6 +42,26 @@ const MainMenu = () => {
                     ...menuInfo,
                     categories:data?.data?.data?.category
                 })
+                data?.data?.data?.tableDetails?.orderId?.order.map(ori=>{
+                    ori.item = ori.menuId
+                })
+                console.log({valu:val.map(vall=>{
+                   let finalData = data?.data?.data?.tableDetails?.orderId?.order?.find(oldo=>oldo.item._id == vall.item._id)
+                   return finalData
+                    
+                })});
+
+                if(val.map(vall=>{
+                    let finalData = data?.data?.data?.tableDetails?.orderId?.order?.find(oldo=>oldo.item._id == vall.item._id)
+                    return finalData
+                 }).length == 0){
+
+                    setValue([...val, ...data?.data?.data?.tableDetails?.orderId?.order])
+                }
+                setoldOrderId(data?.data?.data?.tableDetails?.orderId?._id)
+                /*
+                 */
+                // setValue(vall=>([...vall, ...data?.data?.data?.tableDetails?.orderId?.order]))
             }
 
         }
@@ -53,7 +76,6 @@ const MainMenu = () => {
     if(isError){
           return (
             <Stack sx={{...flexBox(), ...size("100%", "100%")}}>
-                {console.log(isError)}
                 <Typography>Error</Typography> 
             </Stack>
         )
@@ -89,7 +111,7 @@ const MainMenu = () => {
         setValue([...newVal])
     }
     console.log({
-      isLoading, isError, data:data?.data?.data, error, menuInfo
+      isLoading, isError, data:data?.data?.data, error, val
     })
   return (
   <>
@@ -101,7 +123,7 @@ const MainMenu = () => {
             md:"flex"
             }
         }}>
-            <Checkout tableId={table} val={val} setValue={setValue} variableip={variableip} />
+            <Checkout oldOrderId={oldOrderId} tableId={table} val={val} setValue={setValue} variableip={variableip} />
         </Stack>
         <Stack sx={{
             display:{
@@ -109,7 +131,7 @@ const MainMenu = () => {
             md:"none"
             }
         }}>
-            <MobileCheckout tableId={table} val={val} setValue={setValue} variableip={variableip} />
+            <MobileCheckout oldOrderId={oldOrderId} tableId={table} val={val} setValue={setValue} variableip={variableip} />
         </Stack>
   </>
   )

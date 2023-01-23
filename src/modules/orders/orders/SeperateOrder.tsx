@@ -22,7 +22,7 @@ export const SeperateOrder = ({orderVal}) => {
             </Typography>
             <Typography> {orderVal.quantity}</Typography>
           </Stack>
-            <Typography>Rs. {orderVal?.cost}</Typography>
+            <Typography>₹ {orderVal?.cost}</Typography>
         </Stack>
     </Stack>
   )

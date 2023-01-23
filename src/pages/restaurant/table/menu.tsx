@@ -14,9 +14,8 @@ import { getMenu } from "store/api/axiosSetup";
 import MainMenu from "modules/menu/MainMenu";
 
 export default function menu() {
+  
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router = useRouter();
-  const {table} = router.query;
   return (
     <>
       <Head>

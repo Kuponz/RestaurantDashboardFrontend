@@ -13,7 +13,7 @@ import { createOrder } from 'store/api/axiosSetup'
 import { useUserStore } from 'store/user/userzustandstore'
 import { useorderStore } from 'store/order/orderStore'
 
-const Checkout = ({setOpen = true, val, setValue, variableip, tableId}) => {
+const Checkout = ({setOpen = true,oldOrderId, val, setValue, variableip, tableId}) => {
     const router = useRouter();
     const [instrData, setInstrData] = useState({
         name:"",
@@ -55,8 +55,8 @@ const Checkout = ({setOpen = true, val, setValue, variableip, tableId}) => {
             specialInstruction:instrData.specialInstruction,
             restaurantId:restaurant?.restaurantInfo?._id,
             tableId:tableId,
+            oldOrderId
         }
-        console.log({orderDetail})
         mutate({
             token:user?.jwtToken, 
             orderDetail 

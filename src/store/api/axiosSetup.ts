@@ -37,9 +37,9 @@ authApi.defaults.headers.common['Content-Type'] = 'application/json';
     });
     return response;
   }
-  export const getMenu= async (table, restaurantId)=> {
+  export const getMenu= async (table, restaurantId, edit)=> {
     let reId = restaurantId.length != 0 ?restaurantId[0]:"";
-    const response = await authApi.get(`menu/getAllMenuByRestaurantId?tableId=${table}&restaurantId=${reId}`, {
+    const response = await authApi.get(`menu/getAllMenuByRestaurantId?tableId=${table}&restaurantId=${reId}&edit=${edit}`, {
     });
     return response;
   }
