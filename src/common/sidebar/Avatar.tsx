@@ -57,7 +57,10 @@ export default function AvatarMenu({userState, logout}) {
   })
     const handleClose = () => {
       setAnchorEl(null);
+    };
+    const handleLogout = () => {
       mutate(userState?.jwtToken)
+      setAnchorEl(null);
     };
     if(isLoading)
     {
@@ -88,7 +91,7 @@ export default function AvatarMenu({userState, logout}) {
           }}
         >
           <MenuItem onClick={handleClose}>User Settings</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </div>
         );

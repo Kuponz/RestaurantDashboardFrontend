@@ -6,7 +6,7 @@ import { Button, CircularProgress, Grid, Stack, Typography } from "@mui/material
 import { flexBox, size } from "theme/defaultFunction";
 import { useRouter } from "next/router";
 import { CompleteOrders, OrderContainer } from "modules/orders/OrderContainer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getRestaurantById } from "store/api/axiosSetup";
 import { useUserStore } from "store/user/userzustandstore";
@@ -19,12 +19,16 @@ export default function Home() {
   const setRestaurantDetails = userestaurantStore(state=>state.setRestaurantDetails);
   const { isLoading, isError, data, error } = useQuery(
     {
+      enabled:!!userDetails,
       queryKey:['getRestaurantById'], 
       queryFn:()=>getRestaurantById(userDetails?.jwtToken, userDetails?.restaurantLinked),
       onSuccess:(data)=>{
           console.log({data:data?.data?.data})
           console.log(userDetails)
           setRestaurantDetails(data?.data?.data?.restaurantInfo)
+      },
+      onerror:(data)=>{
+        console.log({data})
       }
   })
   if(isLoading){
@@ -41,6 +45,8 @@ export default function Home() {
       </Stack>
   )
   }
+  console.log({userDetails})
+ 
   return (
     <>
       <Head>
