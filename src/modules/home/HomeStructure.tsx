@@ -6,32 +6,32 @@ import { flexBox, size } from 'theme/defaultFunction';
 import MenuIcon from '@mui/icons-material/Menu';
 import SideBar from 'common/sidebar/Sidebar';
 import AvatarMenu from 'common/sidebar/Avatar';
+import { userestaurantStore } from 'store/restaurant/restaurantStore';
 
 
 
 
 const HomeStructure = ({children}) => {
-    const router = useRouter();
-    const drawerWidth = 240;
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+  const router = useRouter();
+  const drawerWidth = 240;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
 
-    const handleDrawerToggle = () => {
-      setMobileOpen(!mobileOpen);
-    };
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
 
-    const userState = useUserStore(state=>state.user);
-    // useEffect(() => {
-    //   if(!userState?.login){
-    //     router.push("/auth")
-    //   }
-    // }, [router, userState?.login])
-    // useEffect(()=>{
-    //     if(userState?.login && userState.role == "WAITER"){
-    //         router.push("/table")
-    //     }
-    // },[router, userState?.login , userState?.role])
-  
-   
+  const userState = useUserStore(state=>state.user);
+  const logout = useUserStore(state=>state.logout);
+  const restaurant = userestaurantStore(state=>state.restaurant);
+  useEffect(()=>{
+    if(!userState || !userState.login || !userState._id){
+      router.push("/auth");
+    }
+  },[userState, router])
+  console.log({
+    u:!userState || !userState.login || !userState._id,
+    userState
+  })
   return (
     <Box sx={{ display: 'flex', height:"100vh", width:"100vw", overflowY:"hidden" }}>
       <CssBaseline />
@@ -61,13 +61,13 @@ const HomeStructure = ({children}) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h3" noWrap component="div" color={"white"}>
-            Restaurant Name
+            {restaurant?.restaurantInfo?.restaurantName}
           </Typography>
           <Box sx={{
             flex:1,
             ...flexBox("row", "flex-end")
           }}>
-            <AvatarMenu userState={userState}/>
+            <AvatarMenu userState={userState} logout={logout}/>
             {/*  */}
           </Box>
         </Toolbar>

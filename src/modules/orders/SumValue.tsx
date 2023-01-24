@@ -1,32 +1,18 @@
 import { Button, Stack, Typography } from '@mui/material'
 import React from 'react'
 
-const SumValue = () => {
-    const JSONData =[
-        {
-            title:"Food Value",
-            price:"1000"
-        },
-        {
-            title:"GST",
-            price:"50"
-        },
-        {
-            title: "TOTAL",
-            price: "1050"
-        },
-        {
-            title:"Total Items",
-            price:"9"
-        },
-    ]
+const SumValue = ({order}) => {
   return (
-    <Stack  p={3} height={"100%"}>
-        {JSONData.map((data, index)=>{
+      <Stack p={2} height={"90%"}>
+        {Object?.keys(order?.details?.orderAmount || {})?.map((data, index)=>{
             return (
                 <Stack direction={"row"} key={index} justifyContent={"space-between"} alignItems={"center"} py={1}>
-                    <Typography variant='h5'>{data.title}</Typography>
-                    <Typography variant='h5'>{data.price}</Typography>
+                    {console.log({call:callfortitle(data), data})}
+                    <Typography variant='h5'>{callfortitle(data)}</Typography>
+                    <Stack direction={"row"}>
+                        {(data == "total" || data == "orderGst") && <span>₹</span>}
+                        <Typography variant='h5'>{order?.details?.orderAmount[data]}</Typography>
+                    </Stack>
                 </Stack>
             )
         })}
@@ -34,6 +20,29 @@ const SumValue = () => {
     </Stack>
 
   )
+}
+const callfortitle = (val:String)=>{
+    let title="";
+    switch (val) {
+        case "totalItem":
+            title="Total Items"
+            break;
+        case "orderGst":
+            title="GST"
+            break;
+        case "orderBeforeAddingGSTValue":
+            title = "Order Total"
+            break;
+        case "orderExcludeGSTValue":
+            title = "Order value with diffrent/No GST"
+            break;
+        case "total":
+            title="Total"
+            break;
+        default:
+            break;
+    }
+    return title;
 }
 
 export default SumValue

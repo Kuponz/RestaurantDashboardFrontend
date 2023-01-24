@@ -65,6 +65,10 @@ export const tokens = () => ({
     800: "#013550",
     900: "#001a28",
   },
+  warning:{
+    100:"#ffb851",
+    200:"#ffa726",
+  }
 });
 
 // mui theme settings
@@ -225,6 +229,13 @@ export const themeSettings = () => {
             style: {
               padding: 0,
               background: tokens().greenAccent[500],
+            },
+          },
+          {
+            props: { variant: "inprogress" },
+            style: {
+              padding: 0,
+              background: colors.warning[100],
             },
           },
           {

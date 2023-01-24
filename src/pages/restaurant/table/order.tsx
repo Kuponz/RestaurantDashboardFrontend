@@ -1,11 +1,50 @@
-import { Button, Stack, Toolbar, Typography } from '@mui/material'
+import { Button, CircularProgress, Stack, Toolbar, Typography } from '@mui/material'
+import { useQuery } from '@tanstack/react-query'
 import HomeStructure from 'modules/home/HomeStructure'
-import Orders from 'modules/orders/Orders'
+import KotCheckout from 'modules/orders/kot/KotCheckout'
+import EmptyBill from 'modules/orders/orders/EmptyBill'
+import Orders from 'modules/orders/orders/Orders'
 import SumValue from 'modules/orders/SumValue'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
+import { getorderById } from 'store/api/axiosSetup'
+import { useorderStore } from 'store/order/orderStore'
+import { userestaurantStore } from 'store/restaurant/restaurantStore'
+import { useUserStore } from 'store/user/userzustandstore'
 import { size } from 'theme/defaultFunction'
 
-const order = () => {
+const Order = () => {
+    const router = useRouter();
+  const [Selection, setSelection] = useState(true);
+  const query  = router.query;
+  const userDetails = useUserStore(state=>state.user);
+  const restro = userestaurantStore(state=>state.restaurant);
+  const {order, setOrder} = useorderStore(state=>state);
+  console.log(query)
+  const { isLoading, isError, data, error } = useQuery(
+    {
+      queryKey:['getRestaurantById'], 
+      enabled: !!query?.orderId,
+      queryFn:()=>getorderById(userDetails?.jwtToken, query?.orderId,restro?.restaurantInfo?._id),
+      onSuccess:(data)=>{
+          console.log({data:data?.data?.data?.orderInfo})
+          console.log({userDetails,restro})
+        //   setRestaurantDetails(data?.data?.data?.restaurantInfo)
+        setOrder(data?.data?.data?.orderInfo)
+      }
+  })
+  if(isLoading){
+    return (
+        <Stack sx={{
+            height:"100vh",
+            width:"100vw",
+            justifyContent:"center",
+            alignItems:"center"
+        }}>
+            <CircularProgress/>
+        </Stack>
+    )
+  }
   return (
     <HomeStructure>
         <Stack sx={{
@@ -13,45 +52,16 @@ const order = () => {
                 md:2
             },
             ...size("100%", "100%"),
+            overflow:"hidden"
         }}>
-            <Toolbar/>
-            <Stack sx={{
-                width:"100%"
-            }}>
-                <Typography textAlign={"center"} variant="h3">Order</Typography>
-            </Stack>
-            
-            <Stack>
-                <Stack direction={"row"}>
-                    
-                    <Button>Update Order</Button>
-                    <Button>Generate Bill</Button>
-                    <Button>Print Bill</Button>
-                    <Button>Cancel</Button>
-                </Stack>
-                <Stack>
-                    <Button>Collect Payment</Button>
-                </Stack>
-            </Stack>
-            <Stack sx={{
-                overflowY:"auto",
-                py:2,
-                overflowX:"hidden",
-                gap:1,
-                px:2,
-                height:40,
-                flex:1
-            }}>
-                <Orders/>
-            </Stack>
-            <Stack sx={{
-                height:"40vh",
-            }}>
-                <SumValue/>
-            </Stack>
+            {order?.details?.orderStatus  == "CREATED"?
+                <KotCheckout order={order}/>
+            :
+                <EmptyBill order={order}/>
+            }
         </Stack>
     </HomeStructure>
   )
 }
 
-export default order
+export default Order

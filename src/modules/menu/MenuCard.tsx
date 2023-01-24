@@ -1,28 +1,24 @@
 
 import { Box, Paper, Stack, Button, IconButton, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { useEffect } from "react";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { flexBox } from "theme/defaultFunction";
 
-const MenuCard = ({ items }) => {
-    const { id, title, price } = items;
+const MenuCard = ({ items, val, setValue, variableip }) => {
+    const [itemVal, setitemVal] = useState({
+        
+        
+    });
+    console.log({itemVal})
+    useEffect(()=>{
+        setitemVal(val.find(vali=>vali.item._id == items._id));
 
-    const [val, setValue] = useState(0);
-
-    const decrement = () => {
-        if(val<=0){
-
-        }else{
-            setValue(val - 1)
-        }
-    }
-    const increment = () => {
-        setValue(val + 1)
-    }
+    },[val, items])
     return (
         <>
-        <Paper sx={{
+        <Paper variant="outlined" sx={{
             display:"flex",
             justifyContent:"space-between",
             alignItems:"center",
@@ -34,7 +30,7 @@ const MenuCard = ({ items }) => {
                 lg:"30%",
                 xl:"32%"
             },
-            backgroundColor:theme=>val > 0 ?theme.palette.secondary.main:theme.palette.background.default
+            backgroundColor:theme=>itemVal && itemVal.quantity > 0 ?theme.palette.secondary.main:theme.palette.background.default
         }}
             elevation={6}
         >
@@ -47,16 +43,20 @@ const MenuCard = ({ items }) => {
                 <Stack>
                     <Typography sx={{
                         overflowWrap:"anywhere"
-                    }}>{title}</Typography>
-                    <Typography variant="body2" color={val > 0? "white":"neutral.default"}>
-                        &#8377;{price}
+                    }}
+                    variant="h4"
+                    >{items?.itemName}</Typography>
+                    <Typography variant="body2" sx={{
+                        fontSize:"18px"
+                    }} color={itemVal && itemVal.quantity > 0? "white":"neutral.default"}>
+                        &#8377; {items?.price}
 
                     </Typography>
 
                 </Stack>
                 {
-                    val>0?
-                    <Button variant="outlined" onClick={()=>setValue(0)} sx={{
+                    itemVal && itemVal.quantity > 0?
+                    <Button variant="outlined" onClick={()=>variableip(items, "*", parseInt("0"))} sx={{
                         my:1
                     }}>
                         <RemoveIcon/>
@@ -67,13 +67,22 @@ const MenuCard = ({ items }) => {
                 }
             </Stack>
             {
-                val <=0?
+                !itemVal?
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'space-between',
                 }}>
 
-                   <Button onClick={increment} variant="outlined" sx={{...flexBox()}}><AddIcon/>Add</Button>
+                   <Button onClick={()=>{
+                        setValue([
+                            ...val,
+                            {
+                                item:items,
+                                quantity:1
+                            }
+                        
+                        ])
+                    }} variant="outlined" sx={{...flexBox()}}><AddIcon/>Add</Button>
                 </Box>
                 :
                 <Box sx={{
@@ -83,21 +92,15 @@ const MenuCard = ({ items }) => {
                     alignItems:"center",
                     gap:1
                 }}>
-                    <IconButton onClick={increment}>
+                    <IconButton onClick={()=>variableip(items, "+")}>
                         <AddIcon/>
                     </IconButton>
                     <Stack sx={{
                         width:"4rem"
                     }}>
-                        <TextField value={val} onChange={e=>{
-                            if(e.target.value == ""){
-                                setValue(0)
-
-                            }
-                            setValue(parseInt(e.target.value))
-                        }}/>
+                        <TextField value={itemVal.quantity} onChange={(e)=>variableip(items, "*", parseInt(e.target.value))}/>
                     </Stack>
-                    <IconButton onClick={decrement}>
+                    <IconButton onClick={()=>variableip(items, "-")}>
                         <RemoveIcon/>
                     </IconButton>
 

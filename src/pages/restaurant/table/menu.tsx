@@ -6,12 +6,16 @@ import { useRouter } from "next/router";
 import Display from "modules/menu/Display";
 import Checkout from "modules/checkoout/Checkout";
 import MobileCheckout from "modules/checkoout/MobileCheckout";
+import { userestaurantStore } from "store/restaurant/restaurantStore";
+import { useUserStore } from "store/user/userzustandstore";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getMenu } from "store/api/axiosSetup";
+import MainMenu from "modules/menu/MainMenu";
 
 export default function menu() {
+  
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const router = useRouter();
-  const {table} = router.query;
-  console.log({table})
   return (
     <>
       <Head>
@@ -48,24 +52,7 @@ export default function menu() {
             overflow:"hidden"
           }}
           >
-            <Display/>
-            <Stack sx = {{
-              ...size("100%", "30%"),
-              display:{
-                xs:"none",
-                md:"flex"
-              }
-            }}>
-              <Checkout/>
-            </Stack>
-            <Stack sx={{
-              display:{
-                xs:"flex",
-                md:"none"
-              }
-            }}>
-              <MobileCheckout/>
-            </Stack>
+            <MainMenu/>
           </Stack>
 
         </HomeStructure>
