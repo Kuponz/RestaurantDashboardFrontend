@@ -39,10 +39,14 @@ export const OrderContainer = ({order}) => {
           {order?.order?.map((menuData, idn) => {
               return <OrderItems menuData={menuData} key={idn}/>;
             })}
-            {
-              order?.specialInstruction && <Divider>Instructions: {order?.specialInstruction}</Divider>
+            <Stack sx={{
+              width:"100%"
+            }}>
+              {
+                order?.specialInstruction && <Divider flexItem><Typography variant="body2">{order?.specialInstruction}</Typography></Divider>
 
-            }
+              }
+            </Stack>
         </Paper>
       </Paper>
     </Grid>

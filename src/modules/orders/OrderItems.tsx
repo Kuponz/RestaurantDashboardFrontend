@@ -7,7 +7,7 @@ export const OrderItems = ({menuData}) => {
     <Stack direction="row" p={0.5} justifyContent={"space-between"}>
       <Stack direction="column">
         <Typography>{menuData?.menuId?.itemName}</Typography>
-        <Typography variant={"caption"}>{menuData?.specialInstruction}</Typography>
+        <Typography variant={"caption"} color={"primary.main"}>{menuData?.specialInstruction}</Typography>
       </Stack>
       <Stack sx={{
         ...flexBox(),

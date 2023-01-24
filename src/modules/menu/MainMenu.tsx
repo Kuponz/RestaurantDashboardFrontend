@@ -33,15 +33,20 @@ const MainMenu = () => {
             edit = edit == undefined?false:true;
             if(data?.data?.data?.tableReserved && !edit){
                 setOrder(data?.data?.data?.tableDetails?.orderId)
-                if(data?.data?.data?.tableDetails?.status && data?.data?.data?.tableDetails?.orderId._id){
+                if(data?.data?.data?.tableDetails?.status && data?.data?.data?.tableDetails?.orderId?._id){
                     router.push(`/restaurant/table/order?orderId=${data?.data?.data?.tableDetails?.orderId._id}`)
+                }else{
+                    setmenuInfo({
+                        ...menuInfo,
+                        categories:data?.data?.data?.category
+                    })
                 }
             }else{
-
                 setmenuInfo({
                     ...menuInfo,
                     categories:data?.data?.data?.category
                 })
+                
                 data?.data?.data?.tableDetails?.orderId?.order.map(ori=>{
                     ori.item = ori.menuId
                 })
