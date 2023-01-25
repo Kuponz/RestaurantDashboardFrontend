@@ -29,11 +29,11 @@ const MainMenu = () => {
         queryKey:['getCategoryMenu'], 
         queryFn:()=>getMenu(table, userDetails?.restaurantLinked, edit),
         onSuccess:(data)=>{
-            console.log({data:data?.data?.data?.category})
+            console.log({data:data?.data?.data})
             edit = edit == undefined?false:true;
             if(data?.data?.data?.tableReserved && !edit){
                 setOrder(data?.data?.data?.tableDetails?.orderId)
-                if(data?.data?.data?.tableDetails?.status && data?.data?.data?.tableDetails?.orderId?._id){
+                if(data?.data?.data?.tableDetails?.orderId?._id && data?.data?.data?.tableDetails?.status != "VACANT"){
                     router.push(`/restaurant/table/order?orderId=${data?.data?.data?.tableDetails?.orderId._id}`)
                 }else{
                     setmenuInfo({
