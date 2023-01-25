@@ -115,7 +115,7 @@ export default function CurrentOrder() {
           >
             {alignment == "incomingOrders"?
               order?.incomingOrders?.map(runningOrder=>(
-                <OrderContainer key={runningOrder._id} order={runningOrder} />
+                <OrderContainer userDetails={userDetails} key={runningOrder._id} order={runningOrder} />
                 
               ))
             :

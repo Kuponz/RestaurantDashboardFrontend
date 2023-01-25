@@ -1,62 +1,79 @@
-import { Button, Stack, Typography } from '@mui/material'
-import React from 'react'
+import { Button, IconButton, Stack, Typography } from '@mui/material'
+import React, { useRef } from 'react'
 import SumValue from '../SumValue'
 import Orders from './Orders'
+import WestIcon from '@mui/icons-material/West';
+import { useRouter } from 'next/router';
+import  { useReactToPrint } from 'react-to-print';
 
 const EmptyBill = ({order}) => {
+    const router = useRouter();
+    const printRef = useRef(null);
+   const handlePrint = useReactToPrint({
+        content: () => printRef.current,
+    })
+    
   return (
     <>
-        <Stack sx={{
-            width:"100%"
+        <Stack direction={"row"} sx={{
+            width:"100%",
+            justifyContent:"space-between",
+            px:2
         }}>
-            <Typography textAlign={"center"} variant="h3">Order</Typography>
+            <Stack direction={"row"} gap={2} justifyContent={"center"} alignItems={"center"}>
+                <IconButton onClick={()=>{
+                    router.push("/restaurant/table")
+                }}><WestIcon/></IconButton>
+                <Typography variant="h3">Bill</Typography>
+            </Stack>
+            <Stack direction={"row"} gap={2} justifyContent={"center"} alignItems={"center"}>
+                <Button onClick={handlePrint} variant={"outlined"}>Print Bill</Button>
+                <Button variant={"outlined"}>Cancel</Button>
+            </Stack>
         </Stack>
         <Stack sx={{
             flexDirection:{
                 xs:"column",
-                md:"row-reverse"
+                md:"row"
             },
             width:"100%",
             height:"100%",
             overflow:"hidden"
         }}>
             <Stack sx={{
+                height:{
+                    xs:"50%",
+                    md:"100%"
+                },
+                width:"100%",
+                flex:1,
+                overflowY:"auto",
+                p:{
+                    xs:1,
+                    md:2
+                }
+            }}>
+                <Orders ref={printRef} order={order?.details}/>
+            </Stack>
+            <Stack sx={{
                 width:{
                     xs:"100%",
                     md:"45%"
                 },
+                height:{
+                    xs:70,
+                    md:"100%"
+                },
+                flex:1,
                 overflow:"hidden",
                 p:{
                     md:2,
                     lg:2
                 }
             }}>
-            
-                <Stack direction={{
-                    xs:"row",
-                    md:"column"
-                }} gap={{
-                    xs:1,
-                }}>
-                    <Button variant={"text"}>Update Order</Button>
-                    <Button variant={"text"}>Generate Bill</Button>
-                    <Button variant={"text"}>Print Bill</Button>
-                    <Button variant={"text"}>Cancel</Button>
-                </Stack>
                 <SumValue order={order} />
             </Stack>
-            <Stack sx={{
-                height:{
-                    xs:"30vh",
-                    md:"100%"
-                },
-                width:"100%",
-                flex:1,
-                overflowY:"auto",
-                p:2
-            }}>
-                <Orders order={order?.details}/>
-            </Stack>
+            
             
         </Stack>
     </>

@@ -151,6 +151,7 @@ export const themeSettings = () => {
               backgroundColor: tokens().greenAccent[200],
               borderWidth: 0,
               color: "#31cb81 !important",
+              borderRadius:"5px !important",
               ":hover": {
                 backgroundColor: tokens().greenAccent[200],
                 borderWidth: 0,

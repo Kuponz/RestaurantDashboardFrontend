@@ -1,14 +1,14 @@
 import axios from "axios";
 import { GenericResponse } from "./types";
 
-const BASE_URL = "https://etopos.up.railway.app/";
+// const BASE_URL = "https://etopos.up.railway.app/";
+const BASE_URL = "http://localhost:5000/";
 
-export const authApi = axios.create({
+const authApi = axios.create({
   baseURL: BASE_URL,
 });
 
 authApi.defaults.headers.common['Content-Type'] = 'application/json';
-
 
 // {
 //   headers: {
@@ -81,3 +81,25 @@ export const createOrder = async (details) => {
   });
   return response;
 };
+export const updateOrderStatus = async (details) => {
+  const response = await authApi.post('order/changeOrderStatus',details.orderDetail,{
+    headers:{
+      Authorization: 'Bearer ' + details.token //the token is a variable which holds the token
+    }
+  });
+  return response;
+};
+
+export const completeOrderStatus = async (details)=>{
+  const response = await authApi.post('order/completeOrder',details,{
+    headers:{
+      Authorization: 'Bearer ' + details.token //the token is a variable which holds the token
+    }
+  });
+  return response;
+}
+
+
+
+
+export default authApi;

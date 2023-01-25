@@ -7,8 +7,26 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import ClearIcon from '@mui/icons-material/Clear';
 import { flexBox } from 'theme/defaultFunction';
 import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
+import { updateOrderStatus } from 'store/api/axiosSetup';
+import { useUserStore } from 'store/user/userzustandstore';
 const KotCheckout = ({order}) => {
     const router = useRouter();
+    const user = useUserStore(state=>state.user);
+    const {mutate} = useMutation(updateOrderStatus, {
+        onSuccess:(data, variables, context)=> {
+
+            console.log({
+                data:data.data.data,
+                variables,
+                context,
+            })
+            router.push(`/restaurant/table/bill?tableId=${data?.data?.data?.table._id}&orderId=${data?.data?.data?.orderStatus?._id}`)
+        },
+        onError: (error, variables, context) =>{
+            console.log({error})
+        },
+    })
   return (
     <Stack sx={{
         height:"100%",
@@ -23,11 +41,22 @@ const KotCheckout = ({order}) => {
                 <Button variant='text' onClick={()=>{
                     router.push(`/restaurant/table/menu?edit=${true}&table=${order?.details?.table}`)
                 }} sx={{...flexBox()}}><CreateIcon/> Update Order</Button>
-                <Button variant='text' sx={{...flexBox()}}><ReceiptIcon/>Generate Bill </Button>
+                <Button variant='text' onClick={()=>{
+                    let onjForOrder = {
+                        orderDetail:{
+                            orderId:order?.details?._id,
+                        tableId:order?.details?.table,
+                        status:"BILLING"
+                        },
+                        token:user?.jwtToken,
+                    }
+                    console.log(onjForOrder)
+                    mutate(onjForOrder)
+                }} sx={{...flexBox()}}><ReceiptIcon/>Generate Bill </Button>
             </Stack>
         </Stack>
 
-        <Orders order={order}/>
+        <Orders order={order?.details}/>
     </Stack>
   )
 }

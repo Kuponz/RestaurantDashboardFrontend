@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Stack, Toolbar, Typography } from '@mui/material'
+import { Alert, AlertTitle, Button, CircularProgress, Stack, Toolbar, Typography } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import HomeStructure from 'modules/home/HomeStructure'
 import KotCheckout from 'modules/orders/kot/KotCheckout'
@@ -13,14 +13,12 @@ import { userestaurantStore } from 'store/restaurant/restaurantStore'
 import { useUserStore } from 'store/user/userzustandstore'
 import { size } from 'theme/defaultFunction'
 
-const Order = () => {
+const Bill = () => {
     const router = useRouter();
-  const [Selection, setSelection] = useState(true);
   const query  = router.query;
   const userDetails = useUserStore(state=>state.user);
   const restro = userestaurantStore(state=>state.restaurant);
   const {order, setOrder} = useorderStore(state=>state);
-  console.log(query)
   const { isLoading, isError, data, error } = useQuery(
     {
       queryKey:['getRestaurantById'], 
@@ -31,43 +29,48 @@ const Order = () => {
           console.log({userDetails,restro})
         //   setRestaurantDetails(data?.data?.data?.restaurantInfo)
         setOrder(data?.data?.data?.orderInfo)
-        }
-    })
-
-    useEffect(()=>{
+      }
+  })
+  useEffect(()=>{
     
     const orderDetails = order.details;
-    if(orderDetails?.orderStatus  == "BILLING") {
-        router.push(`/restaurant/table/bill?tableId=${orderDetails?.table}&orderId=${orderDetails._id}`);
+    if(orderDetails?.orderStatus  != "BILLING") {
+        router.push(`/restaurant/table/order?orderId=${orderDetails._id}`);
     } 
     },[order.details, router])
-
-  if(isLoading){
-    return (
-        <Stack sx={{
-            height:"100vh",
-            width:"100vw",
-            justifyContent:"center",
-            alignItems:"center"
-        }}>
-            <CircularProgress/>
-        </Stack>
-    )
-  }
-
   return (
     <HomeStructure>
-        <Stack sx={{
-            p:{
-                md:2
-            },
-            ...size("100%", "100%"),
-            overflow:"hidden"
-        }}>
-            <KotCheckout order={order}/>
-        </Stack>
+        { isLoading ? 
+            <Stack sx={{
+                height:"100vh",
+                width:"100vw",
+                justifyContent:"center",
+                alignItems:"center"
+            }}>
+                <CircularProgress/>
+            </Stack>
+        :
+            <Stack sx={{
+                p:{
+                    md:2
+                },
+                height:"100vh",
+                width:"100%",
+                overflow:"hidden"
+            }}>
+                {isError &&
+                    <Alert severity="warning">
+                    <AlertTitle>Warning</AlertTitle>
+                    Error From Backend API — <strong>check it out!</strong>
+                    </Alert>
+                }
+                {/* {order?.details?.orderStatus  != "BILLING"? */}
+                <EmptyBill order={order}/>
+                
+            </Stack>
+        }
     </HomeStructure>
   )
 }
 
-export default Order
+export default Bill

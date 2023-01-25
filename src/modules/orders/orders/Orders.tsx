@@ -3,15 +3,18 @@ import React from 'react'
 import { SeperateOrder } from './SeperateOrder'
 import { flexBox } from 'theme/defaultFunction'
 
-const Orders = ({order}) => {
+const Orders = ({order,  ref}) => {
   return (
-    <Stack sx={{
+    <Stack ref={ref} sx={{
       height:"100%",
-      p:1
     }}>
       <Stack direction={"row"} sx={{
         width:"100%",
-        justifyContent:"space-between"
+        justifyContent:"space-between",
+        px:{
+          xs:1,
+          md:2
+        },
       }}>
         <Stack sx={{
               width:"50%"
@@ -33,10 +36,14 @@ const Orders = ({order}) => {
       </Stack>
       <Stack sx={{
         overflowY:"auto",
-        pb:20
+        pb:20,
+        px:{
+          xs:1,
+          md:2
+        },
       }}>
-        {order?.details?.order?.map((orderVal, orderINdex)=>(
-          <>
+        {order?.order?.map((orderVal, orderINdex)=>(
+          <>            
             <SeperateOrder orderVal={orderVal} key={orderINdex}/>
           </>
         ))}

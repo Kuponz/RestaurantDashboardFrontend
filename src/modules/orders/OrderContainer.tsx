@@ -3,8 +3,36 @@ import { Paper, Stack, Grid, Button, Divider } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import { OrderItems } from "modules/orders/OrderItems";
 import moment, {} from "moment"
-export const OrderContainer = ({order}) => {
-  console.log({order})
+import { useMutation } from "@tanstack/react-query";
+import { updateOrderStatus } from "store/api/axiosSetup";
+import { useRouter } from "next/router";
+export const OrderContainer = ({order, userDetails}) => {
+  const router = useRouter();
+  console.log({order, userDetails});
+  const {mutate} = useMutation(updateOrderStatus, {
+    onSuccess:(data, variables, context)=> {
+      console.log({
+        data:data.data.data,
+        variables,
+        context,
+      })
+      router.reload();
+    },
+    onError: (error, variables, context) =>{
+        console.log({error})
+    },
+})
+  const onReady = ()=>{
+    const details = {
+      orderDetail:{
+        "orderId":order._id,
+        "tableId":order.table._id, 
+        "status":"PREPARED"
+      },
+      token:userDetails.jwtToken
+    }
+    mutate(details);
+  }
   return (
     <Grid item direction="column" sx={{ display: "grid" }}>
       <Paper>
@@ -28,6 +56,7 @@ export const OrderContainer = ({order}) => {
                 backgroundColor: "#fff !important",
                 color: "#000 !important",
               }}
+              onClick={onReady}
             >
               Ready
             </Button>
