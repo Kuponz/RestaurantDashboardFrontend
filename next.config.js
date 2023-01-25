@@ -1,11 +1,15 @@
+
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+
+const withPWA = require("next-pwa")({
+  dest: "public",
+  register: true,
+  skipWaiting: true,
+  // put other next-pwa options here
+});
+
+const nextConfig = withPWA({
   reactStrictMode: true,
-  eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
-    ignoreDuringBuilds: true,
-  },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if
@@ -13,6 +17,11 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-}
-
-module.exports = nextConfig
+  eslint: {
+    ignoreDuringBuilds: true,
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+  },
+  // put other next js options here
+});
+module.exports = nextConfig;
