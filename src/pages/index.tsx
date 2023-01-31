@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getRestaurantById } from "store/api/axiosSetup";
 import { useUserStore } from "store/user/userzustandstore";
 import { userestaurantStore } from "store/restaurant/restaurantStore";
+import IndexHome from "modules/home/IndexHome";
 
 export default function Home() {
   const router = useRouter();
@@ -45,8 +46,6 @@ export default function Home() {
       </Stack>
   )
   }
-  console.log({userDetails})
- 
   return (
     <>
       <Head>
@@ -59,19 +58,14 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        {/* Auth Stuff Here */}
-        {/* <Waiter /> */}
         <HomeStructure>
           
           <Stack
           direction="column"
           // gap={2}
-          sx={{ width: "100%", height: "100vh", py: 3, overflowX: "scroll", ...flexBox("column") }}
+          sx={{ width: "100%", height: "100vh", py: 3, px:3, overflowX: "scroll", ...flexBox("column", "flex-start", "flex-start") }}
         >
-          <Typography variant="h2">Welcome to etoPOS</Typography>
-          <Typography p={1} pb={3} variant="body2">Construction in Progress</Typography>
-          <Button variant="contained" onClick={()=>{router.push("/restaurant/table")}}>Book Table</Button>
-          
+          <IndexHome/>
         </Stack>
         </HomeStructure>
       </div>
@@ -79,3 +73,6 @@ export default function Home() {
   );
 }
 
+//   <Typography variant="h2">Welcome to etoPOS</Typography>
+//   <Typography p={1} pb={3} variant="body2">Construction in Progress</Typography>
+//   <Button variant="contained" onClick={()=>{router.push("/restaurant/table")}}>Book Table</Button>

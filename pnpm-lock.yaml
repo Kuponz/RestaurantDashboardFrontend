@@ -25,6 +25,7 @@ specifiers:
   react: 18.2.0
   react-dom: 18.2.0
   react-icons: ^4.7.1
+  react-thermal-printer: ^0.11.0
   react-to-print: ^2.14.11
   tailwindcss: ^3.2.4
   typescript: 4.9.4
@@ -55,6 +56,7 @@ dependencies:
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.7.1_react@18.2.0
+  react-thermal-printer: 0.11.0_biqbaboplfbrettd7655fr4n2y
   react-to-print: 2.14.11_biqbaboplfbrettd7655fr4n2y
   tailwindcss: 3.2.4
   typescript: 4.9.4
@@ -1846,6 +1848,17 @@ packages:
     resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
     dev: false
 
+  /@react-thermal-printer/image/0.9.1:
+    resolution: {integrity: sha512-lmIcEhDu8qo2Bn1f0dDGLHORUtUfnfkYaRv2DiqhLX5jDHWI78JakGYTDNvF0BBxcvr4zJgBMXV7NbYYLH/VpA==}
+    dev: false
+
+  /@react-thermal-printer/printer/0.10.0:
+    resolution: {integrity: sha512-aTL6y/k+1IeCVztE1Ebw2DIaEl6AgGIyHE7En9GAcOxIvQxtDsbFk/LCQxfwsSndiWyPIVadfVT/uAQDLC8VaQ==}
+    dependencies:
+      '@react-thermal-printer/image': 0.9.1
+      iconv-lite: 0.6.3
+    dev: false
+
   /@rollup/plugin-babel/5.3.1_3dsfpkpoyvuuxyfgdbpn4j4uzm:
     resolution: {integrity: sha512-WFfdLWU/xVWKeRQnKmIAQULUI7Il0gZnBIH/ZFO069wYIfPu+8zrfp/KMW0atmELoRDq8FbiP3VCss9MhCut7Q==}
     engines: {node: '>= 10.0.0'}
@@ -2467,6 +2480,10 @@ packages:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.2
+    dev: false
+
+  /classnames/2.3.2:
+    resolution: {integrity: sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==}
     dev: false
 
   /clean-webpack-plugin/4.0.0:
@@ -3514,6 +3531,13 @@ packages:
 
   /hyphenate-style-name/1.0.4:
     resolution: {integrity: sha512-ygGZLjmXfPHj+ZWh6LwbC37l43MhfztxetbFCoYTM2VjkIUpeHgSNn7QIyVFj7YQ1Wl9Cbw5sholVJPzWvC2MQ==}
+    dev: false
+
+  /iconv-lite/0.6.3:
+    resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      safer-buffer: 2.1.2
     dev: false
 
   /idb/7.1.1:
@@ -4603,6 +4627,18 @@ packages:
     resolution: {integrity: sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==}
     dev: false
 
+  /react-thermal-printer/0.11.0_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-8SjchmwEH9QE0Q5lc5vdiditeuv5z39eDNXfZRbWGplbq7lz0jVGfVm4XuNoRb+x9XJaUXrjR87Kl+uTMPWohg==}
+    peerDependencies:
+      react: '*'
+      react-dom: '*'
+    dependencies:
+      '@react-thermal-printer/printer': 0.10.0
+      classnames: 2.3.2
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
   /react-to-print/2.14.11_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-sePHBaCtZLp8/g4d/gRyI9XQZkveZq6xoukanAHfkzlXOa7sTuXCEQOYq37lIa5MkUoxySdJxYuyClaXPa9Zpg==}
     peerDependencies:
@@ -4819,6 +4855,10 @@ packages:
       call-bind: 1.0.2
       get-intrinsic: 1.1.3
       is-regex: 1.1.4
+    dev: false
+
+  /safer-buffer/2.1.2:
+    resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
     dev: false
 
   /scheduler/0.23.0:

@@ -41,14 +41,23 @@ const CustomCard = ({tableData}) => {
         router.push(`/restaurant/table/menu?table=${tableData?._id}`)
       }}
       >
-          <Typography variant="body1" component="div" sx={{
-                color:varaintSelection=="VACANT"?tokens().greenAccent[500]:"white"
+          <Typography variant="body1" component="p" sx={{
+                color:varaintSelection=="VACANT"?tokens().greenAccent[500]:"white",
+                width:"100%",
+                textAlign:"center"
             }}>
               {tableData.TableName}
           </Typography>
-              <Typography variant='caption' sx={{
-                  color:varaintSelection=="VACANT"?tokens().grey[300]:"white"
-              }}>{tableData.waiter?tableData.waiter.name : tableData.status}</Typography>
+
+          <Stack direction="row"
+            width={"100%"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            >
+            <Typography variant='caption' sx={{
+                color:varaintSelection=="VACANT"?tokens().grey[300]:"white"
+            }}>{tableData.waiter?tableData.waiter.name : tableData.status}</Typography>
+         </Stack>
       </Paper>
     </Tooltip>
   )

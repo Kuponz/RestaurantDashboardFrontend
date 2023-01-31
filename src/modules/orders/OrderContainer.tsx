@@ -6,7 +6,7 @@ import moment, {} from "moment"
 import { useMutation } from "@tanstack/react-query";
 import { updateOrderStatus } from "store/api/axiosSetup";
 import { useRouter } from "next/router";
-export const OrderContainer = ({order, userDetails}) => {
+export const OrderContainer = ({order, userDetails, adminPrev}) => {
   const router = useRouter();
   console.log({order, userDetails});
   const {mutate} = useMutation(updateOrderStatus, {

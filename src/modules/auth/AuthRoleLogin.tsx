@@ -137,7 +137,7 @@ const AuthRoleLogin = () => {
                         </Typography>
                         <Button variant='contained' disabled={isLoading} onClick={(e)=>submitLogin(e)}>{isLoading?<CircularProgress /> :"Login"}</Button>
                         <Typography variant='body2' textAlign={"center"} sx={{...flexBox()}}>Contact &nbsp; 
-                            <Link href="callto:8766968741" >
+                            <Link href="tel:8766968741" >
                                 <MuiLink sx={{...flexBox()}}>
                                     Support
                                     <Icon><SupportAgentOutlined/></Icon>

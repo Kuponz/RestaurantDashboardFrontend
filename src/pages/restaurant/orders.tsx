@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import { CompleteOrders, OrderContainer } from "modules/orders/OrderContainer";
 import { useState } from "react";
 import { flexBox } from "theme/defaultFunction";
+import OrderIndex from "modules/prevOrders/OrderIndex";
 
 export default function orders() {
   const router = useRouter();
@@ -23,18 +24,7 @@ export default function orders() {
       </Head>
       {/* <div> */}
       <HomeStructure>
-          <Typography variant="h2">Stay Tuned</Typography>
-          <Typography variant="body2">Construction in Progress!</Typography>
-          <Stack direction={"column"} sx={{
-              py:5,
-
-          }}>
-              <Typography pb={3}>Meanwhile You can Book Table: </Typography>
-              <Button variant={"outlined"} onClick={()=>{
-                  router.push("/restaurant/table")
-              }} sx={{...flexBox(), gap:1}}>Book Tables <EastOutlinedIcon/></Button>
-          </Stack>
-
+        <OrderIndex/>
       </HomeStructure>
       {/* </div> */}
     </>

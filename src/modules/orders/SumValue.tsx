@@ -54,11 +54,10 @@ const SumValue = ({ order}) => {
             })}
             <Stack direction={"row"} sx={{
                 width:"100%",
-                justifyContent:"space-between",
+                justifyContent:"center",
                 px:2
             }}>
                 <Button variant='outlined' onClick={()=>setOpen(true)}>Collect Payment</Button>
-                <Button variant={"outlined"}>Update Order</Button>
             </Stack>
             <BasicModal open={open} setOpen={setOpen} title={"Payment"}>
                 <PaymentModal settlePayment={settlePayment} order={order.details} paymentDetails={paymentDetails} settlePaymentDetails={settlePaymentDetails}/>

@@ -1,17 +1,45 @@
 import { Button, IconButton, Stack, Typography } from '@mui/material'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import SumValue from '../SumValue'
 import Orders from './Orders'
 import WestIcon from '@mui/icons-material/West';
 import { useRouter } from 'next/router';
 import  { useReactToPrint } from 'react-to-print';
+import { Printer, Text, render } from 'react-thermal-printer';
+import { BillPrint } from 'modules/BillPrint';
+
+
 
 const EmptyBill = ({order}) => {
     const router = useRouter();
-    const printRef = useRef(null);
-   const handlePrint = useReactToPrint({
-        content: () => printRef.current,
-    })
+    const [showPrint, setShowPrint] = useState(false);
+//     const printRef = useRef(null);
+    const handlePrint = async () => {
+        const data = await render(
+            <Printer type="epson">
+                <BillPrint order={order?.details}/>
+            </Printer>
+        );
+        try {
+            const port = await window.navigator.serial.requestPort();
+            console.log(`Serial port opened: ${port.path}`);
+            console.log(await window.navigator.serial.onconnect)
+            console.log(await window.navigator.serial.ondisconnect)
+            console.log({port});
+            const writer = port.writable?.getWriter();
+            if (writer != null) {
+                await writer.write(data);
+                writer.releaseLock();
+            }
+            // Perform additional actions with the port
+        } 
+        catch (error) {
+            console.error(`Error opening serial port: ${error}`);
+            alert("Print Cancelled");
+            window.print();
+        }        
+           
+    }  
     
   return (
     <>
@@ -53,7 +81,7 @@ const EmptyBill = ({order}) => {
                     md:2
                 }
             }}>
-                <Orders ref={printRef} order={order?.details}/>
+                <Orders order={order?.details}/>
             </Stack>
             <Stack sx={{
                 width:{
@@ -79,5 +107,4 @@ const EmptyBill = ({order}) => {
     </>
   )
 }
-
 export default EmptyBill
