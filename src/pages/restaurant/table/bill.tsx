@@ -1,17 +1,13 @@
-import { Alert, AlertTitle, Button, CircularProgress, Stack, Toolbar, Typography } from '@mui/material'
+import { Alert, AlertTitle,  CircularProgress, Stack } from '@mui/material'
 import { useQuery } from '@tanstack/react-query'
 import HomeStructure from 'modules/home/HomeStructure'
-import KotCheckout from 'modules/orders/kot/KotCheckout'
 import EmptyBill from 'modules/orders/orders/EmptyBill'
-import Orders from 'modules/orders/orders/Orders'
-import SumValue from 'modules/orders/SumValue'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { getorderById } from 'store/api/axiosSetup'
 import { useorderStore } from 'store/order/orderStore'
 import { userestaurantStore } from 'store/restaurant/restaurantStore'
 import { useUserStore } from 'store/user/userzustandstore'
-import { size } from 'theme/defaultFunction'
 
 const Bill = () => {
     const router = useRouter();
