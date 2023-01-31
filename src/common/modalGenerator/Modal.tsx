@@ -41,9 +41,7 @@ export default function BasicModal({open, setOpen, title, children}) {
             {title}
             <IconButton onClick={handleClose}><CloseIcon/></IconButton>
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {children}
-          </Typography>
+          {children}
         </Box>
       </Modal>
     </div>

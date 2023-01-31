@@ -47,8 +47,8 @@ export const tokens = () => ({
     100: "#ecd0d7",
     200: "#d9a0b0",
     300: "#c57188",
-    400: "#b24161",
-    500: "#9f1239",
+    400: "#f73378",
+    500: "#f50057",
     600: "#7f0e2e",
     700: "#5f0b22",
     800: "#400717",
@@ -95,6 +95,7 @@ export const themeSettings = () => {
         background: {
           default: "#f8fafc",
         },
+        errorRed:colors.redAccent[300],
         white: "#fff",
       },
     },
@@ -194,7 +195,7 @@ export const themeSettings = () => {
             cursor: "pointer",
             color: colors.greenAccent[500],
           },
-        },
+        }
       },
       MuiIconButton: {
         defaultProps: {
