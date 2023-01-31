@@ -1,5 +1,5 @@
 import { Button, Stack, Typography } from '@mui/material'
-import React from 'react'
+import React, { useRef } from 'react'
 import Orders from '../orders/Orders'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CreateIcon from '@mui/icons-material/Create';
@@ -10,6 +10,9 @@ import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 import { updateOrderStatus } from 'store/api/axiosSetup';
 import { useUserStore } from 'store/user/userzustandstore';
+import { Printer, render } from 'react-thermal-printer';
+import { useReactToPrint } from 'react-to-print';
+import TablePrint from './TablePrint';
 const KotCheckout = ({order}) => {
     const router = useRouter();
     const user = useUserStore(state=>state.user);
@@ -27,6 +30,35 @@ const KotCheckout = ({order}) => {
             console.log({error})
         },
     })
+    let componentRef = useRef(null);
+    const handlePrintPart2 = useReactToPrint({
+        content: () => componentRef.current,
+      });
+    const handlePrint = async () => {
+        const data = await render(
+            <Printer type="epson">
+                <TablePrint componentRef={componentRef} order={order?.details}/>
+            </Printer>
+        );
+        try {
+            const port = await window.navigator.serial.requestPort();
+            console.log(`Serial port opened: ${port.path}`);
+            console.log(await window.navigator.serial.onconnect)
+            console.log(await window.navigator.serial.ondisconnect)
+            console.log({port});
+            const writer = port.writable?.getWriter();
+            if (writer != null) {
+                await writer.write(data);
+                writer.releaseLock();
+            }
+            // Perform additional actions with the port
+        } 
+        catch (error) {
+            console.error(`Error opening serial port: ${error}`);
+            handlePrintPart2();
+        }        
+           
+    }  
   return (
     <Stack sx={{
         height:"100%",
@@ -55,8 +87,17 @@ const KotCheckout = ({order}) => {
                 }} sx={{...flexBox()}}><ReceiptIcon/>Generate Bill </Button>
             </Stack>
         </Stack>
-
+        <Stack justifyContent={"center"} alignItems={"center"}>
+            <Button variant='outlined' sx={{
+                m:1
+            }}
+            onClick={handlePrint}
+            >Print KOT</Button>
+        </Stack>
         <Orders order={order?.details}/>
+        <div style={{display:"none"}}>
+            <TablePrint componentRef={componentRef} order={order?.details}/>
+        </div>
     </Stack>
   )
 }

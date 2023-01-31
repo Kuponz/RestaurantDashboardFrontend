@@ -95,21 +95,17 @@ const Checkout = ({setOpen = true,oldOrderId, val, setValue, variableip, tableId
             </Stack>
             <Stack>
                 <Stack direction={"row"} sx={{
-
+                    justifyContent:"space-between",
+                    p:1
                 }}>
                     
-                    <Button onClick={()=>{
+                    <Button variant='outlined' onClick={()=>{
                         setOpen(false)
-                    }}>Cancel</Button>
-                    <Button onClick={()=>{
+                    }}>Update Items</Button>
+                    <Button variant='outlined' onClick={()=>{
                         setOpenAD(true);
                         // router.push("/restaurant/table/order")
                     }}>KOT</Button>
-                    <Button>Generate Bill</Button>
-                    <Button>Print Bill</Button>
-                </Stack>
-                <Stack>
-                    <Button>Collect Payment</Button>
                 </Stack>
             </Stack>
             <BasicModal open={openAD}  setOpen={setOpenAD} title={"Add Details"}>

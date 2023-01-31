@@ -4,20 +4,23 @@ import SumValue from '../SumValue'
 import Orders from './Orders'
 import WestIcon from '@mui/icons-material/West';
 import { useRouter } from 'next/router';
-import  { useReactToPrint } from 'react-to-print';
+import  ReactToPrint, { useReactToPrint } from 'react-to-print';
 import { Printer, Text, render } from 'react-thermal-printer';
 import { BillPrint } from 'modules/BillPrint';
-
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 
 
 const EmptyBill = ({order}) => {
     const router = useRouter();
     const [showPrint, setShowPrint] = useState(false);
-//     const printRef = useRef(null);
+    let componentRef = useRef(null);
+    const handlePrintPart2 = useReactToPrint({
+        content: () => componentRef.current,
+      });
     const handlePrint = async () => {
         const data = await render(
             <Printer type="epson">
-                <BillPrint order={order?.details}/>
+                <BillPrint componentRef={componentRef} order={order?.details} setShowPrint={setShowPrint} reference={false}/>
             </Printer>
         );
         try {
@@ -35,8 +38,8 @@ const EmptyBill = ({order}) => {
         } 
         catch (error) {
             console.error(`Error opening serial port: ${error}`);
-            alert("Print Cancelled");
-            window.print();
+            setShowPrint(true);
+            handlePrintPart2();
         }        
            
     }  
@@ -102,8 +105,12 @@ const EmptyBill = ({order}) => {
                 <SumValue order={order} />
             </Stack>
             
-            
         </Stack>
+        <div style={{
+            display:"none",
+        }}>
+            <BillPrint componentRef={componentRef} setShowPrint={setShowPrint} order={order.details} reference={true} />
+        </div>
     </>
   )
 }

@@ -66,7 +66,7 @@ const SumValue = ({ order}) => {
 
     )
 }
-const callfortitle = (val:String)=>{
+export const callfortitle = (val:String)=>{
     let title="";
     switch (val) {
         case "totalItem":
