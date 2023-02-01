@@ -137,7 +137,7 @@ const ManageMenuHome = () => {
       </Stack>
       <BasicModal open={open} setOpen={setOpen} title={isItem?"Item":"Category"}
       >
-        <AddModal/>
+        <AddModal isItem={isItem}/>
       </BasicModal>
     </Stack>
   );
