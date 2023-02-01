@@ -9,6 +9,7 @@ const ValueForm = ({values}) => {
                 <Switch aria-label={values.name}/>
             </>
         )
+    }else if(values.type == "select"){
     }else{
         return (
             <>

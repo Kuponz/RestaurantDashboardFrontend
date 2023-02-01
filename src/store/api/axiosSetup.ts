@@ -1,8 +1,8 @@
 import axios from "axios";
 import { GenericResponse } from "./types";
 
-const BASE_URL = "https://etopos.up.railway.app/";
-// const BASE_URL = "http://localhost:5000/";
+// const BASE_URL = "https://etopos.up.railway.app/";
+const BASE_URL = "http://localhost:5000/";
 
 const authApi = axios.create({
   baseURL: BASE_URL,
@@ -63,6 +63,17 @@ export const getMenu = async (table, restaurantId, edit) => {
   const response = await authApi.get(
     `menu/getAllMenuByRestaurantId?tableId=${table}&restaurantId=${reId}&edit=${edit}`,
     {}
+  );
+  return response;
+};
+export const getWorkMenu = async (props) => {
+  const response = await authApi.get(
+    `menu/getCategoryByRestaurantId?restaurantId=${props.restaurantId}`,
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
   );
   return response;
 };

@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import ValueForm from './ValueForm'
 
 // {
@@ -121,8 +121,12 @@ const AddModal = ({isItem}:{isItem:boolean}) => {
       })
     }
   })
+  
   return (
-    <Stack>
+    <Stack sx = {{
+      gap:1,
+      p:1
+    }}>
       {Object.keys(data).map((values, index)=>(
         <ValueForm key={index} values={data[values]} data={values}/>
       ))}

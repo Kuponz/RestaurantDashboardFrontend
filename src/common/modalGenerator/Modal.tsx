@@ -23,8 +23,8 @@ const style = {
   borderRadius:2,
   overflow:"hidden",
 };
-
-export default function BasicModal({open, setOpen, title, children}) {
+type basicModal ={open:boolean, setOpen:React.Dispatch<React.SetStateAction<boolean>>, title:string, children:React.ReactNode}
+export default function BasicModal({open, setOpen, title, children}:basicModal) {
   const handleClose = () => setOpen(false);
 
   return (
