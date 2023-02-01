@@ -1,8 +1,8 @@
 import axios from "axios";
 import { GenericResponse } from "./types";
 
-const BASE_URL = "https://etopos.up.railway.app/";
-// const BASE_URL = "http://localhost:5000/";
+// const BASE_URL = "https://etopos.up.railway.app/";
+const BASE_URL = "http://localhost:5000/";
 
 const authApi = axios.create({
   baseURL: BASE_URL,
@@ -46,6 +46,36 @@ export const createUser = async (props) =>{
   );
   return response;
 }
+export const createCategory = async (props) =>{
+  // console.log({props, userData:props.userObj.userData});
+  const response = await authApi.post(
+    "menu/createCategoryByRestaurantId",
+    {
+      ...props.sendData
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+}
+export const createItem = async (props) =>{
+  // console.log({props, userData:props.userObj.userData});
+  const response = await authApi.post(
+    "menu/createMenuByRestaurantId",
+    {
+      ...props.sendData
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+}
 export const getTables = async (headerAuth, restaurantId) => {
   let reId = restaurantId.length != 0 ? restaurantId[0] : "";
   const response = await authApi.get(
@@ -63,6 +93,17 @@ export const getMenu = async (table, restaurantId, edit) => {
   const response = await authApi.get(
     `menu/getAllMenuByRestaurantId?tableId=${table}&restaurantId=${reId}&edit=${edit}`,
     {}
+  );
+  return response;
+};
+export const getWorkMenu = async (props) => {
+  const response = await authApi.get(
+    `menu/getCategoryByRestaurantId?restaurantId=${props.restaurantId}`,
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
   );
   return response;
 };

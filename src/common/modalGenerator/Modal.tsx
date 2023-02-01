@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { IconButton } from '@mui/material';
+import { IconButton, Stack } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { flexBox } from 'theme/defaultFunction';
 const style = {
@@ -15,13 +15,16 @@ const style = {
     xs:"90%",
     md:600
   },
+  ...flexBox("column"),
+  maxHeight:"90%",
   bgcolor: 'background.paper',
   boxShadow: 24,
   p: 2,
-  borderRadius:2
+  borderRadius:2,
+  overflow:"hidden",
 };
-
-export default function BasicModal({open, setOpen, title, children}) {
+type basicModal ={open:boolean, setOpen:React.Dispatch<React.SetStateAction<boolean>>, title:string, children:React.ReactNode}
+export default function BasicModal({open, setOpen, title, children}:basicModal) {
   const handleClose = () => setOpen(false);
 
   return (
@@ -36,12 +39,20 @@ export default function BasicModal({open, setOpen, title, children}) {
           <Typography id="modal-modal-title" variant="h4" py={1} sx={{
             ...flexBox(),
             justifyContent:"space-between",
-            width:"100%"
+            width:"100%",
+            height:"10vh",
+            fontWeight:700
           }}>
             {title}
             <IconButton onClick={handleClose}><CloseIcon/></IconButton>
           </Typography>
-          {children}
+          <Stack sx={{
+            overflowY:"auto",
+            maxHeight:"100%",
+            width:"100%"
+          }}>
+            {children}
+          </Stack>
         </Box>
       </Modal>
     </div>

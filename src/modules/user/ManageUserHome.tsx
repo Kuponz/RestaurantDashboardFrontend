@@ -16,7 +16,7 @@ const ManageUserHome = () => {
     const { isLoading, isError, data, error } = useQuery(
         {
           enabled: !!restaurant.restaurantInfo,
-          queryKey:['getCategoryMenu'], 
+          queryKey:['getWorkUsers'], 
           queryFn:()=>getWorkUsers({
             restaurantId:restaurant.restaurantInfo._id,
             headerAuth:user.jwtToken

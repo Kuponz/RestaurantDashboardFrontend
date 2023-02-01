@@ -3,7 +3,7 @@ import React from 'react'
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import HomeIcon from '@mui/icons-material/Home';
 import { useRouter } from 'next/router';
-const TopBar = ({title, backUrl, home=false, children}:{backUrl:string, title:String, home:Boolean, children}) => {
+const TopBar = ({title, backUrl, home=false, children}:{backUrl:string, title:String, home:Boolean, children?:React.ReactNode}) => {
     const router = useRouter();
   return (
       <Stack direction={"row"} justifyContent={"space-between"} width={"100%"} alignItems={"center"}>

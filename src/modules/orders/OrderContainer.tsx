@@ -36,7 +36,7 @@ export const OrderContainer = ({order, userDetails, adminPrev}) => {
   return (
     <Grid item direction="column" sx={{ display: "grid" }}>
       <Paper>
-        <Paper elevation={0} variant="free" sx={{ p: 2, minWidth: "20rem" }}>
+        <Paper elevation={0} variant="free" sx={{ p: 2, minWidth: "clamp(15rem,80vw,30rem)" }}>
           <Stack direction="row" justifyContent="center" alignItems="center">
             <Stack direction="column">
               <Typography variant="h4" fontWeight={600} color="white">

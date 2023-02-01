@@ -1,16 +1,6 @@
 import Head from "next/head";
 import HomeStructure from "modules/home/HomeStructure";
 import { Button, Stack, Toolbar, Typography } from "@mui/material";
-import { flexBox, size } from "theme/defaultFunction";
-import { useRouter } from "next/router";
-import Display from "modules/menu/Display";
-import Checkout from "modules/checkoout/Checkout";
-import MobileCheckout from "modules/checkoout/MobileCheckout";
-import { userestaurantStore } from "store/restaurant/restaurantStore";
-import { useUserStore } from "store/user/userzustandstore";
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getMenu } from "store/api/axiosSetup";
 import MainMenu from "modules/menu/MainMenu";
 
 export default function menu() {
