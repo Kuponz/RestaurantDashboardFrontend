@@ -2,16 +2,39 @@ import {
   CleaningServicesOutlined,
   EditNotificationsOutlined,
 } from "@mui/icons-material";
-import { FormControlLabel, IconButton, Paper, Stack, Switch, Typography } from "@mui/material";
+import {
+  FormControlLabel,
+  IconButton,
+  Paper,
+  Stack,
+  Switch,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { tokens } from "theme/theme";
+import { redDeleteStyle } from "common/styles/deleteStyle";
 const ManageMenuCard = ({
   isCategory = true,
   menuVal,
+  viewOne,
+  setViewOne,
 }: {
   isCategory: boolean;
+  viewOne: {
+    viewObj: {};
+    id: number;
+    open: boolean;
+  };
+  setViewOne: React.Dispatch<
+    React.SetStateAction<{
+      viewObj: {};
+      id: number;
+      open: boolean;
+    }>
+  >;
   menuVal:
     | {
         isAvailable?: boolean;
@@ -79,7 +102,7 @@ const ManageMenuCard = ({
         <IconButton>
           <VisibilityIcon />
         </IconButton>
-        <IconButton>
+        <IconButton sx={redDeleteStyle}>
           <DeleteIcon />
         </IconButton>
       </Stack>
@@ -124,13 +147,17 @@ const ManageMenuCard = ({
         >
           {menuVal?.categoryName}
         </Typography>
-        <FormControlLabel control={<Switch checked={menuVal?.available} />} label="Available" labelPlacement="start"/>
+        <FormControlLabel
+          control={<Switch checked={menuVal?.available} />}
+          label="Available"
+          labelPlacement="start"
+        />
       </Stack>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <IconButton>
           <VisibilityIcon />
         </IconButton>
-        <IconButton>
+        <IconButton sx={redDeleteStyle}>
           <DeleteIcon />
         </IconButton>
       </Stack>

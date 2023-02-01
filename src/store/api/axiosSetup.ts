@@ -46,6 +46,36 @@ export const createUser = async (props) =>{
   );
   return response;
 }
+export const createCategory = async (props) =>{
+  // console.log({props, userData:props.userObj.userData});
+  const response = await authApi.post(
+    "menu/createCategoryByRestaurantId",
+    {
+      ...props.sendData
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+}
+export const createItem = async (props) =>{
+  // console.log({props, userData:props.userObj.userData});
+  const response = await authApi.post(
+    "menu/createMenuByRestaurantId",
+    {
+      ...props.sendData
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+}
 export const getTables = async (headerAuth, restaurantId) => {
   let reId = restaurantId.length != 0 ? restaurantId[0] : "";
   const response = await authApi.get(
