@@ -99,7 +99,7 @@ const ManageMenuHome = () => {
               px:2,
               gap:2
             }}>
-              {restroState.restaurant.categories.map((category, index) => {
+              {restroState?.restaurant?.categories?.map((category, index) => {
                   return (<><ManageMenuCard key={index} isCategory={true} menuVal={category} /></>);
               })}
 
@@ -150,11 +150,11 @@ const ManageMenuHome = () => {
               px:2,
               gap:2
             }}>
-              {"Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem mollitia quia laborum aspernatur non illum. Ex perspiciatis modi ducimus sed quia magnam ab quasi. Laudantium itaque corporis voluptate nihil aspernatur?"
-                  .split(" ")
-                  .map(() => {
-                      return <ManageMenuCard />;
-                  })}
+              {restroState?.restaurant?.categories?.map((category, index) => {
+                return category?.menu.map(menuVal=>(
+                  <ManageMenuCard key={index} isCategory={false} menuVal={{...menuVal, categoryName:category?.categoryName}} />
+                ))
+              })}
 
             </Stack>
           </Stack>
