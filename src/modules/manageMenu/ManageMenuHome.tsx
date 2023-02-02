@@ -1,8 +1,10 @@
 import {
+  Alert,
   Button,
   CircularProgress,
   Divider,
   Grid,
+  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
@@ -26,6 +28,10 @@ const ManageMenuHome = () => {
   })
   const userToken = useUserStore((state) => state.user);
   const restroState = userestaurantStore((state) => state);
+  const [errorOpener, setErrorOpener] = useState({
+    message:"",
+    open:false});
+
   const { isLoading, isError, data, error } = useQuery({
     enabled: !!restroState && !!userToken,
     queryKey: ["getWorkMenu"],
@@ -38,7 +44,12 @@ const ManageMenuHome = () => {
       console.log({ data: data?.data?.data });
       restroState.setCategories(data?.data?.data?.category);
     },
+    onError(err) {
+        console.log({err})
+      setErrorOpener({...errorOpener, open:true});
+    }
   });
+
   return (
     <Stack
       sx={{
@@ -213,8 +224,18 @@ const ManageMenuHome = () => {
         setOpen={setOpen}
         title={isItem ? "Item" : "Category"}
       >
-        <AddModal isItem={isItem} userToken={userToken} restroState={restroState} setOpen={setOpen}/>
+        <AddModal errorOpener={errorOpener} setErrorOpener={setErrorOpener} isItem={isItem} userToken={userToken} restroState={restroState} setOpen={setOpen}/>
       </BasicModal>
+      {console.log(errorOpener)}
+      <Snackbar
+        open={errorOpener.open}
+        autoHideDuration={6000}
+        onClose={()=>{
+          setErrorOpener(erp=>({...erp, open:false}));
+        }}
+      >
+        <Alert severity="error">{errorOpener.message}</Alert>
+      </Snackbar>
     </Stack>
   );
 };
