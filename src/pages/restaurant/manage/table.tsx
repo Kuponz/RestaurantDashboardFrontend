@@ -1,5 +1,4 @@
 import Head from "next/head";
-import { Waiter } from "modules/table";
 import HomeStructure from "modules/home/HomeStructure";
 import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import { Button, Stack, Typography } from "@mui/material";
@@ -23,17 +22,18 @@ export default function createTable() {
         {/* Auth Stuff Here */}
         {/* <Waiter /> */}
         <HomeStructure>
-        <Typography variant="h2">Stay Tuned</Typography>
+          <Typography variant="h2">Stay Tuned</Typography>
           <Typography variant="body2">Construction in Progress!</Typography>
           <Stack direction={"column"} sx={{
-              py:5,
+            py: 5,
 
           }}>
-              <Typography pb={3}>Payments isn't out yet but Table ordering is!! Book Table: </Typography>
-              <Button variant={"outlined"} onClick={()=>{
-                  router.push("/restaurant/table")
-              }} sx={{...flexBox(), gap:1}}>Book Tables <EastOutlinedIcon/></Button>
+            <Typography pb={3}>Payments isn't out yet but Table ordering is!! Book Table: </Typography>
+            <Button variant={"outlined"} onClick={() => {
+              router.push("/restaurant/table")
+            }} sx={{ ...flexBox(), gap: 1 }}>Book Tables <EastOutlinedIcon /></Button>
           </Stack>
+
 
         </HomeStructure>
       </div>

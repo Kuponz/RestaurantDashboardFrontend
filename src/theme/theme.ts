@@ -65,9 +65,9 @@ export const tokens = () => ({
     800: "#013550",
     900: "#001a28",
   },
-  warning:{
-    100:"#ffb851",
-    200:"#ffa726",
+  warning: {
+    100: "#ffb851",
+    200: "#ffa726",
   }
 });
 
@@ -90,12 +90,12 @@ export const themeSettings = () => {
           dark: colors.grey[700],
           main: colors.grey[500],
           light: colors.grey[100],
-          default:colors.grey[300]
+          default: colors.grey[300]
         },
         background: {
           default: "#f8fafc",
         },
-        errorRed:colors.redAccent[300],
+        errorRed: colors.redAccent[300],
         white: "#fff",
       },
     },
@@ -152,9 +152,9 @@ export const themeSettings = () => {
               backgroundColor: tokens().greenAccent[200],
               borderWidth: 0,
               color: "#31cb81 !important",
-              borderRadius:"5px !important",
+              borderRadius: "5px !important",
               ":hover": {
-                backgroundColor: tokens().greenAccent[200],
+                backgroundColor: tokens().grey[100],
                 borderWidth: 0,
                 color: "#31cb81 !important",
               },
@@ -200,22 +200,23 @@ export const themeSettings = () => {
       MuiIconButton: {
         defaultProps: {
           sx: {
-            backgroundColor:colors.greenAccent[200],
-            color:colors.greenAccent[500],
-            boxShadow:3,
-            ":focus":{
-              backgroundColor:colors.greenAccent[700],
-              color:colors.greenAccent[100],
-              boxShadow:10,
+            backgroundColor: colors.greenAccent[200],
+            color: colors.greenAccent[500],
+            boxShadow: 3,
+            ":focus": {
+              backgroundColor: colors.greenAccent[700],
+              color: colors.greenAccent[100],
+              boxShadow: 10,
             },
-            ":hover":{
-              backgroundColor:colors.greenAccent[700],
-              color:colors.greenAccent[100],
+            ":hover": {
+              backgroundColor: colors.greenAccent[700],
+              color: colors.greenAccent[100],
             }
           },
           disableRipple: true,
         },
       },
+
       MuiPaper: {
         defaultProps: {
           sx: {
