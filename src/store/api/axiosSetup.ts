@@ -161,6 +161,17 @@ export const getorderById = async (headerAuth, orderId, restaurantId) => {
   );
   return response;
 };
+export const getorderHistory = async (props) => {
+  const response = await authApi.get(
+    `order/getOrderHistory?restaurantId=${props.restaurantId}&startDate=${props.startDate}&endDate=${props.endDate}&pageNumber=${props.pageNumber}&pageSize=${props.pageSize}`,
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+};
 
 export const createOrder = async (details) => {
   const response = await authApi.post(

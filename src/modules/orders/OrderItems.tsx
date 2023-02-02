@@ -22,7 +22,11 @@ export const OrderItems = ({menuData, isDashboardViewer=false}) => {
         </Stack>
         <Stack direction={"row"} sx={{ width: '40%'}}>
           <Typography sx={{ color: 'text.secondary' }}> x &nbsp;{menuData.quantity}</Typography>
-          <Typography sx={{ ml: "auto" }} color="primary.main">₹ {menuData?.cost}</Typography>
+          {isDashboardViewer?
+            <Typography sx={{ ml: "auto" }} color="primary.main">₹ {menuData?.cost}</Typography>
+            :
+            <></>
+          }
         </Stack>
       </Stack>
     </Stack>
