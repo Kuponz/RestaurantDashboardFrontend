@@ -9,6 +9,7 @@ import { useUserStore } from 'store/user/userzustandstore';
 import { useMutation } from '@tanstack/react-query';
 import { getorderHistory } from 'store/api/axiosSetup';
 import dayjs from 'dayjs';
+import TopBar from 'common/topBar/TopBar';
 
 
 type Tfilter = {
@@ -257,8 +258,9 @@ const OrderIndex = () => {
         overflow:"hidden",
         p:2,
     }}>
-        
-        <Filters mutate={mutate} isLoading={isLoading} restaurant={restaurant} user={user} setValue={setValue} value={value}/>
+        <TopBar backUrl={"/"} home={true} title={`${orders.length ?? ""} orders`}>    
+            <Filters mutate={mutate} isLoading={isLoading} restaurant={restaurant} user={user} setValue={setValue} value={value}/>  
+        </TopBar>
         <Stack sx={{
             height:"100%",
             overflowY:"auto",
