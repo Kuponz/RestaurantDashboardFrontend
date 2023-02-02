@@ -36,50 +36,50 @@ import { useUserStore } from "store/user/userzustandstore";
 
 
 export const Waiter = () => {
-  const [openModel, setOpenModel]  = useState(false);
-  
+  const [openModel, setOpenModel] = useState(false);
+
   const router = useRouter();
-  const restroDetails = userestaurantStore(state=>state);
-  const userDetails = useUserStore(state=>state.user);
+  const restroDetails = userestaurantStore(state => state);
+  const userDetails = useUserStore(state => state.user);
   const [infoSelected, setinfoSelected] = useState({
-    table:"",
-    floor:"ALL"  
+    table: "",
+    floor: "ALL"
   });
   const { isLoading, isError, data, error } = useQuery(
     {
-      queryKey:['getTable'], 
-      queryFn:()=>getTables(
-      userDetails?.jwtToken,userDetails?.restaurantLinked
+      queryKey: ['getTable'],
+      queryFn: () => getTables(
+        userDetails?.jwtToken, userDetails?.restaurantLinked
       ),
-      onSuccess:(data)=>{
+      onSuccess: (data) => {
         restroDetails.setFloors(data?.data?.data)
       }
-  })
+    })
   console.log({
-    isLoading, isError, data:data?.data?.data, error,restroDetails
+    isLoading, isError, data: data?.data?.data, error, restroDetails
   })
   return (
     <div className={styles.container}>
       <div className={styles.floor}>
-        <FloorStructure infoSelected={infoSelected} setinfoSelected={setinfoSelected} restroDetails={restroDetails?.restaurant?.floors}/>
-        <IconButton onClick={()=>setOpenModel(true)}><QuestionMarkIcon/></IconButton>
+        <FloorStructure infoSelected={infoSelected} setinfoSelected={setinfoSelected} restroDetails={restroDetails?.restaurant?.floors} />
+        <IconButton onClick={() => setOpenModel(true)}><QuestionMarkIcon /></IconButton>
       </div>
-      
+
       <Stack sx={{
-        height:"100%",
-        width:"100%",
-        overflowY:"auto",
-        p:2,
-        pb:15,
-        flexDirection:"row",
-        flexWrap:"wrap",
-        justifyContent:"flex-start",
-        gap:2
+        height: "100%",
+        width: "100%",
+        overflowY: "auto",
+        p: 2,
+        pb: 15,
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "flex-start",
+        gap: 2
       }}>
-        <FloorWiseTable infoSelected={infoSelected} restroDetails={restroDetails?.restaurant?.floors}/>
+        <FloorWiseTable infoSelected={infoSelected} restroDetails={restroDetails?.restaurant?.floors} />
       </Stack>
       <BasicModal title={"Representations"} open={openModel} setOpen={setOpenModel}>
-        <ModalSupport/>
+        <ModalSupport />
       </BasicModal>
       {/* <div className={styles.base}> */}
       {/* <Paper> */}

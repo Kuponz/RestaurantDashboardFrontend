@@ -2,7 +2,7 @@ import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, S
 import React, { useState } from 'react'
 import { ORDERTYPE } from 'store/constants/ordertype'
 
-const CheckoutModal = ({instrData, setInstrData,setOpenAD, onClickKOT}) => {
+const CheckoutModal = ({instrData,isLoading, setInstrData, onClickKOT}) => {
 
     const ipDetail=[
         {
@@ -64,8 +64,10 @@ const CheckoutModal = ({instrData, setInstrData,setOpenAD, onClickKOT}) => {
             idet.type == "select"?
                 <>
                     <FormControl variant="filled" sx={{  my:1,
-                        mx:2, minWidth: 120 }}>
-        
+                        mx:2, minWidth: 120 }}
+                        disabled={isLoading}
+                        >
+                        
                         <InputLabel id="demo-simple-select-filled-label">{idet.title}</InputLabel>
                         <Select
                             labelId="demo-simple-select-filled-label"
@@ -88,17 +90,18 @@ const CheckoutModal = ({instrData, setInstrData,setOpenAD, onClickKOT}) => {
                         my:1,
                         mx:2
                     }} 
-                    key={index} value={instrData[idet.name]} onChange={e=>setInstrData({
+                    key={index} value={instrData[idet.name]}
+                    disabled={isLoading}
+                    onChange={e=>setInstrData({
                         ...instrData,
                         [idet.name]:e.target.value
                     })} variant='filled' label={idet.title} type={idet.type} multiline={idet.multiline} rows={idet.multiline?5:1}
                 />
 
         ))}
-        <Stack direction={"row"} gap={2} p={2}>
-            <Button variant='contained' onClick={e=>onClickKOT(e)}>KOT</Button>
-            <Button variant='contained' onClick={e=>onClickKOT(e)}>Skip details & KOT</Button>
-        </Stack>
+        
+        <Button sx={{m:1, mx:2}} variant='contained' onClick={e=>onClickKOT(e)} disabled={isLoading}>KOT</Button>
+        
     </Stack>
   )
 }
