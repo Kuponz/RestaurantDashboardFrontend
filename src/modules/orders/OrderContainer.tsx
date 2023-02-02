@@ -69,10 +69,16 @@ export const OrderContainer = ({order, userDetails, adminPrev}) => {
               return <OrderItems menuData={menuData} key={idn}/>;
             })}
             <Stack sx={{
-              width:"100%"
+              // width:"100%"
+              maxWidth:"clamp(15rem,80vw,30rem)"
             }}>
               {
-                order?.specialInstruction && <Divider flexItem><Typography variant="body2">{order?.specialInstruction}</Typography></Divider>
+                order?.specialInstruction && 
+               ( 
+                //<Divider flexItem>
+                  <Typography  mt="1rem" variant="body2">{order?.specialInstruction}</Typography>
+                // </Divider>
+                )
 
               }
             </Stack>

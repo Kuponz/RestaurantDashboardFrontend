@@ -1,12 +1,49 @@
 import Head from "next/head";
 import HomeStructure from "modules/home/HomeStructure";
-import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import { Button, Stack, Typography } from "@mui/material";
-import { flexBox } from "theme/defaultFunction";
 import { useRouter } from "next/router";
+import TopBar from "common/topBar/TopBar";
+import FloorStructure from "modules/table/FloorStructure";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useUserStore } from "store/user/userzustandstore";
+import { getTables } from "store/api/axiosSetup";
+import { userestaurantStore } from "store/restaurant/restaurantStore";
+import TableLayout from "modules/manageTable/tableLayout";
+import BasicModal from "common/modalGenerator/Modal";
 
 export default function createTable() {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [isFloor, setisFloor] = useState(false);
+
+  const restroDetails = userestaurantStore((state) => state);
+  const userDetails = useUserStore((state) => state.user);
+
+  const [infoSelected, setinfoSelected] = useState({
+    table: "",
+    floor: "ALL",
+  });
+
+  const { isLoading, isError, data, error } = useQuery({
+    queryKey: ["getTable"],
+    queryFn: () =>
+      getTables(userDetails?.jwtToken, userDetails?.restaurantLinked),
+    onSuccess: (data) => {
+      restroDetails.setFloors(data?.data?.data);
+    },
+  });
+  // Just Coppied it From Prev
+  // TODO: Needs Work
+
+  const handleFloor = () => {
+    setisFloor(true);
+    setOpen(true);
+  };
+  const handleTable = () => {
+    setisFloor(false);
+    setOpen(true);
+  };
   return (
     <>
       <Head>
@@ -22,20 +59,56 @@ export default function createTable() {
         {/* Auth Stuff Here */}
         {/* <Waiter /> */}
         <HomeStructure>
-          <Typography variant="h2">Stay Tuned</Typography>
-          <Typography variant="body2">Construction in Progress!</Typography>
-          <Stack direction={"column"} sx={{
-            py: 5,
+          <Stack minHeight={"100vh"} mt={"7rem"} width={"100%"}>
+            <Stack direction={"row"}>
+              <TopBar home={true} backUrl={"/"} />
+              <Stack
+                direction={{ xs: "column", md: "row" }}
+                alignItems={"center"}
+                style={{ flex: 1 }}
+                sx={{ paddingInline: "1rem" }}
+                gap={2}
+              >
+                <FloorStructure
+                  infoSelected={infoSelected}
+                  setinfoSelected={setinfoSelected}
+                  restroDetails={restroDetails?.restaurant?.floors}
+                />
+                <Stack direction={"row"} gap={2}>
+                  <Button onClick={handleFloor}>Add Floor</Button>
+                  <Button onClick={handleTable}>Add Tables</Button>
+                  {/* // ! More Intuitive Design Seems to be able to add floor from menu not here */}
+                </Stack>
+              </Stack>
+            </Stack>
 
-          }}>
-            <Typography pb={3}>Payments isn't out yet but Table ordering is!! Book Table: </Typography>
-            <Button variant={"outlined"} onClick={() => {
-              router.push("/restaurant/table")
-            }} sx={{ ...flexBox(), gap: 1 }}>Book Tables <EastOutlinedIcon /></Button>
+            <Stack
+              sx={{
+                height: "100%",
+                width: "100%",
+                overflowY: "auto",
+                p: 2,
+                pb: 15,
+                flexDirection: "row",
+                flexWrap: "wrap",
+                justifyContent: "flex-start",
+                gap: 2,
+              }}
+            >
+              <TableLayout
+                infoSelected={infoSelected}
+                restroDetails={restroDetails?.restaurant?.floors}
+              />
+            </Stack>
           </Stack>
-
-
         </HomeStructure>
+        <BasicModal
+          open={open}
+          setOpen={setOpen}
+          title={isFloor ? "Floor" : "Table"}
+        >
+          {/* TODO: Modal Remaining */}
+        </BasicModal>
       </div>
     </>
   );
