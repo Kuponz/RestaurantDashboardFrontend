@@ -56,8 +56,10 @@ export default function MobileCheckout(props: Props) {
     <Root>
       <Box sx={{ textAlign: 'center', pt: 1, position:"absolute", bottom:10, left:10, right:10  }}>
         <Button variant={"contained"} fullWidth onClick={()=>{
-          setOpen(true)
-        }}>Proceed to Bill</Button>
+          if(val.length > 0){
+            setOpen(true)
+          }
+        }} disabled={val.length <= 0}>Proceed to Bill</Button>
       </Box>
       <Drawer
         anchor={"bottom"}

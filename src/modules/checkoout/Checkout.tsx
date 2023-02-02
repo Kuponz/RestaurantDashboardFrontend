@@ -13,103 +13,106 @@ import { createOrder } from 'store/api/axiosSetup'
 import { useUserStore } from 'store/user/userzustandstore'
 import { useorderStore } from 'store/order/orderStore'
 
-const Checkout = ({setOpen = true,oldOrderId, val, setValue, variableip, tableId}) => {
+const Checkout = ({ setOpen = ()=>{}, oldOrderId, val, setValue, variableip, tableId }) => {
     const router = useRouter();
     const [instrData, setInstrData] = useState({
-        name:"",
-        mobileNumber:"",
-        specialInstruction:"",
-        orderType:ORDERTYPE.DINEIN,
+        name: "",
+        mobileNumber: "",
+        specialInstruction: "",
+        orderType: ORDERTYPE.DINEIN,
     })
-    const restaurant  = userestaurantStore(state=>state.restaurant);
-    const user  = useUserStore(state=>state.user);
-    const {order, setOrder}  = useorderStore(state=>state);
+    const restaurant = userestaurantStore(state => state.restaurant);
+    const user = useUserStore(state => state.user);
+    const { order, setOrder } = useorderStore(state => state);
     const [openAD, setOpenAD] = useState(false);
-    const {mutate, isLoading} = useMutation(createOrder, {
-        onSuccess:(data, variables, context)=> {
+    const { mutate, isLoading } = useMutation(createOrder, {
+        onSuccess: (data, variables, context) => {
 
             console.log({
-                data:data.data.data,
+                data: data.data.data,
                 variables,
                 context,
             })
             setOrder(data?.data?.data?.orderStatus)
-            if(data?.data?.data?.orderStatus  && data?.data?.data?.orderStatus?._id){
+            if (data?.data?.data?.orderStatus && data?.data?.data?.orderStatus?._id) {
                 router.push(`/restaurant/table/order?orderId=${data?.data?.data?.orderStatus?._id}`)
             }
         },
-        onError: (error, variables, context) =>{
-            console.log({error})
+        onError: (error, variables, context) => {
+            console.log({ error })
         },
     })
-    const onClickKOT =(e)=>{
+    const onClickKOT = (e) => {
         e.preventDefault();
-        val.map(orderVal=>{
+        val.map(orderVal => {
             orderVal.menuId = orderVal.item._id;
             return orderVal;
         })
-        let orderDetail={
-            customer:instrData,
-            order:val,
-            orderType:instrData.orderType,
-            specialInstruction:instrData.specialInstruction,
-            restaurantId:restaurant?.restaurantInfo?._id,
-            tableId:tableId,
+        let orderDetail = {
+            customer: instrData,
+            order: val,
+            orderType: instrData.orderType,
+            specialInstruction: instrData.specialInstruction,
+            restaurantId: restaurant?.restaurantInfo?._id,
+            tableId: tableId,
             oldOrderId
         }
         mutate({
-            token:user?.jwtToken, 
-            orderDetail 
+            token: user?.jwtToken,
+            orderDetail
         })
     }
     return (
         <Stack sx={{
-            p:{
-                xs:0,
-                md:2
+            p: {
+                xs: 0,
+                md: 2
             },
             ...size("100%", "100%"),
         }}>
             <Stack sx={{
                 ...flexBox("row", "space-between"),
-                py:1
+                py: 1
             }}>
                 <Typography variant="h3">Checkout Items</Typography>
                 <IconButton sx={{
-                    display:{
-                        xs:"inline-block",
-                        md:"none"
+                    display: {
+                        xs: "inline-block",
+                        md: "none"
                     }
-                }} onClick={()=>{setOpen(false)}}><CloseOutlined/></IconButton>
+                }} onClick={() => { setOpen(false) }}><CloseOutlined /></IconButton>
             </Stack>
             <Stack sx={{
-                overflowY:"auto",
-                py:2,
-                overflowX:"hidden",
-                gap:1,
-                px:2
+                overflowY: "auto",
+                py: 2,
+                overflowX: "hidden",
+                gap: 1,
+                px: 2
             }}>
                 {
-                    val?.map((orderValue, key)=>(<CheckoutItem key={key} val={val} index={key} setValue={setValue} orderValue={orderValue} variableip={variableip}/>))
+                    val?.map((orderValue, key) => (<CheckoutItem key={key} val={val} index={key} setValue={setValue} orderValue={orderValue} variableip={variableip} />))
                 }
             </Stack>
             <Stack>
                 <Stack direction={"row"} sx={{
-                    justifyContent:"space-between",
-                    p:1
+                    justifyContent: "space-between",
+                    p: 1
                 }}>
-                    
-                    <Button variant='outlined' onClick={()=>{
+
+                    <Button variant='outlined' color={"error"} onClick={() => {
+                        setValue([]);
                         setOpen(false)
-                    }}>Update Items</Button>
-                    <Button variant='outlined' onClick={()=>{
-                        setOpenAD(true);
+                    }} disabled={val.length <= 0}>Remove All</Button>
+                    <Button variant='contained' sx={{}} onClick={() => {
+                        if(val.length > 0){
+                            setOpenAD(true);
+                        }
                         // router.push("/restaurant/table/order")
-                    }}>KOT</Button>
+                    }} disabled={val.length <= 0}>KOT</Button>
                 </Stack>
             </Stack>
-            <BasicModal open={openAD}  setOpen={setOpenAD} title={"Add Details"}>
-                <CheckoutModal instrData={instrData} onClickKOT={onClickKOT} setInstrData={setInstrData}/>
+            <BasicModal open={openAD} setOpen={setOpenAD} title={"Add Details"}>
+                <CheckoutModal isLoading={isLoading} instrData={instrData} onClickKOT={onClickKOT} setInstrData={setInstrData} />
             </BasicModal>
         </Stack>
     )

@@ -33,7 +33,7 @@ export const tokens = () => ({
     900: "#06C167",
   },
   greenAccent: {
-    100: "#d0dcdb",
+    100: "#ECFFF6",
     200: "#e5f8ef",
     300: "#719592",
     400: "#42716e",
@@ -65,10 +65,10 @@ export const tokens = () => ({
     800: "#013550",
     900: "#001a28",
   },
-  warning:{
-    100:"#ffb851",
-    200:"#ffa726",
-  }
+  warning: {
+    100: "#ffb851",
+    200: "#ffa726",
+  },
 });
 
 // mui theme settings
@@ -90,12 +90,12 @@ export const themeSettings = () => {
           dark: colors.grey[700],
           main: colors.grey[500],
           light: colors.grey[100],
-          default:colors.grey[300]
+          default: colors.grey[300],
         },
         background: {
           default: "#f8fafc",
         },
-        errorRed:colors.redAccent[300],
+        errorRed: colors.redAccent[300],
         white: "#fff",
       },
     },
@@ -152,10 +152,10 @@ export const themeSettings = () => {
               backgroundColor: tokens().greenAccent[200],
               borderWidth: 0,
               color: "#31cb81 !important",
-              borderRadius:"5px !important",
+              borderRadius: "5px !important",
               ":hover": {
-                backgroundColor: tokens().greenAccent[200],
-                borderWidth: 0,
+                backgroundColor:tokens().greenAccent[100],
+                border:0,
                 color: "#31cb81 !important",
               },
             },
@@ -175,6 +175,28 @@ export const themeSettings = () => {
               },
             },
           },
+          {
+            props: { variant: "outlined", color:"error" },
+            style: {
+              backgroundColor: tokens().redAccent[500],
+              borderWidth: 0,
+              color: "#fff !important",
+              boxShadow: "8",
+              ":hover": {
+                backgroundColor: tokens().redAccent[400],
+                borderWidth: 0,
+                color: "#fff !important",
+                boxShadow: 10,
+              },
+              ":disabled":{
+                backgroundColor:tokens().grey[200],
+                borderWidth: 0,
+                color: "#fff !important",
+                boxShadow: "8",
+              }
+            },
+          },
+          
         ],
       },
       MuiTextField: {
@@ -195,27 +217,28 @@ export const themeSettings = () => {
             cursor: "pointer",
             color: colors.greenAccent[500],
           },
-        }
+        },
       },
       MuiIconButton: {
         defaultProps: {
           sx: {
-            backgroundColor:colors.greenAccent[200],
-            color:colors.greenAccent[500],
-            boxShadow:3,
-            ":focus":{
-              backgroundColor:colors.greenAccent[700],
-              color:colors.greenAccent[100],
-              boxShadow:10,
+            backgroundColor: colors.greenAccent[200],
+            color: colors.greenAccent[500],
+            boxShadow: 3,
+            ":focus": {
+              backgroundColor: colors.greenAccent[700],
+              color: colors.greenAccent[100],
+              boxShadow: 10,
             },
-            ":hover":{
-              backgroundColor:colors.greenAccent[700],
-              color:colors.greenAccent[100],
-            }
+            ":hover": {
+              backgroundColor: colors.greenAccent[700],
+              color: colors.greenAccent[100],
+            },
           },
           disableRipple: true,
         },
       },
+
       MuiPaper: {
         defaultProps: {
           sx: {
@@ -275,3 +298,26 @@ export const useMode = () => {
   const theme = themeSettings();
   return theme;
 };
+
+// variants:[
+//   {
+//     props: { color:"error", className:"delete", },
+//     style: {
+//       backgroundColor:tokens().redAccent[500],
+//       color:"#fff",
+//       boxShadow:"rgba(0, 0, 0, 0.2) 0px 18px 50px -10px",
+//       // boxShadow:3,
+//       ":focus":{
+//         backgroundColor:tokens().redAccent[400],
+//         color:"#fff",
+//         boxShadow:"rgba(0, 0, 0, 0.1) 0px 10px 50px",
+//       },
+//       ":hover":{
+//         backgroundColor:tokens().redAccent[400],
+//         color:"#fff",
+//       }
+
+//     },
+//   }
+// ]
+

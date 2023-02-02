@@ -31,12 +31,12 @@ export const logoutuserfunction = async (headerAuth: any) => {
   );
   return response;
 };
-export const createUser = async (props) =>{
+export const createUser = async (props) => {
   // console.log({props, userData:props.userObj.userData});
   const response = await authApi.post(
     "user/createUser",
     {
-      userData:props.userObj.userData
+      userData: props.userObj.userData
     },
     {
       headers: {
@@ -111,7 +111,8 @@ export const getWorkUsers = async (props) => {
   const response = await authApi.get(
     `restaurant/getAllUserByRestaurantId?restaurantId=${props.restaurantId}`,
     {
-      headers:{
+      headers: {
+
         Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
       }
     }
