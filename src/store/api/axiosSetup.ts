@@ -1,8 +1,13 @@
 import axios from "axios";
 import { GenericResponse } from "./types";
 
+<<<<<<< HEAD
 // const BASE_URL = "http://localhost:5000/";
 const BASE_URL = "https://etopos.up.railway.app/";
+=======
+const BASE_URL = "https://etopos.up.railway.app/";
+// const BASE_URL = "http://localhost:5000/";
+>>>>>>> 44d4d3ef68e834507e159fb754eb65e31b00af39
 
 const authApi = axios.create({
   baseURL: BASE_URL,
