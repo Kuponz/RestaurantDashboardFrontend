@@ -77,7 +77,7 @@ const KotCheckout = ({order}) => {
                     let onjForOrder = {
                         orderDetail:{
                             orderId:order?.details?._id,
-                        tableId:order?.details?.table._id,
+                        tableId:order?.details?.table?._id,
                         status:"BILLING"
                         },
                         token:user?.jwtToken,
