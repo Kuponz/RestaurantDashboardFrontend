@@ -119,6 +119,36 @@ export const getWorkUsers = async (props) => {
   );
   return response;
 };
+export const createFloorAdmin = async (props) => {
+  const response = await authApi.post(
+    `restaurant/createFloor`,
+    {
+      ...props.req
+    },
+    {
+      headers: {
+
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      }
+    }
+  );
+  return response;
+};
+export const createTableAdmin = async (props) => {
+  const response = await authApi.post(
+    `restaurant/createTable`,
+    {
+      ...props.req
+    },
+    {
+      headers: {
+
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      }
+    }
+  );
+  return response;
+};
 // http://localhost:5000/restaurant/getRestaurant?restaurantId=63cb0c2b3f68cb3a0cd577e7
 export const getRestaurantById = async (headerAuth, restaurantId) => {
   let reId = restaurantId.length != 0 ? restaurantId[0] : "";
