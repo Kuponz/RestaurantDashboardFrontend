@@ -6,6 +6,7 @@ import moment, {} from "moment"
 import { useMutation } from "@tanstack/react-query";
 import { updateOrderStatus } from "store/api/axiosSetup";
 import { useRouter } from "next/router";
+import UpdatedOrder from "./UpdatedOrder";
 export const OrderContainer = ({order, userDetails, adminPrev}) => {
   const router = useRouter();
   console.log({order, userDetails});
@@ -66,8 +67,12 @@ export const OrderContainer = ({order, userDetails, adminPrev}) => {
           {/*  */}
 
           {order?.order?.map((menuData, idn) => {
-              return <OrderItems menuData={menuData} key={idn}/>;
-            })}
+            return <OrderItems menuData={menuData} key={idn}/>;
+          })}
+          <Divider/>
+          {order?.order?.map((menuData, idn) => {
+            return <UpdatedOrder menuData={menuData} key={idn}/>;
+          })}
             <Stack sx={{
               width:"100%"
             }}>
