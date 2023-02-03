@@ -4,7 +4,7 @@ import moment from 'moment';
 import React from 'react'
 import { flexBox } from 'theme/defaultFunction';
 
-const OrderCards = ({order, open, setOpen}:{
+const OrderCards = ({order, open, setOpen, setWatchOrder}:{
     order: {
         orderAmount: {
             totalItem: number;
@@ -48,7 +48,12 @@ const OrderCards = ({order, open, setOpen}:{
   return (
     <Paper sx={{
         height:"fit-content",
-        p:1
+        p:1,
+        width:{
+            xs:"100%",
+            md:"45%",
+            lg:"30%"
+        }
     }}>
         <Paper elevation={0} variant="free" sx={{ p:2}}>
           <Stack direction="row" justifyContent={"space-between"}>
@@ -80,7 +85,14 @@ const OrderCards = ({order, open, setOpen}:{
                     ...flexBox("row", "space-between")
                 }}>
                     <Typography variant='h5'>Total : {order.orderAmount.total}</Typography>
-                    <Typography variant='button' color={"primary.main"}>.. Read More</Typography>  
+                    <Typography variant='button' 
+                    onClick={()=>{
+                        setWatchOrder({...order});
+                        setOpen(true);
+                    }}
+                    color={"primary.main"} sx={{
+                        cursor:"pointer"
+                    }}>.. Read More</Typography>  
                 </Stack>
             </Stack>
         </Paper>

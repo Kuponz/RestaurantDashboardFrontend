@@ -29,18 +29,18 @@ const Order = () => {
       onSuccess:(data)=>{
           console.log({data:data?.data?.data?.orderInfo})
           console.log({userDetails,restro})
-        //   setRestaurantDetails(data?.data?.data?.restaurantInfo)
-        setOrder(data?.data?.data?.orderInfo)
+          //   setRestaurantDetails(data?.data?.data?.restaurantInfo)
+          setOrder(data?.data?.data?.orderInfo)
         }
     })
 
     useEffect(()=>{
     
-    const orderDetails = order.details;
-    if(orderDetails?.orderStatus  == "BILLING") {
-        router.push(`/restaurant/table/bill?tableId=${orderDetails?.table}&orderId=${orderDetails._id}`);
+    if(order && order.details?.orderStatus  == "BILLING" && (order.details._id == query?.orderId) && order?.details?.table?._id) {
+      console.log({order});
+        router.push(`/restaurant/table/bill?tableId=${order?.details?.table?._id}&orderId=${order.details._id}`);
     } 
-    },[order.details, router])
+    },[order, router, query?.orderId])
 
   if(isLoading){
     return (

@@ -11,7 +11,7 @@ import { createCategory, createItem } from 'store/api/axiosSetup'
 
 // }
 
-const AddModal = ({isItem, userToken, restroState, setOpen}:{isItem:boolean}) => {
+const AddModal = ({isItem, userToken, restroState, setOpen, setErrorOpener, errorOpener}:{isItem:boolean}) => {
   const [data, setData] = useState(()=>{
     if(isItem){
       return ({
@@ -129,7 +129,7 @@ const AddModal = ({isItem, userToken, restroState, setOpen}:{isItem:boolean}) =>
       })
     }
   })
-  const {mutate, isLoading, error} = useMutation(createCategory, {
+  const {mutate, isLoading} = useMutation(createCategory, {
     onSuccess:(data, variables, context)=> {
         console.log({
             data:data.data.data,
@@ -140,8 +140,10 @@ const AddModal = ({isItem, userToken, restroState, setOpen}:{isItem:boolean}) =>
         // setNewUser(false);
         setOpen(false);
     },
-    onError:(error, variables, context)=> {
-      console.log(error);
+    onError(error, variables, context) {
+      console.log({error})
+      setErrorOpener({...errorOpener, message:error?.response?.data?.message, open:true});
+
     },
   })
   const itemMutatation = useMutation(createItem, {
@@ -165,8 +167,10 @@ const AddModal = ({isItem, userToken, restroState, setOpen}:{isItem:boolean}) =>
 
         // setNewUser(false);
     },
-    onError:(error, variables, context)=> {
-      console.log(error);
+    onError(error, variables, context) {
+      console.log({error})
+      setErrorOpener({...errorOpener, message:error?.response?.data?.message, open:true});
+
     },
   })
   return (
@@ -178,7 +182,8 @@ const AddModal = ({isItem, userToken, restroState, setOpen}:{isItem:boolean}) =>
       {Object.keys(data).map((values, index)=>(
         <ValueForm setData = {setData} key={index} values={data[values]} data={values}/>
       ))}
-      <Button onClick={()=>{
+      <Button 
+      onClick={()=>{
         let sendData={};
         if(isItem){
           sendData={
