@@ -71,13 +71,13 @@ const KotCheckout = ({order}) => {
                 <Button variant='text' onClick={()=>router.push("/restaurant/table")} sx={{...flexBox()}}><ArrowBackIcon/>Table Booking</Button>
                 <Button variant='text' sx={{...flexBox()}}><ClearIcon/> Cancel</Button>
                 <Button variant='text' onClick={()=>{
-                    router.push(`/restaurant/table/menu?edit=${true}&table=${order?.details?.table}`)
+                    router.push(`/restaurant/table/menu?edit=${true}&table=${order?.details?.table._id}`)
                 }} sx={{...flexBox()}}><CreateIcon/> Update Order</Button>
                 <Button variant='text' onClick={()=>{
                     let onjForOrder = {
                         orderDetail:{
                             orderId:order?.details?._id,
-                        tableId:order?.details?.table,
+                        tableId:order?.details?.table._id,
                         status:"BILLING"
                         },
                         token:user?.jwtToken,
