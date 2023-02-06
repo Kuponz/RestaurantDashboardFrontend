@@ -166,7 +166,7 @@ const ManageMenuCard = ({
           <VisibilityIcon />
         </IconButton>
         <IconButton sx={redDeleteStyle} onClick={()=>{
-          deleteMutate && deleteMutate?.mutate({
+          deleteMutate?.mutate({
             menuId: menuVal._id,
             restaurantId:menuVal.restaurantId,
             headerAuth:userToken?.jwtToken
