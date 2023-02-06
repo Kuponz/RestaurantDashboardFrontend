@@ -7,6 +7,10 @@ const ValueForm = ({values, setData}) => {
         return (
             <>
             <FormControlLabel
+                sx={{
+                    justifyContent:"flex-start",
+                    flexDirection:"row"
+                }}
                 control={<Switch checked={values?.value} onChange={e=>{
                     setData(oldData=>(
                         {
@@ -19,7 +23,7 @@ const ValueForm = ({values, setData}) => {
                     )) 
                 }}/>}
                 label={values?.name} 
-                labelPlacement="start"
+                labelPlacement="top"
             />
             </>
         )

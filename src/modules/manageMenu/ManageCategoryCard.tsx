@@ -16,11 +16,15 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { tokens } from "theme/theme";
 import { redDeleteStyle } from "common/styles/deleteStyle";
+import { UseMutationResult } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
 const ManageMenuCard = ({
   isCategory = true,
   menuVal,
   viewOne,
   setViewOne,
+  deleteMutate,
+  userToken
 }: {
   isCategory: boolean;
   viewOne: {
@@ -35,6 +39,10 @@ const ManageMenuCard = ({
       open: boolean;
     }>
   >;
+  userToken: {
+    login: boolean;
+  };
+  deleteMutate:UseMutationResult<AxiosResponse<any, any>, unknown, any, unknown>;
   menuVal:
     | {
         isAvailable?: boolean;
@@ -102,7 +110,7 @@ const ManageMenuCard = ({
         <IconButton>
           <VisibilityIcon />
         </IconButton>
-        <IconButton sx={redDeleteStyle}>
+        <IconButton sx={redDeleteStyle} disabled={true}>
           <DeleteIcon />
         </IconButton>
       </Stack>
@@ -157,7 +165,15 @@ const ManageMenuCard = ({
         <IconButton>
           <VisibilityIcon />
         </IconButton>
-        <IconButton sx={redDeleteStyle}>
+        <IconButton sx={redDeleteStyle} onClick={()=>{
+          deleteMutate && deleteMutate?.mutate({
+            menuId: menuVal._id,
+            restaurantId:menuVal.restaurantId,
+            headerAuth:userToken?.jwtToken
+          })
+        }}
+        disabled={deleteMutate?.isLoading}
+        >
           <DeleteIcon />
         </IconButton>
       </Stack>

@@ -28,29 +28,29 @@ const AddModal = ({isItem, userToken, restroState, setOpen, setErrorOpener, erro
           })
         },
         "packingCharges":{
-          value:"",
+          value:"0",
           type:"text",
           name:"packingCharges",
           title:"Packing Charges"
         },
-        "itemrank":{
-          value:"",
-          type:"text",
-          name:"itemrank",
-          title:"Item Rank"
-        },
+        // "itemrank":{
+        //   value:"",
+        //   type:"text",
+        //   name:"itemrank",
+        //   title:"Item Rank"
+        // },
         "ignoreTaxes":{
           value:false,
           type:"boolean",
           name:"ignoreTaxes",
         },
-        "favorite":{
-          value:true,
-          type:"boolean",
-          name:"favorite",
-        },
+        // "favorite":{
+        //   value:true,
+        //   type:"boolean",
+        //   name:"favorite",
+        // },
         "ignoreDiscounts":{
-          value:false,
+          value:true,
           type:"boolean",
           name:"ignoreDiscounts",
 
@@ -58,8 +58,7 @@ const AddModal = ({isItem, userToken, restroState, setOpen, setErrorOpener, erro
         "available":{
           value:true,
           type:"boolean",
-          name:"available",
-          
+          name:"available",     
         }, 
         "itemName":{
           value:"",
@@ -79,26 +78,26 @@ const AddModal = ({isItem, userToken, restroState, setOpen, setErrorOpener, erro
           name:"itemAttributeid",
           title:"Item Attribute id"
         }, 
-        "itemdescription":{
-          value:"",
-          type:"text",
-          name:"itemdescription",
-          title:"Item Description"
-        }, 
-        "minimumpreparationtime":{
-          value:"",
-          type:"text",
-          name:"minimumpreparationtime",
-          title:"minimumpreparationtime"
-        }, 
+        // "itemdescription":{
+        //   value:"",
+        //   type:"text",
+        //   name:"itemdescription",
+        //   title:"Item Description"
+        // }, 
+        // "minimumpreparationtime":{
+        //   value:"",
+        //   type:"text",
+        //   name:"minimumpreparationtime",
+        //   title:"minimumpreparationtime"
+        // }, 
         "price":{
-          value:"",
+          value:"0",
           type:"text",
           name:"price",
           title:"price"
         }, 
         "itemTax":{
-          value:"",
+          value:"0",
           type:"text",
           name:"itemTax",
           title:"itemTax"
@@ -120,12 +119,12 @@ const AddModal = ({isItem, userToken, restroState, setOpen, setErrorOpener, erro
           title:"Available"
           
         },
-        "categoryRank":{
-          value:"",
-          type:"number",
-          name:"categoryRank",
-          title:"Category Rank"
-        }
+        // "categoryRank":{
+        //   value:"",
+        //   type:"number",
+        //   name:"categoryRank",
+        //   title:"Category Rank"
+        // }
       })
     }
   })
@@ -147,14 +146,14 @@ const AddModal = ({isItem, userToken, restroState, setOpen, setErrorOpener, erro
     },
   })
   const itemMutatation = useMutation(createItem, {
-    onSuccess:(data, variables, context)=> {
+    onSuccess:async (data, variables, context)=> {
         console.log({
             data:data.data.data,
             variables,
             context,
         })
         
-        let categoryAddedRestro = restroState.restaurant.category.map(cat=>{
+        let categoryAddedRestro = await restroState?.restaurant?.categories?.map(cat=>{
           if(cat._id == data.data.data.categoryResult)
           {
             return data.data.data.categoryResult;
@@ -164,12 +163,14 @@ const AddModal = ({isItem, userToken, restroState, setOpen, setErrorOpener, erro
         })
         restroState.setCategories([...categoryAddedRestro])
         setOpen(false);
+        setErrorOpener({...errorOpener, message:"SuccesFully Added", open:true, severity:"success"});
+
 
         // setNewUser(false);
     },
     onError(error, variables, context) {
       console.log({error})
-      setErrorOpener({...errorOpener, message:error?.response?.data?.message, open:true});
+      setErrorOpener({...errorOpener, message:error?.response?.data?.message ?? error, open:true, severity:"error"});
 
     },
   })

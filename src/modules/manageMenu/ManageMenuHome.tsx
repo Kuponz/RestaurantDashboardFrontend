@@ -2,8 +2,6 @@ import {
   Alert,
   Button,
   CircularProgress,
-  Divider,
-  Grid,
   Snackbar,
   Stack,
   Typography,
@@ -14,9 +12,9 @@ import ManageMenuCard from "./ManageCategoryCard";
 import AddIcon from "@mui/icons-material/Add";
 import BasicModal from "common/modalGenerator/Modal";
 import AddModal from "./modal/AddModal";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { userestaurantStore } from "store/restaurant/restaurantStore";
-import { getWorkMenu } from "store/api/axiosSetup";
+import { deleteItem, getWorkMenu } from "store/api/axiosSetup";
 import { useUserStore } from "store/user/userzustandstore";
 const ManageMenuHome = () => {
   const [open, setOpen] = useState(false);
@@ -30,9 +28,11 @@ const ManageMenuHome = () => {
   const restroState = userestaurantStore((state) => state);
   const [errorOpener, setErrorOpener] = useState({
     message:"",
-    open:false});
+    open:false,
+    severity:"error"
+  });
 
-  const { isLoading, isError, data, error } = useQuery({
+  const { isLoading, } = useQuery({
     enabled: !!restroState && !!userToken,
     queryKey: ["getWorkMenu"],
     queryFn: () =>
@@ -49,7 +49,34 @@ const ManageMenuHome = () => {
       setErrorOpener({...errorOpener, open:true});
     }
   });
+  const deleteMutate = useMutation(deleteItem,{
+    onSuccess:async (data)=>{
+      let newStateCategory = await restroState.restaurant.categories.map(cate=>{
+        if(cate._id == data?.data?.data?._id){
+          return data?.data?.data;
+        }else{
+          return cate;
+        }
+      })
+      console.log({data:data?.data?.data, newStateCategory})
 
+      restroState.setCategories(newStateCategory);
+      setErrorOpener({
+        ...errorOpener,
+        message:data?.data?.message,
+        severity:"success",
+        open:true,
+      })
+    },
+    onError:(error)=>{
+      setErrorOpener({
+        ...errorOpener,
+        message:error?.response?.data?.message == ""?error:error?.response?.data?.message,
+        severity:"error",
+        open:true,
+      })
+    }
+  })
   return (
     <Stack
       sx={{
@@ -138,8 +165,10 @@ const ManageMenuHome = () => {
                   <>
                     <ManageMenuCard
                       key={index}
+                      deleteMutate={deleteMutate}
                       isCategory={true}
                       menuVal={category}
+                      userToken={userToken}
                     />
                   </>
                 );
@@ -208,10 +237,12 @@ const ManageMenuHome = () => {
                     isCategory={false}
                     setViewOne={setViewOne}
                     viewOne={viewOne}
+                    userToken={userToken}
                     menuVal={{
                       ...menuVal,
                       categoryName: category?.categoryName,
                     }}
+                    deleteMutate={deleteMutate}
                   />
                 ));
               })}
@@ -226,7 +257,6 @@ const ManageMenuHome = () => {
       >
         <AddModal errorOpener={errorOpener} setErrorOpener={setErrorOpener} isItem={isItem} userToken={userToken} restroState={restroState} setOpen={setOpen}/>
       </BasicModal>
-      {console.log(errorOpener)}
       <Snackbar
         open={errorOpener.open}
         autoHideDuration={6000}
@@ -234,7 +264,7 @@ const ManageMenuHome = () => {
           setErrorOpener(erp=>({...erp, open:false}));
         }}
       >
-        <Alert severity="error">{errorOpener.message}</Alert>
+        <Alert severity={errorOpener.severity}>{errorOpener.message}</Alert>
       </Snackbar>
     </Stack>
   );

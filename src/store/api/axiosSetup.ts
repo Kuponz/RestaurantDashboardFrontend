@@ -76,6 +76,23 @@ export const createItem = async (props) =>{
   );
   return response;
 }
+export const deleteItem = async (props) =>{
+  // console.log({props, userData:props.userObj.userData});
+  const response = await authApi.post(
+    "menu/deleteMenuByRestaurantId",
+    {
+      "menuId":props.menuId,
+      "restaurantId" : props.restaurantId,
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+}
+
 export const getTables = async (headerAuth, restaurantId) => {
   let reId = restaurantId.length != 0 ? restaurantId[0] : "";
   const response = await authApi.get(
