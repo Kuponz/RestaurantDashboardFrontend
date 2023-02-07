@@ -16,10 +16,13 @@ import { loginUserFn } from 'store/api/axiosSetup';
 
 const AuthRoleLogin = () => {
     const [userObj, setUserObj] = useState<{
-        mobileNumber: string | Number; pin : String | Number
+        mobileNumber: string | Number; pin : String | Number;
+        showPin:boolean,
     }>({
     mobileNumber:"",
-    pin:""
+    pin:"",
+    showPin:false,
+
     });
     const erroRef = useRef({
         errorM:false,
@@ -67,7 +70,7 @@ const AuthRoleLogin = () => {
             type:"number",
             label:"Mobile Number",
             name:"mobileNumber",
-            placeholder:"8459162509",
+            placeholder:"1234567891",
             fullWidth:true,
             disabled:isLoading
         },
@@ -78,8 +81,7 @@ const AuthRoleLogin = () => {
             name:"pin",
             placeholder:"123456",
             fullWidth:true,
-            disabled:isLoading
-            
+            disabled:isLoading            
         },
     ]
       // const router = useRouter();

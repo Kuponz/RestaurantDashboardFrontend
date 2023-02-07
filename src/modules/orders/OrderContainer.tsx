@@ -69,7 +69,7 @@ export const OrderContainer = ({order, userDetails, adminPrev}) => {
           {order?.order?.map((menuData, idn) => {
             return <OrderItems menuData={menuData} key={idn}/>;
           })}
-          <Divider/>
+          <Divider>Updates (Any)</Divider>
           {order?.order?.map((menuData, idn) => {
             return <UpdatedOrder menuData={menuData} key={idn}/>;
           })}
