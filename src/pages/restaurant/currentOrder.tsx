@@ -6,11 +6,14 @@ import {
   Button,
   CircularProgress,
   Grid,
+  IconButton,
   Stack,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
   Typography,
 } from "@mui/material";
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { flexBox, size } from "theme/defaultFunction";
 import { useRouter } from "next/router";
 import { CompleteOrders, OrderContainer } from "modules/orders/OrderContainer";
@@ -87,7 +90,7 @@ export default function CurrentOrder() {
             // gap={2}
             sx={{ width: "100%", height: "100vh", py: 3, overflowX: "scroll" }}
           >
-            <Stack direction="row" justifyContent="center" spacing={5} p={2}>
+            <Stack direction="row" justifyContent="center" alignItems={"center"} spacing={5} p={2}>
               {/* <Button
               onClick={() => {
                 if (!Selection) {
@@ -124,6 +127,9 @@ export default function CurrentOrder() {
                   Completed Orders
                 </ToggleButton>
               </ToggleButtonGroup>
+              { order?.incomingOrders?.length != 0 && (<Tooltip title="Refresh">
+              <IconButton onClick={()=>{router.reload()}}><RefreshIcon /></IconButton>
+              </Tooltip>)}
             </Stack>
             {isLoading ? (
               <Stack sx={{ ...flexBox(), ...size("100vh", "100vw") }}>
@@ -151,7 +157,7 @@ export default function CurrentOrder() {
                       <Typography variant="h3" sx={{ py:2}}>No Current Orders !</Typography>
                       <Button variant="outlined" onClick={()=>{
                         router.reload()
-                      }}>Tap to Refresh</Button>
+                      }}>Tap to Refresh <RefreshIcon /></Button>
                     </Stack>
                   )
                 ) : (
