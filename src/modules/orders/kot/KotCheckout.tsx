@@ -19,9 +19,9 @@ const KotCheckout = ({order}) => {
     const router = useRouter();
     const [openCancel, setOpenCancel] = useState({
         open:false,
-        reason:"NIL",
-        orderId:"",
-        tableId:""
+        reason:"",
+        orderId:order?.details?._id,
+        tableId:order?.details?.table?._id,
     });
     const user = useUserStore(state=>state.user);
     const {mutate} = useMutation(updateOrderStatus, {
@@ -78,6 +78,10 @@ const KotCheckout = ({order}) => {
             <Stack direction={"row"} flexWrap={"wrap"} justifyContent={"space-between"} gap={1}>
                 <Button variant='text' onClick={()=>router.push("/restaurant/table")} sx={{...flexBox()}}><ArrowBackIcon/>Table Booking</Button>
                 <Button variant='text' sx={{...flexBox()}} onClick={()=>{
+                    setOpenCancel({...openCancel, 
+                        orderId:order?.details?._id,
+                        tableId:order?.details?.table?._id,
+                        open:true})
 
                 }}><ClearIcon/> Cancel</Button>
                 <Button variant='text' onClick={()=>{
