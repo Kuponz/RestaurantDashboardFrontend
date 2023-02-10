@@ -8,7 +8,7 @@ import { flexBox } from "theme/defaultFunction";
 
 
 
-const PaymentModal = ({order, settlePayment, settlePaymentDetails, paymentDetails}) => {
+const PaymentModal = ({order, settlePayment, settlePaymentDetails, paymentDetails, isLoading}) => {
     const [alignment, setAlignment] = useState(()=>{
         settlePaymentDetails({
             ...paymentDetails,
@@ -140,6 +140,7 @@ const PaymentModal = ({order, settlePayment, settlePaymentDetails, paymentDetail
                     exclusive
                     onChange={handleChange}
                     aria-label="Platform"
+                    disabled={isLoading}
                     >
                     <ToggleButton value="UPI">UPI</ToggleButton>
                     <ToggleButton value="CASH">Cash</ToggleButton>
@@ -194,7 +195,7 @@ const PaymentModal = ({order, settlePayment, settlePaymentDetails, paymentDetail
                 }
             </Stack> */}
             <Stack direction={"row"} gap={1} justifyContent={"center"}>
-                <Button variant='outlined' onClick={settlePayment}>Settle</Button>
+                <Button disabled={isLoading} variant='outlined' onClick={settlePayment}>Settle</Button>
             </Stack>
         </Stack>
       )

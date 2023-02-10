@@ -26,8 +26,8 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import PaymentsIcon from '@mui/icons-material/Payments';
-import { Icon, Stack, Tooltip } from '@mui/material';
-import { flexBox } from 'theme/defaultFunction';
+import { CircularProgress, Icon, Stack, Tooltip } from '@mui/material';
+import { flexBox, size } from 'theme/defaultFunction';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -36,7 +36,7 @@ import HookSidebar from './HookSidebar';
 const drawerWidth = 240;
 
 
-export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen}) {
+export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen, isLoading, user}) {
     const router = useRouter();
     const tabJSON = [
         {
@@ -125,6 +125,12 @@ export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen})
         </Stack>
       {/* <Toolbar title='etoPOS' variant='regular' /> */}
       <Divider />
+      {isLoading?
+      <Stack sx={{...size("70vh", "100%"), ...flexBox()}}>
+        <CircularProgress/>
+      </Stack>
+      :
+      <Stack>
       <List>
         {tabJSON.map((text, index) =><HookSidebar text={text} key={index}/>
         )} 
@@ -134,6 +140,8 @@ export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen})
       {tab2JSON.map((text, index) =><HookSidebar text={text} key={index}/>
         )} 
       </List>
+      </Stack>
+      }
     </div>
   );
   return (

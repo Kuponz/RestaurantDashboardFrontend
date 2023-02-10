@@ -8,6 +8,7 @@ import {
   CardActions,
   CardContent,
   Chip,
+  CircularProgress,
   Divider,
   FormControl,
   IconButton,
@@ -16,8 +17,10 @@ import {
   Paper,
   Select,
   Stack,
+  Tooltip,
   Typography,
 } from "@mui/material";
+import RefreshIcon from '@mui/icons-material/Refresh';
 import styles from "./waiter.module.css";
 import React, { useEffect, useState } from "react";
 import PersonIcon from "@mui/icons-material/Person";
@@ -62,9 +65,18 @@ export const Waiter = () => {
     <div className={styles.container}>
       <div className={styles.floor}>
         <FloorStructure infoSelected={infoSelected} setinfoSelected={setinfoSelected} restroDetails={restroDetails?.restaurant?.floors} />
-        <IconButton onClick={() => setOpenModel(true)}><QuestionMarkIcon /></IconButton>
+        <Tooltip title="Help">
+          <IconButton onClick={() => setOpenModel(true)}><QuestionMarkIcon /></IconButton>
+        </Tooltip>
+        <Tooltip title="Refresh">
+        <IconButton onClick={()=>{router.reload()}}><RefreshIcon /></IconButton>
+        </Tooltip>
       </div>
-
+      {isLoading?
+      <Stack>
+        <CircularProgress/>
+      </Stack>
+      :
       <Stack sx={{
         height: "100%",
         width: "100%",
@@ -77,7 +89,8 @@ export const Waiter = () => {
         gap: 2
       }}>
         <FloorWiseTable infoSelected={infoSelected} restroDetails={restroDetails?.restaurant?.floors} />
-      </Stack>
+      </Stack>}
+      
       <BasicModal title={"Representations"} open={openModel} setOpen={setOpenModel}>
         <ModalSupport />
       </BasicModal>

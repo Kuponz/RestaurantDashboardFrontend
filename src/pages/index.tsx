@@ -43,13 +43,15 @@ export default function Home() {
       console.log({ data });
     },
   });
-  if (isLoading) {
+
+  if (isError) {
     return (
       <Stack sx={{ ...flexBox(), ...size("100vh", "100vw") }}>
-        <CircularProgress />
+        <Typography>No network Detected!</Typography>
       </Stack>
     );
   }
+
   if (userDetails?.role == "WAITER") {
     return (
       <Stack sx={{ ...flexBox(), ...size("100vh", "100vw") }}>
@@ -88,21 +90,27 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        <HomeStructure>
-          <Stack
-            direction="column"
-            // gap={2}
-            sx={{
-              width: "100%",
-              height: "100vh",
-              py: 3,
-              px: 3,
-              overflowX: "scroll",
-              ...flexBox("column", "flex-start", "flex-start"),
-            }}
-          >
-            <IndexHome />
-          </Stack>
+        <HomeStructure isLoading={isLoading} user={userDetails?.role}>
+          {isLoading ? (
+            <Stack sx={{ ...flexBox(), ...size("100vh", "100vw") }}>
+              <CircularProgress />
+            </Stack>
+          ) : (
+            <Stack
+              direction="column"
+              // gap={2}
+              sx={{
+                width: "100%",
+                height: "100vh",
+                py: 3,
+                px: 3,
+                overflowX: "scroll",
+                ...flexBox("column", "flex-start", "flex-start"),
+              }}
+            >
+              <IndexHome />
+            </Stack>
+          )}
         </HomeStructure>
       </div>
     </>

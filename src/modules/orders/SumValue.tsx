@@ -1,8 +1,6 @@
 import { Button, Stack, Typography } from '@mui/material'
 import BasicModal from 'common/modalGenerator/Modal'
-import BillPrint from 'modules/BillPrint'
-import Bill from 'pages/restaurant/table/bill'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { userestaurantStore } from 'store/restaurant/restaurantStore'
 import PaymentModal from './orders/PaymentModal'
 import { useMutation } from '@tanstack/react-query'
@@ -16,7 +14,7 @@ const SumValue = ({ order}) => {
     const [paymentDetails, settlePaymentDetails] = useState({});
     const router = useRouter();
     const user = useUserStore(state=>state.user);
-    const {mutate} = useMutation(completeOrderStatus, {
+    const {mutate, isLoading} = useMutation(completeOrderStatus, {
         onSuccess:(data, variables, context)=> {
   
             console.log({
@@ -60,7 +58,7 @@ const SumValue = ({ order}) => {
                 <Button variant='outlined' onClick={()=>setOpen(true)}>Collect Payment</Button>
             </Stack>
             <BasicModal open={open} setOpen={setOpen} title={"Payment"}>
-                <PaymentModal settlePayment={settlePayment} order={order.details} paymentDetails={paymentDetails} settlePaymentDetails={settlePaymentDetails}/>
+                <PaymentModal isLoading={isLoading} settlePayment={settlePayment} order={order.details} paymentDetails={paymentDetails} settlePaymentDetails={settlePaymentDetails}/>
             </BasicModal>
         </Stack>
 
