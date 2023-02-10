@@ -1,8 +1,8 @@
 import axios from "axios";
 import { GenericResponse } from "./types";
 
-// const BASE_URL = "https://etopos.up.railway.app/";   //QA URL
-const BASE_URL = "https://apietopos.azurewebsites.net/"; //Main URL
+const BASE_URL = "https://etopos.up.railway.app/";   //QA URL
+// const BASE_URL = "https://apietopos.azurewebsites.net/"; //Main URL
 // const BASE_URL = "http://localhost:5000/"; //LocalHost Url
 
 const authApi = axios.create({
@@ -248,6 +248,14 @@ export const updateOrderStatus = async (details) => {
 
 export const completeOrderStatus = async (details) => {
   const response = await authApi.post("order/completeOrder", details, {
+    headers: {
+      Authorization: "Bearer " + details.token, //the token is a variable which holds the token
+    },
+  });
+  return response;
+};
+export const cancelOrderStatus = async (details) => {
+  const response = await authApi.post("order/cancelOrder", details.body, {
     headers: {
       Authorization: "Bearer " + details.token, //the token is a variable which holds the token
     },

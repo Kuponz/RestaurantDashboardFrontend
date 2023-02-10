@@ -1,5 +1,5 @@
-import { Button, Stack, Typography } from '@mui/material'
-import React, { useRef } from 'react'
+import { Button, Stack, TextField, Typography } from '@mui/material'
+import React, { useRef, useState } from 'react'
 import Orders from '../orders/Orders'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CreateIcon from '@mui/icons-material/Create';
@@ -11,10 +11,18 @@ import { useMutation } from '@tanstack/react-query';
 import { updateOrderStatus } from 'store/api/axiosSetup';
 import { useUserStore } from 'store/user/userzustandstore';
 import { Printer, render } from 'react-thermal-printer';
+import BasicModal from "common/modalGenerator/Modal";
 import { useReactToPrint } from 'react-to-print';
 import TablePrint from './TablePrint';
+import CancelModal from './CancelModal';
 const KotCheckout = ({order}) => {
     const router = useRouter();
+    const [openCancel, setOpenCancel] = useState({
+        open:false,
+        reason:"NIL",
+        orderId:"",
+        tableId:""
+    });
     const user = useUserStore(state=>state.user);
     const {mutate} = useMutation(updateOrderStatus, {
         onSuccess:(data, variables, context)=> {
@@ -69,7 +77,9 @@ const KotCheckout = ({order}) => {
             <Typography variant='h3' textAlign={"center"} py={1}>My orders</Typography>
             <Stack direction={"row"} flexWrap={"wrap"} justifyContent={"space-between"} gap={1}>
                 <Button variant='text' onClick={()=>router.push("/restaurant/table")} sx={{...flexBox()}}><ArrowBackIcon/>Table Booking</Button>
-                <Button variant='text' sx={{...flexBox()}}><ClearIcon/> Cancel</Button>
+                <Button variant='text' sx={{...flexBox()}} onClick={()=>{
+
+                }}><ClearIcon/> Cancel</Button>
                 <Button variant='text' onClick={()=>{
                     router.push(`/restaurant/table/menu?edit=${true}&table=${order?.details?.table._id}`)
                 }} sx={{...flexBox()}}><CreateIcon/> Update Order</Button>
@@ -98,6 +108,10 @@ const KotCheckout = ({order}) => {
         <div style={{display:"none"}}>
             <TablePrint componentRef={componentRef} order={order?.details}/>
         </div>
+        <BasicModal title="Cancel Order" open={openCancel?.open} setOpen={(callto:boolean)=>{
+            setOpenCancel({...openCancel, open:callto})}}>
+            <CancelModal user={user} openCancel={openCancel} setOpenCancel ={setOpenCancel}/>
+        </BasicModal>
     </Stack>
   )
 }
