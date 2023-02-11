@@ -22,9 +22,11 @@ const ManageMenuCard = ({
   isCategory = true,
   menuVal,
   viewOne,
+  setisItem,
   setViewOne,
   deleteMutate,
-  userToken
+  userToken,
+  setOpen
 }: {
   isCategory: boolean;
   viewOne: {
@@ -32,6 +34,9 @@ const ManageMenuCard = ({
     id: number;
     open: boolean;
   };
+  setisItem:React.Dispatch<
+  React.SetStateAction<boolean>
+>;
   setViewOne: React.Dispatch<
     React.SetStateAction<{
       viewObj: {};
@@ -162,7 +167,12 @@ const ManageMenuCard = ({
         />
       </Stack>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <IconButton>
+        <IconButton onClick={()=>{
+          setisItem(true)
+          setOpen(true);
+          setViewOne({...viewOne, open:true, viewObj:menuVal})
+        }}
+        >
           <VisibilityIcon />
         </IconButton>
         <IconButton sx={redDeleteStyle} onClick={()=>{

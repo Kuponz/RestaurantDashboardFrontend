@@ -21,7 +21,6 @@ const ManageMenuHome = () => {
   const [isItem, setisItem] = useState(false);
   const [viewOne, setViewOne] = useState({
     viewObj:{},
-    id:0,
     open:open
   })
   const userToken = useUserStore((state) => state.user);
@@ -238,6 +237,8 @@ const ManageMenuHome = () => {
                     setViewOne={setViewOne}
                     viewOne={viewOne}
                     userToken={userToken}
+                    setisItem={setisItem}
+                    setOpen={setOpen}
                     menuVal={{
                       ...menuVal,
                       categoryName: category?.categoryName,
@@ -252,10 +253,24 @@ const ManageMenuHome = () => {
       )}
       <BasicModal
         open={open}
-        setOpen={setOpen}
+        setOpen={()=>{
+          setisItem(false);
+          setViewOne({
+            viewObj:{},
+            open:false,
+          })
+          setOpen(false);
+        }}
         title={isItem ? "Item" : "Category"}
       >
-        <AddModal errorOpener={errorOpener} setErrorOpener={setErrorOpener} isItem={isItem} userToken={userToken} restroState={restroState} setOpen={setOpen}/>
+        <AddModal viewOne={viewOne} errorOpener={errorOpener} setErrorOpener={setErrorOpener} isItem={isItem} userToken={userToken} restroState={restroState} setOpen={()=>{
+          setisItem(false);
+          setViewOne({
+            viewObj:{},
+            open:false,
+          })
+          setOpen(false);
+        }}/>
       </BasicModal>
       <Snackbar
         open={errorOpener.open}

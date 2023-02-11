@@ -1,0 +1,23 @@
+import pandas as pd
+import numpy as np
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+
+# Load the LinkedIn dataset into a pandas dataframe
+df = pd.read_csv("linkedin_dataset.csv")
+
+# Pre-process the data by removing missing values and irrelevant variables
+df = df.dropna()
+df = df.drop(["Unrelated_Variable_1", "Unrelated_Variable_2"], axis=1)
+
+# Extract the features and target variables from the dataset
+X = df.iloc[:, :-1].values
+y = df.iloc[:, -1].values
+
+# Perform PCA with data reduction
+pca = PCA(n_components=2) # Reduce to 2 components
+X_reduced = pca.fit_transform(X)
+
+# Plot the reduced data to visualize the structure
+plt.scatter(X_reduced[:, 0], X_reduced[:, 1], c=y)
+plt.show()

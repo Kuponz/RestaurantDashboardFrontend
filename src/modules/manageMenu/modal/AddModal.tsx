@@ -14,6 +14,7 @@ import { createCategory, createItem } from "store/api/axiosSetup";
 const AddModal = ({
   isItem,
   userToken,
+  viewOne,
   restroState,
   setOpen,
   setErrorOpener,
@@ -25,7 +26,7 @@ const AddModal = ({
     if (isItem) {
       return {
         categoryId: {
-          value: "",
+          value: viewOne?.viewObj?.categoryId ?? "",
           type: "select",
           name: "categoryId",
           title: "Catgeory",
@@ -37,7 +38,7 @@ const AddModal = ({
           }),
         },
         packingCharges: {
-          value: "0",
+          value: viewOne?.viewObj?.packingCharges ?? "0",
           type: "text",
           name: "packingCharges",
           title: "Packing Charges",
@@ -49,7 +50,7 @@ const AddModal = ({
         //   title:"Item Rank"
         // },
         ignoreTaxes: {
-          value: false,
+          value: viewOne?.viewObj?.ignoreTaxes ?? false,
           type: "boolean",
           name: "ignoreTaxes",
         },
@@ -59,29 +60,29 @@ const AddModal = ({
         //   name:"favorite",
         // },
         ignoreDiscounts: {
-          value: true,
+          value: viewOne?.viewObj?.ignoreDiscounts ?? true,
           type: "boolean",
           name: "ignoreDiscounts",
         },
         available: {
-          value: true,
+          value: viewOne?.viewObj?.available ?? true,
           type: "boolean",
           name: "available",
         },
         itemName: {
-          value: "",
+          value: viewOne?.viewObj?.itemName ?? "",
           type: "text",
           name: "itemName",
           title: "Item Name",
         },
         itemShortName: {
-          value: "",
+          value: viewOne?.viewObj?.itemShortName ?? "",
           type: "text",
           name: "itemShortName",
           title: "Item Short Name",
         },
         itemAttributeid: {
-          value: "",
+          value: viewOne?.viewObj?.itemAttributeid ?? "",
           type: "text",
           name: "itemAttributeid",
           title: "Item Attribute id",
@@ -99,13 +100,13 @@ const AddModal = ({
         //   title:"minimumpreparationtime"
         // },
         price: {
-          value: "0",
+          value: viewOne?.viewObj?.price ?? "0",
           type: "text",
           name: "price",
           title: "price",
         },
         itemTax: {
-          value: "0",
+          value: viewOne?.viewObj?.itemTax ?? "0",
           type: "text",
           name: "itemTax",
           title: "itemTax",
@@ -114,13 +115,13 @@ const AddModal = ({
     } else {
       return {
         categoryName: {
-          value: "",
+          value: viewOne?.viewObj?.categoryName ?? "",
           type: "text",
           name: "categoryName",
           title: "Category Name",
         },
         isAvailable: {
-          value: true,
+          value: viewOne?.viewObj?.isAvailable ?? true,
           type: "boolean",
           name: "isAvailable",
           title: "Available",
@@ -146,7 +147,7 @@ const AddModal = ({
         data.data.data?.categoryResult,
       ]);
       // setNewUser(false);
-      setOpen(false);
+      setOpen();
     },
     onError(error, variables, context) {
       console.log({ error });
@@ -175,13 +176,24 @@ const AddModal = ({
         categoryAddedRestro,
       });
       restroState.setCategories([...categoryAddedRestro]);
-      setOpen(false);
-      setErrorOpener({
-        ...errorOpener,
-        message: "SuccesFully Added",
-        open: true,
-        severity: "success",
-      });
+      setOpen();
+      if(viewOne?.open){
+        setErrorOpener({
+          ...errorOpener,
+          message: "SuccesFully Updated a menu Item",
+          open: true,
+          severity: "success",
+        });
+
+      }else{
+        setErrorOpener({
+          ...errorOpener,
+          message: "SuccesFully Added",
+          open: true,
+          severity: "success",
+        });
+
+      }
 
       // setNewUser(false);
     },
@@ -232,10 +244,26 @@ const AddModal = ({
               itemTax: data.itemTax?.value,
             };
             console.log(sendData);
-            itemMutatation.mutate({
-              sendData,
-              headerAuth: userToken.jwtToken,
-            });
+            if(viewOne?.open && viewOne?.viewObj?._id){
+              sendData.menuId = viewOne?.viewObj?._id;
+              sendData.isEdit = viewOne?.open;
+              console.log({
+                sendData
+              })
+              itemMutatation.mutate({
+                sendData,
+                headerAuth: userToken.jwtToken,
+              });
+
+            }else{
+              console.log({
+                sendData
+              })
+              itemMutatation.mutate({
+                sendData,
+                headerAuth: userToken.jwtToken,
+              });
+            }
           } else {
             sendData = {
               categoryName: data["categoryName"]?.value,
