@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react'
 import { flexBox } from 'theme/defaultFunction';
 
-const HookSidebar = ({key, text}) => {
+const HookSidebar = ({ text}) => {
     const router = useRouter();
     let color = text.url == router.asPath ? "white":"#383d4a";
     return (
@@ -11,7 +11,6 @@ const HookSidebar = ({key, text}) => {
       onClick={()=>{
         router.push(text.url)
       }}
-      key={key} 
       sx={{
         ...flexBox("row", "flex-start", "center"),
         px:2,

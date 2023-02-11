@@ -18,6 +18,7 @@ import { getRestaurantById } from "store/api/axiosSetup";
 import { useUserStore } from "store/user/userzustandstore";
 import { userestaurantStore } from "store/restaurant/restaurantStore";
 import IndexHome from "modules/home/IndexHome";
+import { RefreshOutlined } from "@mui/icons-material";
 
 export default function Home() {
   const router = useRouter();
@@ -46,8 +47,12 @@ export default function Home() {
 
   if (isError) {
     return (
-      <Stack sx={{ ...flexBox(), ...size("100vh", "100vw") }}>
+      <Stack sx={{ ...flexBox("column"), ...size("100vh", "100vw"),gap:2 }}>
         <Typography>No network Detected!</Typography>
+        <Button variant="outlined" onClick={async ()=>{
+          await localStorage.clear();
+          router.push("/auth")
+        }}>Refresh <RefreshOutlined/></Button>
       </Stack>
     );
   }
