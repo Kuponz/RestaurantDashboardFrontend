@@ -19,6 +19,12 @@ const Display = ({val, setValue, variableip, menuInfo, setmenuInfo}) => {
         })
         return newMenu;
     });
+    const [searchMenuItem, setsearchMenuItem] = useState(()=>{
+        return ({
+            menuItem:[],
+            open:false,
+        })
+    });
     const filterItems = (category) => {
 
         setActiveCategory(category);
@@ -46,7 +52,26 @@ const Display = ({val, setValue, variableip, menuInfo, setmenuInfo}) => {
         }
     };
 
+    const changeEventHandler = (event)=>{
+        if(event.target.value != ""){
+            console.log({
+                menuItems,
+                activeCategory,
+                menuInfo,
+                value:event.target.value
+            })
+            //Logic:
 
+            setsearchMenuItem({
+                ...searchMenuItem,open:true,
+            })
+        }else{
+            
+            setsearchMenuItem({
+                ...searchMenuItem,open:false,
+            })
+        }
+    }
     
     useEffect(()=>{
         // console.log("useEffect Called", menuInfo, activeCategory);
@@ -95,7 +120,7 @@ const Display = ({val, setValue, variableip, menuInfo, setmenuInfo}) => {
                 p:1,
                 width:"100%"
             }}>
-                <TextField label={"search"}/>
+                <TextField label={"search"} onChange={(e)=>changeEventHandler(e)}/>
             </Stack>
             <Stack sx={{
                 height:'5rem',
@@ -129,8 +154,14 @@ const Display = ({val, setValue, variableip, menuInfo, setmenuInfo}) => {
                 pb:25
             }}>
                 {
+                    (searchMenuItem.open && searchMenuItem.menuItem.length > 0)?
+                    searchMenuItem?.menuItem?.map((item, key) => <MenuCard variableip={variableip}  val={val} setValue={setValue} key={key} items={item}/>)
+
+                    :
                     menuItems?.map((item, key) => <MenuCard variableip={variableip}  val={val} setValue={setValue} key={key} items={item}/>)
                 }
+                {/* {
+                } */}
                 {/* <MenuCard items={menuItems} /> */}
             </Stack>
         </Stack>
