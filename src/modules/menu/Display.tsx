@@ -23,6 +23,7 @@ const Display = ({val, setValue, variableip, menuInfo, setmenuInfo}) => {
         return ({
             menuItem:[],
             open:false,
+            value:""
         })
     });
     const filterItems = (category) => {
@@ -60,15 +61,52 @@ const Display = ({val, setValue, variableip, menuInfo, setmenuInfo}) => {
                 menuInfo,
                 value:event.target.value
             })
+            let newMenuInfo = [];
+            const regex = new RegExp(event.target.value, 'i');
+            menuInfo.categories.filter(value=>{
+                value.menu.map(valMenu=>{
+                    console.log({
+                       iName: valMenu?.itemName.match(regex),
+                       i2Name:valMenu?.itemAttributeid.match(regex),
+                       i3Name: valMenu?.itemShortName.match(regex),
+                       valMenu,
+                       regex
+                    })
+                    if(valMenu?.itemName.match(regex)){
+                        newMenuInfo.push({...valMenu});
+                    }
+                    else if(valMenu?.itemAttributeid.match(regex)){
+                        newMenuInfo.push({...valMenu});
+                        
+                    }else if(valMenu?.itemShortName.match(regex)){
+                        newMenuInfo.push({...valMenu});
+                    }
+                })
+                return false;
+            })
+            console.log({
+                newMenuInfo
+            })
+            // menuItems(newMenuInfo);
+            setActiveCategory({
+                _id:"ALL",
+                categoryName:"All"
+            })
+            // setMenuItems(newMenuInfo);
             //Logic:
-
+            
             setsearchMenuItem({
                 ...searchMenuItem,open:true,
+                menuItem:newMenuInfo,
+                value:event.target.value
+
             })
         }else{
             
             setsearchMenuItem({
                 ...searchMenuItem,open:false,
+                value:event.target.value
+
             })
         }
     }
@@ -120,13 +158,14 @@ const Display = ({val, setValue, variableip, menuInfo, setmenuInfo}) => {
                 p:1,
                 width:"100%"
             }}>
-                <TextField label={"search"} onChange={(e)=>changeEventHandler(e)}/>
+                <TextField label={"search"} value={searchMenuItem.value} onChange={(e)=>changeEventHandler(e)}/>
             </Stack>
             <Stack sx={{
                 height:'5rem',
                 width:"100%",
             }}>
                 <Categories
+                    setsearchMenuItem ={setsearchMenuItem}
                     categories={menuInfo.categories}
                     activeCategory={activeCategory}
                     filterItems={filterItems}
