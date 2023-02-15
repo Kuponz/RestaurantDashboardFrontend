@@ -9,7 +9,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import LocalMallIcon from '@mui/icons-material/LocalMall';
 import PaymentsIcon from '@mui/icons-material/Payments';
-import {  Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -20,95 +20,95 @@ const IndexHome = () => {
     const router = useRouter();
     const JSONHome = [
         {
-            title:"Home",
-            icons:<HomeRoundedIcon/>,
-            url:"/"
+            title: "Home",
+            icons: <HomeRoundedIcon />,
+            url: "/"
         },
         {
-            title:"Book Table",
-            icons:<TableRestaurantIcon/>,
-            url:"/restaurant/table"
+            title: "Book Table",
+            icons: <TableRestaurantIcon />,
+            url: "/restaurant/table"
 
         },
         {
             title: "Current Orders",
-            icons:<LocalMallIcon/>,
-            url:"/restaurant/currentOrder"
+            icons: <LocalMallIcon />,
+            url: "/restaurant/currentOrder"
 
         },
         {
             title: "Orders",
-            icons:<ViewListIcon/>,
-            url:"/restaurant/orders"
+            icons: <ViewListIcon />,
+            url: "/restaurant/orders"
 
         },
         {
-            title:"Dashboard",
-            icons:<DashboardIcon/>,
-            url:"/restaurant/dashboard"
+            title: "Dashboard",
+            icons: <DashboardIcon />,
+            url: "/restaurant/dashboard/dashboard"
         },
         {
-            title:"Inventory",
-            icons:<InventoryIcon/>,
-            url:"/restaurant/inventory"
+            title: "Inventory",
+            icons: <InventoryIcon />,
+            url: "/restaurant/inventory"
         },
         {
-            title:"Payments",
-            icons:<AccountBalanceWalletIcon/>,
-            url:"/restaurant/payments"
+            title: "Payments",
+            icons: <AccountBalanceWalletIcon />,
+            url: "/restaurant/payments"
         },
         {
-            title:"Attendance",
-            icons:<CurrencyRupeeIcon/>,
-            url:"/restaurant/attendance"
+            title: "Attendance",
+            icons: <CurrencyRupeeIcon />,
+            url: "/restaurant/attendance"
         },
         {
-            title:"Manage Table",
-            icons:<TableBarIcon/>,
-            url:"/restaurant/manage/table"
+            title: "Manage Table",
+            icons: <TableBarIcon />,
+            url: "/restaurant/manage/table"
         },
         {
-            title:"Manage Menu",
-            icons:<MenuBookIcon/>,
-            url:"/restaurant/manage/menu"
+            title: "Manage Menu",
+            icons: <MenuBookIcon />,
+            url: "/restaurant/manage/menu"
         },
         {
-            title:"Manage Users",
-            icons:<PersonAddAltIcon/>,
-            url:"/restaurant/manage/users"
+            title: "Manage Users",
+            icons: <PersonAddAltIcon />,
+            url: "/restaurant/manage/users"
         },
         {
-            title:"Manage Customers",
-            icons:<PeopleAltIcon/>,
-            url:"/restaurant/manage/customers"
+            title: "Manage Customers",
+            icons: <PeopleAltIcon />,
+            url: "/restaurant/manage/customers"
         },
         {
-            title:"Recharge",
-            icons:<PaymentsIcon/>,
-            url:"/restaurant/manage/recharge"
+            title: "Recharge",
+            icons: <PaymentsIcon />,
+            url: "/restaurant/manage/recharge"
         }
-    
-    
-    ]
-  return (
-  <Stack sx={{
-    flexDirection:{
-        xs:"column",
-        md:"row",
-    },
-    flexWrap:"wrap",
-    width:{
-        xs:"100%"
-    }
-    }}>
-    {
-    JSONHome.map((home, index)=>(
-        <CardFeatue key={index} homeInfo={home} router={router}/>
 
-    ))
-    }
-  </Stack>
-  )
+
+    ]
+    return (
+        <Stack sx={{
+            flexDirection: {
+                xs: "column",
+                md: "row",
+            },
+            flexWrap: "wrap",
+            width: {
+                xs: "100%"
+            }
+        }}>
+            {
+                JSONHome.map((home, index) => (
+                    <CardFeatue key={index} homeInfo={home} router={router} />
+
+                ))
+            }
+        </Stack>
+    )
 }
 
 export default IndexHome

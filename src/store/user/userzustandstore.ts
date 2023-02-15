@@ -11,74 +11,74 @@ const userStore = (set: any) => ({
     role: "",
     _id: "",
     jwtToken: "",
-    access:[
-        {
-          title:"Home",
-          icons:"HomeRoundedIcon",
-          url:"/",
-        },
-        {
-          title:"Book Table",
-          icons:"TableRestaurantIcon",
-          url:"/restaurant/table"
+    access: [
+      {
+        title: "Home",
+        icons: "HomeRoundedIcon",
+        url: "/",
+      },
+      {
+        title: "Book Table",
+        icons: "TableRestaurantIcon",
+        url: "/restaurant/table"
 
-        },
-        {
-          title: "Current Orders",
-          icons:"LocalMallIcon",
-          url:"/restaurant/currentOrder"
+      },
+      {
+        title: "Current Orders",
+        icons: "LocalMallIcon",
+        url: "/restaurant/currentOrder"
 
-        },
-        {
-          title: "Orders",
-          icons:"ViewListIcon",
-          url:"/restaurant/orders"
+      },
+      {
+        title: "Orders",
+        icons: "ViewListIcon",
+        url: "/restaurant/orders"
 
-        },
-        {
-          title:"Dashboard",
-          icons:"DashboardIcon",
-          url:"/restaurant/dashboard"
-        },
-        {
-          title:"Inventory",
-          icons:"InventoryIcon",
-          url:"/restaurant/inventory"
-        },
-        {
-          title:"Payments",
-          icons:"AccountBalanceWalletIcon",
-          url:"/restaurant/payments"
-        },
-        {
-          title:"Attendance",
-          icons:"CurrencyRupeeIcon",
-          url:"/restaurant/attendance"
-        },
-        {
-          title:"Manage Table",
-          icons:"TableBarIcon",
-          url:"/restaurant/manage/table"
       },
       {
-          title:"Manage Menu",
-          icons:"MenuBookIcon",
-          url:"/restaurant/manage/menu"
+        title: "Dashboard",
+        icons: "DashboardIcon",
+        url: "/restaurant/dashboard/dashboard"
       },
       {
-          title:"Manage Users",
-          icons:"PersonAddAltIcon",
-          url:"/restaurant/manage/users"
+        title: "Inventory",
+        icons: "InventoryIcon",
+        url: "/restaurant/inventory"
       },
       {
-          title:"Manage Customers",
-          icons:"PeopleAltIcon",
-          url:"/restaurant/manage/customers"
+        title: "Payments",
+        icons: "AccountBalanceWalletIcon",
+        url: "/restaurant/payments"
       },
       {
-          title:"Recharge",
-          icons:"PaymentsIcon",
-          url:"/restaurant/manage/recharge"
+        title: "Attendance",
+        icons: "CurrencyRupeeIcon",
+        url: "/restaurant/attendance"
+      },
+      {
+        title: "Manage Table",
+        icons: "TableBarIcon",
+        url: "/restaurant/manage/table"
+      },
+      {
+        title: "Manage Menu",
+        icons: "MenuBookIcon",
+        url: "/restaurant/manage/menu"
+      },
+      {
+        title: "Manage Users",
+        icons: "PersonAddAltIcon",
+        url: "/restaurant/manage/users"
+      },
+      {
+        title: "Manage Customers",
+        icons: "PeopleAltIcon",
+        url: "/restaurant/manage/customers"
+      },
+      {
+        title: "Recharge",
+        icons: "PaymentsIcon",
+        url: "/restaurant/manage/recharge"
       }
     ],
   },

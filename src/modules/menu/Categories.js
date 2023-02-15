@@ -19,7 +19,7 @@ const Categories = ({ categories, filterItems, activeCategory }) => {
             whiteSpace: 'nowrap'
         }}
         >
-            <Button variant='outlined' color={activeCategory._id == "ALL"?"error":"primary"}
+            <Button variant='outlined' color={activeCategory._id == "ALL" ? "error" : "primary"}
                 onClick={() => filterItems({
                     _id: "ALL",
                     categoryName: "All"
@@ -33,7 +33,7 @@ const Categories = ({ categories, filterItems, activeCategory }) => {
                     return (
                         <>
                             <Box>
-                                <Button variant='outlined' color={activeCategory._id == category._id?"error":"primary"}
+                                <Button variant='outlined' color={activeCategory._id == category._id ? "error" : "primary"}
                                     key={index}
                                     onClick={() => filterItems(category)}
                                 >
