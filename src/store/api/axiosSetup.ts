@@ -257,15 +257,16 @@ export const updateOrderStatus = async (details) => {
   return response;
 };
 export const swapTable = async (details) => {
+  console.log(details)
   const response = await authApi.post(
-    "order/changeOrderStatus",
+    "order/transferTable",
     {
       "newTableId":details.newTableId,
       "oldTableId":details.oldTableId
     },
     {
       headers: {
-        Authorization: "Bearer " + details.token, //the token is a variable which holds the token
+        Authorization: "Bearer " + details.headerAuth, //the token is a variable which holds the token
       },
     }
   );
