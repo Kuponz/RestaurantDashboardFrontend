@@ -26,6 +26,7 @@ specifiers:
   next-pwa: ^5.6.0
   react: ^18.2.0
   react-dom: 18.2.0
+  react-filter-search: ^1.1.11
   react-icons: ^4.7.1
   react-thermal-printer: ^0.11.0
   react-to-print: ^2.14.11
@@ -59,6 +60,7 @@ dependencies:
   next-pwa: 5.6.0_next@13.1.2
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-filter-search: 1.1.11_react@18.2.0
   react-icons: 4.7.1_react@18.2.0
   react-thermal-printer: 0.11.0_biqbaboplfbrettd7655fr4n2y
   react-to-print: 2.14.11_biqbaboplfbrettd7655fr4n2y
@@ -2018,6 +2020,16 @@ packages:
 
   /@rushstack/eslint-patch/1.2.0:
     resolution: {integrity: sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==}
+    dev: false
+
+  /@strikeentco/get/1.0.1:
+    resolution: {integrity: sha512-qPnoWkt7xxcOaUJhMveDHmj6INVKHXUEsPTGz3g4HC5XNnqRd1dDEFxL1KpG+vZ2VxmRK42EjBt5vUDr4uLzQQ==}
+    engines: {node: '>=6.0.0'}
+    dev: false
+
+  /@strikeentco/set/1.0.2:
+    resolution: {integrity: sha512-jP/wGhBi70RoD2Ww2bd3Ay4nzKfyWSPL/sDgFaq2e/FXNC9a04R0M7fuDVHG/dG+WWNVj2pmE9exXn20a0AjGg==}
+    engines: {node: '>=6.0.0'}
     dev: false
 
   /@surma/rollup-plugin-off-main-thread/2.2.3:
@@ -4545,6 +4557,14 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
+  /pick-deep/1.0.0:
+    resolution: {integrity: sha512-Uy0VUtabou1sPl/vVClBFrWi4Ae/D3Vqu44FJawmm4lnduu5E16ykw8kh15fiUeLQ6lbmXQ0EMr3YIsqpLZl+A==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      '@strikeentco/get': 1.0.1
+      '@strikeentco/set': 1.0.2
+    dev: false
+
   /picocolors/1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
     dev: false
@@ -4716,6 +4736,15 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
+    dev: false
+
+  /react-filter-search/1.1.11_react@18.2.0:
+    resolution: {integrity: sha512-zqOIvhpXg/VKHxgleSPGAfGjSnHg8jsbybHUAY4ao49yUreauYAc+vI34JXQYoNvC7/+rtOf95sk626jnVRCtQ==}
+    peerDependencies:
+      react: 16.x
+    dependencies:
+      pick-deep: 1.0.0
+      react: 18.2.0
     dev: false
 
   /react-icons/4.7.1_react@18.2.0:
