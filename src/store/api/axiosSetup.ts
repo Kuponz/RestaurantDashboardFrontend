@@ -1,8 +1,8 @@
 import axios from "axios";
 import { GenericResponse } from "./types";
 
-// const BASE_URL = "https://etopos.up.railway.app/";   //QA URL
-const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
+const BASE_URL = "https://etopos.up.railway.app/";   //QA URL
+// const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
 // const BASE_URL = "http://localhost:5000/"; //LocalHost Url
 
 const authApi = axios.create({
@@ -212,6 +212,17 @@ export const getorderById = async (headerAuth, orderId, restaurantId) => {
 export const getorderHistory = async (props) => {
   const response = await authApi.get(
     `order/getOrderHistory?restaurantId=${props.restaurantId}&startDate=${props.startDate}&endDate=${props.endDate}&pageNumber=${props.pageNumber}&pageSize=${props.pageSize}`,
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+};
+export const getdashboardHistory = async (props) => {
+  const response = await authApi.get(
+    `restaurant/getMainDashboard?restaurantId=${props.restaurantId}&startDate=${props.startDate}&endDate=${props.endDate}`,
     {
       headers: {
         Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token

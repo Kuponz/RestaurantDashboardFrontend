@@ -9,9 +9,14 @@ import { tokens } from "theme/theme";
 
 export default function SalesBox(prop) {
     return (
-        <>
-
-            <Paper sx={{
+            <Paper 
+            onClick={()=>{
+                prop.setOpen({
+                    forWork:prop.name,
+                    work:true,
+                })
+            }}
+            sx={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -31,6 +36,7 @@ export default function SalesBox(prop) {
                 },
 
             }}
+
                 elevation={2}
             >
                 <Stack>
@@ -69,6 +75,5 @@ export default function SalesBox(prop) {
                     </Typography>
                 </Box>
             </Paper>
-        </>
     )
 }

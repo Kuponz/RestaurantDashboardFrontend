@@ -15,6 +15,7 @@ import BasicModal from "common/modalGenerator/Modal";
 import { useReactToPrint } from 'react-to-print';
 import TablePrint from './TablePrint';
 import CancelModal from './CancelModal';
+import moment from 'moment';
 const KotCheckout = ({order}) => {
     const router = useRouter();
     const [openCancel, setOpenCancel] = useState({
@@ -67,6 +68,17 @@ const KotCheckout = ({order}) => {
         }        
            
     }  
+    const timeDiff= (createdAt)=>{
+        var now = moment(new Date()); //todays date
+        var end = moment(createdAt); // another date
+        var duration = moment.duration(now.diff(end));
+        console.log({
+            now, end, duration
+        })
+        var days = moment.utc(duration.asMilliseconds()).format("HH:mm:ss");
+        // console.log(moment(duration).hour(), moment(duration).minutes(), moment(duration).second())
+        return days;
+    }
   return (
     <Stack sx={{
         height:"100%",
@@ -101,7 +113,15 @@ const KotCheckout = ({order}) => {
                 }} sx={{...flexBox()}}><ReceiptIcon/>Generate Bill </Button>
             </Stack>
         </Stack>
-        <Stack justifyContent={"center"} alignItems={"center"}>
+        <Stack justifyContent={"space-between"} direction={"row"} alignItems={"center"}>
+            <Stack sx={{
+                flexDirection:"row",
+                justifyContent:"space-between"
+            }}>
+                <Typography sx={{px:1}}>Time(HH:MM:SS): </Typography>
+                <Typography>{String(timeDiff(order?.details?.createdAt))} </Typography>
+
+            </Stack>
             <Button variant='outlined' sx={{
                 m:1
             }}

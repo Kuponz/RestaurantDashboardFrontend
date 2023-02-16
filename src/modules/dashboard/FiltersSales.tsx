@@ -95,23 +95,6 @@ const FiltersSales = ({ mutate, user, isLoading, restaurant, setValue, value }) 
                                     onChange={(newValue) => handleChange(newValue, "endDate")}
                                     renderInput={(params) => <TextField {...params} />}
                                 />
-                                <FormControl variant="filled" sx={{ minWidth: 120 }}>
-                                    <InputLabel id="demo-simple-select-filled-label">
-                                        Page Size
-                                    </InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-filled-label"
-                                        id="demo-simple-select-filled"
-                                        value={value.pageSize}
-                                        name={"pageSize"}
-                                        onChange={(e) => handleIp(e)}
-                                    >
-                                        <MenuItem value={25}>25</MenuItem>
-                                        <MenuItem value={50}>50</MenuItem>
-                                        <MenuItem value={75}>75</MenuItem>
-                                        <MenuItem value={100}>100</MenuItem>
-                                    </Select>
-                                </FormControl>
                             </Stack>
                             <Button variant="contained" sx={{
 

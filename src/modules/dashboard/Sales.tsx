@@ -5,47 +5,47 @@ import FiltersSales from './FiltersSales';
 import { userestaurantStore } from 'store/restaurant/restaurantStore';
 import { useUserStore } from 'store/user/userzustandstore';
 import { useMutation } from '@tanstack/react-query';
-import { getorderHistory } from 'store/api/axiosSetup';
+import { getdashboardHistory, getorderHistory } from 'store/api/axiosSetup';
 import dayjs from 'dayjs';
 import TopBar from 'common/topBar/TopBar';
 import SalesBox from './SalesBox';
 import Payment from './Payment';
 import HomeStructure from 'modules/home/HomeStructure';
-import { tokens } from "theme/theme";
+import { flexBox } from 'theme/defaultFunction';
 
 
 type Tfilter = {
     startDate: dayjs.Dayjs;
     endDate: dayjs.Dayjs;
     restaurantId: string;
-    pageNumber: number;
-    pageSize: number;
     headerAuth: string;
-    pageCounts: number;
 };
 const Sales = () => {
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState({
+        work:false,
+        forWork:""
+    });
     const restaurant = userestaurantStore(state => state.restaurant);
     const user = useUserStore(state => state.user);
-    const [orders, setOrder] = useState([]);
+    const [orders, setOrder] = useState({});
     const [value, setValue] = React.useState<Tfilter>({
         startDate: dayjs(),
         endDate: dayjs(),
         restaurantId: restaurant.restaurantInfo._id,
-        pageNumber: 1,
-        pageSize: 25,
         headerAuth: user.jwtToken,
-        pageCounts: 1,
     });
     const [watchOrder, setWatchOrder] = useState({});
-    const { mutate, isLoading } = useMutation(getorderHistory, {
+    const { mutate, isLoading } = useMutation(getdashboardHistory, {
         onSuccess: (state) => {
             console.log(state.data.data);
-            setValue({ ...value, pageCounts: state?.data?.data?.totalPages });
-            setOrder(state.data.data.orders);
+            setValue({ ...value });
+            setOrder(state.data.data);
         }
     })
-
+    useEffect(()=>{
+        mutate(value);
+    },[])
+    console.log({orders})
     return (
         <>
             <HomeStructure>
@@ -56,24 +56,28 @@ const Sales = () => {
                     pr: 0,
                     pl: 0,
                 }}>
-                    <TopBar backUrl={"/"} home={true} title={
-                        <ToggleButtonGroup
-                            color="primary"
-                            aria-label="Platform"
-                        >
-                            <ToggleButton value="TodaysSales">
-                                Todays Sales
-                            </ToggleButton>
-                            <ToggleButton value="WeeklySales">
-                                7 days Sales
-                            </ToggleButton>
-                            <ToggleButton value="MonthlySales">
-                                Monthly Sales
-                            </ToggleButton>
+                    <TopBar backUrl={"/"} home={true} title={""}>
+                        <Stack sx={{
+                            ...flexBox("row", "flex-end")
+                        }}>
+                            <ToggleButtonGroup
+                                color="primary"
+                                aria-label="Platform"
+                            >
+                                <ToggleButton value="TodaysSales">
+                                    Today
+                                </ToggleButton>
+                                <ToggleButton value="WeeklySales">
+                                    Weekly
+                                </ToggleButton>
+                                <ToggleButton value="MonthlySales">
+                                    Monthly
+                                </ToggleButton>
 
-                        </ToggleButtonGroup>
-                    }>
-                        <FiltersSales mutate={mutate} isLoading={isLoading} restaurant={restaurant} user={user} setValue={setValue} value={value} />
+                            </ToggleButtonGroup>
+                            <FiltersSales mutate={mutate} isLoading={isLoading} restaurant={restaurant} user={user} setValue={setValue} value={value} />
+
+                        </Stack>
                     </TopBar>
                     <Stack sx={{ overflow: 'scroll' }}>
                         <Stack
@@ -85,15 +89,17 @@ const Sales = () => {
 
                                 flexDirection: "row",
                                 flexWrap: "wrap",
-                                justifyContent: "flex-start",
+                                justifyContent: "space-around",
                                 gap: 1,
                             }}
                         >
-                            <SalesBox title="Todays Order" orders="32,456,122.90" />
-                            <SalesBox title="Completed Order" orders="25,456,122.90" />
-                            <SalesBox title="Cancelled Order" orders="6,122.90" />
+                            <SalesBox setOpen={setOpen} title="Total Earning" name={"totalPayment"} orders={orders?.totalPayment?.total} />
+                            <SalesBox setOpen={setOpen} title="Total Completed Orders" name={"totalOrders"} orders={orders?.totalOrders?.completedOrders} />
                         </Stack>
-                        <Stack
+                        {console.log({
+                            open
+                        })}
+                        {open.work && <Stack
                             sx={{
 
                                 p: 1,
@@ -108,7 +114,7 @@ const Sales = () => {
                             <Payment title="Cash Payment " payment="12,345,67.80" />
                             <Payment title="Debit Card " payment="21,46,67.80" />
                             <Payment title="Credit Card " payment="32,375,67.80" />
-                        </Stack>
+                        </Stack>}
                     </Stack>
                 </Stack>
             </HomeStructure>

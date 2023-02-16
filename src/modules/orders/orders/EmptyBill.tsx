@@ -8,6 +8,7 @@ import  ReactToPrint, { useReactToPrint } from 'react-to-print';
 import { Printer, Text, render } from 'react-thermal-printer';
 import { BillPrint } from 'modules/BillPrint';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import moment from 'moment';
 
 
 const EmptyBill = ({order}) => {
@@ -43,7 +44,17 @@ const EmptyBill = ({order}) => {
         }        
            
     }  
-    
+    const timeDiff= (createdAt, updatedAt)=>{
+        var now = moment(new Date(updatedAt)); //todays date
+        var end = moment(createdAt); // another date
+        var duration = moment.duration(now.diff(end));
+        console.log({
+            now, end, duration
+        })
+        var days = moment.utc(duration.asMilliseconds()).format("HH:mm:ss");
+        // console.log(moment(duration).hour(), moment(duration).minutes(), moment(duration).second())
+        return days;
+    }
   return (
     <>
         <Stack direction={"row"} sx={{
@@ -102,6 +113,14 @@ const EmptyBill = ({order}) => {
                     lg:2
                 }
             }}>
+                <Stack sx={{
+                    flexDirection:"row",
+                    justifyContent:"space-between"
+                }}>
+                    <Typography sx={{px:1}}>Time(HH:MM:SS): </Typography>
+                    <Typography>{String(timeDiff(order?.details?.createdAt, order?.details?.updatedAt))} </Typography>
+
+                </Stack>
                 <SumValue order={order} />
             </Stack>
             

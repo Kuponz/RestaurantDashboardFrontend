@@ -7,7 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SideBar from 'common/sidebar/Sidebar';
 import AvatarMenu from 'common/sidebar/Avatar';
 import { userestaurantStore } from 'store/restaurant/restaurantStore';
-
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 
 
@@ -50,6 +50,7 @@ const HomeStructure = ({children}) => {
           }
         }}
       >
+        
         <Toolbar>
           <IconButton
             color="inherit"
@@ -63,10 +64,12 @@ const HomeStructure = ({children}) => {
           <Typography variant="h3" noWrap component="div" color={"white"}>
             {restaurant?.restaurantInfo?.restaurantName}
           </Typography>
+
           <Box sx={{
             flex:1,
             ...flexBox("row", "flex-end")
           }}>
+            <IconButton onClick={()=>{router.reload()}}><RefreshIcon /></IconButton>
             <AvatarMenu userState={userState} logout={logout}/>
             {/*  */}
           </Box>

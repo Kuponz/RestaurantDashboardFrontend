@@ -11,7 +11,7 @@ const MenuCard = ({ items, val, setValue, variableip }) => {
         
         
     });
-    console.log({itemVal})
+    // console.log({itemVal})
     useEffect(()=>{
         setitemVal(val.find(vali=>vali.item._id == items._id));
 

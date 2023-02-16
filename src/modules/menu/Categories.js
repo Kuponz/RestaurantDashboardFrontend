@@ -6,7 +6,7 @@ import { size } from "theme/defaultFunction";
 import { tokens } from "theme/theme";
 import { SentimentNeutral } from "@mui/icons-material";
 
-const Categories = ({ categories, filterItems, activeCategory }) => {
+const Categories = ({ categories, filterItems, activeCategory, setsearchMenuItem }) => {
     console.log({ categories })
     return (
         <div className="btn-container" style={{
@@ -19,12 +19,19 @@ const Categories = ({ categories, filterItems, activeCategory }) => {
             whiteSpace: 'nowrap'
         }}
         >
-            <Button variant='outlined' color={activeCategory._id == "ALL" ? "error" : "primary"}
-                onClick={() => filterItems({
-                    _id: "ALL",
-                    categoryName: "All"
-                })
-                }
+            <Button variant='outlined' color={activeCategory._id == "ALL"?"error":"primary"}
+                onClick={() => {
+                    setsearchMenuItem({
+                        open:false,
+                        menuItem:[],
+                        value:""
+                    })
+                    filterItems({
+                        _id: "ALL",
+                        categoryName: "All"
+                    })
+                }}
+                    
             >
                 All
             </Button>
@@ -35,7 +42,13 @@ const Categories = ({ categories, filterItems, activeCategory }) => {
                             <Box>
                                 <Button variant='outlined' color={activeCategory._id == category._id ? "error" : "primary"}
                                     key={index}
-                                    onClick={() => filterItems(category)}
+                                    onClick={() => {
+                                        setsearchMenuItem({
+                                            open:false,
+                                            menuItem:[],
+                                            value:""
+                                        }) 
+                                        filterItems(category)}}
                                 >
                                     {category?.categoryName}
                                 </Button>
