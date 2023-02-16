@@ -18,6 +18,7 @@ import CancelModal from "./CancelModal";
 import moment from "moment";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import KotModal from "modules/orders/kot/kotModal";
+import LocalSnackBar from "./components/snackBar";
 
 const KotCheckout = ({ order }) => {
   const router = useRouter();
