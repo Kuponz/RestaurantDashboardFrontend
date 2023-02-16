@@ -11,6 +11,8 @@ import { useUserStore } from "store/user/userzustandstore";
 import { flexBox } from "theme/defaultFunction";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import { useRouter } from "next/router";
+import LocalSnackBar from "./components/snackBar";
+import CustomTableStructure from "./swapModal";
 
 interface PropType {
   open: boolean;
@@ -30,76 +32,76 @@ interface TableProps {
 }>>;
 }
 
-const CustomTableStructure = ({ restroDetails, infoSelected,
-  setinfoSelected }: TableProps) => {
-  const [useData, setuseData] = useState([]);
-  let floorData = useCallback(() => {
-    if (infoSelected?.floor == "ALL") {
-      return restroDetails;
-    } else {
-      return restroDetails?.filter(
-        (resId: any) => resId._id == infoSelected.floor
-      );
-    }
-  }, [infoSelected, restroDetails]);
-  useEffect(() => {
-    setuseData(floorData());
-  }, [floorData]);
-  {
-    // console.log({ data: floorData() });
-  }
-  return (
-    <>
-      {useData.map((floorData, i) => {
-        // console.log(floorData);
-        let newTables = floorData.tables.map(tableData=>{
-          if(tableData?.status =="VACANT"){
-              return (
-                <Paper variant={infoSelected.newTableId == tableData?._id?"free":"outlined"}
-                elevation={infoSelected.newTableId == tableData?._id?5:1}
-                 key={i} sx={{
-                  p:2,
-                  cursor:"pointer"
-                }}
-                onClick={()=>{
-                  setinfoSelected(st=>({...st, newTableId:tableData?._id}))
-                  console.log({infoSelected});
-                }}
-                >
-                <Typography>{tableData?.TableName}</Typography>
-              </Paper>
-            )
-          }else{
-            return null;
-          }
-        })
-        newTables = newTables.filter(val=>val);
-        console.log(newTables)
-        if(newTables && newTables?.length > 0){
-          return (
-            <Stack key={i} sx={{...flexBox("column", "flex-start"), p:1}}>
-              <Divider>{floorData.floorName}</Divider>
-              <Stack sx={{...flexBox("row", "flex-start"), p:1, flexWrap:"wrap", gap:1}}>
-                {newTables}
-              </Stack>
-            </Stack>
-          )
+// const CustomTableStructure = ({ restroDetails, infoSelected,
+//   setinfoSelected }: TableProps) => {
+//   const [useData, setuseData] = useState([]);
+//   let floorData = useCallback(() => {
+//     if (infoSelected?.floor == "ALL") {
+//       return restroDetails;
+//     } else {
+//       return restroDetails?.filter(
+//         (resId: any) => resId._id == infoSelected.floor
+//       );
+//     }
+//   }, [infoSelected, restroDetails]);
+//   useEffect(() => {
+//     setuseData(floorData());
+//   }, [floorData]);
+//   {
+//     // console.log({ data: floorData() });
+//   }
+//   return (
+//     <>
+//       {useData.map((floorData, i) => {
+//         // console.log(floorData);
+//         let newTables = floorData.tables.map(tableData=>{
+//           if(tableData?.status =="VACANT"){
+//               return (
+//                 <Paper variant={infoSelected.newTableId == tableData?._id?"free":"outlined"}
+//                 elevation={infoSelected.newTableId == tableData?._id?5:1}
+//                  key={i} sx={{
+//                   p:2,
+//                   cursor:"pointer"
+//                 }}
+//                 onClick={()=>{
+//                   setinfoSelected(st=>({...st, newTableId:tableData?._id}))
+//                   console.log({infoSelected});
+//                 }}
+//                 >
+//                 <Typography>{tableData?.TableName}</Typography>
+//               </Paper>
+//             )
+//           }else{
+//             return null;
+//           }
+//         })
+//         newTables = newTables.filter(val=>val);
+//         console.log(newTables)
+//         if(newTables && newTables?.length > 0){
+//           return (
+//             <Stack key={i} sx={{...flexBox("column", "flex-start"), p:1}}>
+//               <Divider>{floorData.floorName}</Divider>
+//               <Stack sx={{...flexBox("row", "flex-start"), p:1, flexWrap:"wrap", gap:1}}>
+//                 {newTables}
+//               </Stack>
+//             </Stack>
+//           )
           
-        }else{
-          return (
-            <Stack key={i} sx={{...flexBox("column", "flex-start"), p:1}}>
-              <Divider>{floorData.floorName}</Divider>
-              <Stack sx={{...flexBox("row", "flex-start"), p:1, flexWrap:"wrap", gap:1}}>
-                <Typography key={i} variant="subtitle1">No Table Exists!</Typography> 
-              </Stack>
-            </Stack>
-          )
+//         }else{
+//           return (
+//             <Stack key={i} sx={{...flexBox("column", "flex-start"), p:1}}>
+//               <Divider>{floorData.floorName}</Divider>
+//               <Stack sx={{...flexBox("row", "flex-start"), p:1, flexWrap:"wrap", gap:1}}>
+//                 <Typography key={i} variant="subtitle1">No Table Exists!</Typography> 
+//               </Stack>
+//             </Stack>
+//           )
 
-        }
-      })}
-    </>
-  );
-};
+//         }
+//       })}
+//     </>
+//   );
+// };
 
 const KotModal = (props: PropType) => {
   const { open, setOpen, data } = props;
@@ -124,6 +126,7 @@ const KotModal = (props: PropType) => {
         eMessage:"Success!",
         variant:"success"
        })
+       setOpen(false);
        router.push("/restaurant/table");
     },
     onError:(err)=>{
@@ -185,11 +188,16 @@ const KotModal = (props: PropType) => {
             if(infoSelected.newTableId && infoSelected.oldTableId){
               mutate(infoSelected)
             }else{
-              setinfoSelected({...infoSelected, eOpen:true, eMessage:"Missing Parameters"})
+              setinfoSelected({...infoSelected, eOpen:true, eMessage:"Please Select New Table"})
             }
           }}>Confirm</Button>
         </Stack>}
       </BasicModal>
+      <LocalSnackBar
+        open={infoSelected.eOpen}
+        severity={infoSelected.variant}
+        msg={infoSelected.eMessage}
+      />
     </>
   );
 };
