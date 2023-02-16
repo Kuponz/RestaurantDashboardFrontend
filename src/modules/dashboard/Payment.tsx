@@ -42,7 +42,7 @@ export default function Payment(prop) {
                             pt: 1,
                             color: theme => theme.palette.secondary.main,
                         }} >
-                            &#8377; {prop.payment}
+                            {prop.isRupee && "₹ "} {prop.payment}
 
                         </Typography>
 
