@@ -56,7 +56,7 @@ export default function SalesBox(prop) {
                             pt: 1,
                             color: theme => theme.palette.secondary.main,
                         }} >
-                            &#8377; {prop.orders}
+                            {prop.orders}
 
                         </Typography>
 

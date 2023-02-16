@@ -102,6 +102,10 @@ const FiltersSales = ({ mutate, user, isLoading, restaurant, setValue, value }) 
                                 disabled={isLoading}
                                 onClick={() => {
                                     // console.log({value})
+                                    setValue({
+                                        ...value,
+                                        valueHeader:""
+                                    })
                                     mutate({ ...value })
                                     handleClose();
                                 }}
