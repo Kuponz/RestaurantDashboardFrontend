@@ -65,7 +65,7 @@ export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen, 
         {
             title:"Dashboard",
             icons:<DashboardIcon/>,
-            url:"/restaurant/dashboard/dashboard"
+            url:"/restaurant/dashboard"
         },
         {
             title:"Inventory",

@@ -45,7 +45,7 @@ const IndexHome = () => {
         {
             title: "Dashboard",
             icons: <DashboardIcon />,
-            url: "/restaurant/dashboard/dashboard"
+            url: "/restaurant/dashboard"
         },
         {
             title: "Inventory",
