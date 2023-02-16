@@ -100,7 +100,9 @@ const KotModal = (props: PropType) => {
     floor: "ALL",
     oldTableId:data.details.table?._id,
     newTableId:null,
-    headerAuth:user.jwtToken
+    headerAuth:user.jwtToken,
+    eOpen:false,
+    eMessage:""
   });
 
   return (
@@ -139,7 +141,13 @@ const KotModal = (props: PropType) => {
             restroDetails={restroDetails?.restaurant.floors}
           />
         </Stack>
-        <Button>Confirm</Button>
+        <Button disabled={isLoading} onClick={()=>{
+          if(infoSelected.newTableId && infoSelected.oldTableId){
+            mutate(infoSelected)
+          }else{
+            setinfoSelected({...infoSelected, eOpen:true, eMessage:"Missing Parameters"})
+          }
+        }}>Confirm</Button>
       </BasicModal>
     </>
   );
