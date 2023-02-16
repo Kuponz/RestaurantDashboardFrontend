@@ -2,8 +2,11 @@ import Head from "next/head";
 import React from "react";
 import HomeStructure from "modules/home/HomeStructure";
 import ManageTableHome from "../../../modules/manageTable/ManageTableHome";
+import { useUserStore } from "store/user/userzustandstore";
+import { Stack, Typography } from "@mui/material";
 
 export default function createTable() {
+  const user = useUserStore((state) => state.user);
  
   return (
     <>
@@ -20,7 +23,14 @@ export default function createTable() {
         {/* Auth Stuff Here */}
         {/* <Waiter /> */}
         <HomeStructure>
+        {
+          user.role == "OWNER" ?
           <ManageTableHome/>
+          :
+          <Stack>
+            <Typography>Not Authorized</Typography>
+          </Stack>
+        }
         </HomeStructure>
         
       </div>

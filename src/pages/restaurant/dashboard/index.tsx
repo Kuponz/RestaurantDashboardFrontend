@@ -21,8 +21,6 @@ export default function Dashboard() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-        {/* Auth Stuff Here */}
-        {/* <Waiter /> */}
         <Sales />
       </div>
     </>
