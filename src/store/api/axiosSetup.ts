@@ -256,6 +256,21 @@ export const updateOrderStatus = async (details) => {
   );
   return response;
 };
+export const swapTable = async (details) => {
+  const response = await authApi.post(
+    "order/changeOrderStatus",
+    {
+      "newTableId":details.newTableId,
+      "oldTableId":details.oldTableId
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + details.token, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+};
 
 export const completeOrderStatus = async (details) => {
   const response = await authApi.post("order/completeOrder", details, {

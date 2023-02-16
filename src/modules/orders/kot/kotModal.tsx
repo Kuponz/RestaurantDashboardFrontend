@@ -5,6 +5,11 @@ import table from "pages/restaurant/table/index";
 import { userestaurantStore } from "store/restaurant/restaurantStore";
 import FloorStructure from "modules/table/FloorStructure";
 import FloorWiseTable from "modules/table/FloorWiseTable";
+import { useMutation } from "@tanstack/react-query";
+import { swapTable } from "store/api/axiosSetup";
+import { useUserStore } from "store/user/userzustandstore";
+import { flexBox } from "theme/defaultFunction";
+import SwapVertIcon from "@mui/icons-material/SwapVert";
 
 interface PropType {
   open: boolean;
@@ -15,9 +20,17 @@ interface PropType {
 interface TableProps {
   restroDetails: any;
   infoSelected: any;
+  setinfoSelected:React.Dispatch<React.SetStateAction<{
+    table: string;
+    floor: string;
+    oldTableId: string;
+    newTableId: string;
+    headerAuth: string;
+}>>;
 }
 
-const CustomTableStructure = ({ restroDetails, infoSelected }: TableProps) => {
+const CustomTableStructure = ({ restroDetails, infoSelected,
+  setinfoSelected }: TableProps) => {
   const [useData, setuseData] = useState([]);
   let floorData = useCallback(() => {
     if (infoSelected?.floor == "ALL") {
@@ -37,8 +50,37 @@ const CustomTableStructure = ({ restroDetails, infoSelected }: TableProps) => {
   return (
     <>
       {useData.map((floorData, i) => {
-        console.log(floorData.tables);
-        return <div key={i}>lmao</div>;
+        console.log(floorData);
+        let newTables = floorData.tables.map(tableData=>{
+          if(tableData?.status =="VACANT"){
+              return (
+                <Paper variant="outlined" key={i} sx={{
+                  p:2
+                }}
+                onClick={()=>{
+                  setinfoSelected(st=>({...st, newTableId:tableData?._id}))
+                  console.log({infoSelected});
+                }}
+                >
+                <Typography>{tableData?.TableName}</Typography>
+              </Paper>
+              )
+          }
+        })
+        console.log(newTables)
+        if(newTables && newTables.length > 0){
+          return (
+            <Stack key={i} sx={{...flexBox("row", "flex-start"), p:1}}>
+              {newTables}
+            </Stack>
+          )
+          
+        }else{
+          return (
+            <Typography key={i}>No Table Exists!</Typography> 
+          )
+
+        }
       })}
     </>
   );
@@ -47,9 +89,18 @@ const CustomTableStructure = ({ restroDetails, infoSelected }: TableProps) => {
 const KotModal = (props: PropType) => {
   const { open, setOpen, data } = props;
   const restroDetails = userestaurantStore((state) => state);
+  const {isLoading, mutate} = useMutation(swapTable,{
+    onSuccess:(data)=>{
+      console.log(data)
+    }
+  })
+  const user = useUserStore(state=>state.user);
   const [infoSelected, setinfoSelected] = useState({
     table: "",
     floor: "ALL",
+    oldTableId:data.details.table?._id,
+    newTableId:null,
+    headerAuth:user.jwtToken
   });
 
   return (
@@ -72,13 +123,19 @@ const KotModal = (props: PropType) => {
           </Paper>
         </Stack>
         <Stack>
+        <SwapVertIcon/>
+        </Stack>
+        <Stack sx={{
+          p:1
+        }}>
           <FloorStructure
             infoSelected={infoSelected}
             setinfoSelected={setinfoSelected}
             restroDetails={restroDetails?.restaurant?.floors}
           />
           <CustomTableStructure
-            infoSelected={infoSelected}
+          infoSelected={infoSelected}
+          setinfoSelected={setinfoSelected}
             restroDetails={restroDetails?.restaurant.floors}
           />
         </Stack>
