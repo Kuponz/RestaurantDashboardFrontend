@@ -39,7 +39,7 @@ const ModalSupport = () => {
         
         <Stack direction={"row"} py={2} justifyContent={"center"}>
             <Typography>Need More Support &nbsp;</Typography>
-            <Link href={"tel:8766968741"}><MUIlink>
+            <Link target='_blank' href={"https://wa.me/+918180850827"}><MUIlink>
                 <Stack sx={{...flexBox()}}>
                     Click & Contact Here 
                     <CallIcon/>
