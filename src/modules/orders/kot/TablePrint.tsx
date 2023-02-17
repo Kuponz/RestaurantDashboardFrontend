@@ -7,7 +7,7 @@ const TablePrint = ({order, componentRef}) => {
     <Stack ref={el=>(componentRef.current = el)} sx={{
       p:2
     }}>
-        <Typography textAlign={"center"} variant='h2' p={2}>KOT</Typography>
+        <Typography textAlign={"center"} variant='body1' p={0.5}>KOT</Typography>
         <Stack direction={"row"} justifyContent={"space-between"} p={1}>
           <Typography>{order.table.TableName}</Typography>
           <Typography>{order.createdUser.name}</Typography>

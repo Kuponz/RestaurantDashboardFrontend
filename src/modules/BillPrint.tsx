@@ -37,12 +37,12 @@ export const BillPrint = ({order, reference=false, componentRef, setShowPrint}) 
     <>
       <Text>{order.orderAmount.total}</Text>  
       {order.order.map(orderItem=>(
-        <>
+        <Stack key={orderItem}>
           <Text>{orderItem.menuId.itemName}</Text>
           <Text>{orderItem.quantity}</Text>
           <Text>{orderItem.cost}</Text>
   
-        </>
+        </Stack>
         
       ))}
     </>
