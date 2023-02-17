@@ -45,7 +45,7 @@ const HomeStructure = ({children}) => {
             md:1
           },
           height:{
-            xs:"60px",
+            xs:"55px",
             md:"70px"
           }
         }}
