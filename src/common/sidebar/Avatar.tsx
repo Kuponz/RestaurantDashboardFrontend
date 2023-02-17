@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { logoutuserfunction } from "store/api/axiosSetup";
 import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import Link from "next/link";
 
 function stringAvatar(name: string) {
     return {
@@ -92,12 +93,12 @@ export default function AvatarMenu({userState, logout}) {
           }}
         >
           {/* <a target="_blank" rel="noreferrer" href="https://wa.me/+918180850827"> */}
-          <a target="_blank" rel="noreferrer" href="tel:8766968741">
+          <Link target="_blank" rel="noreferrer" href="https://wa.me/+918180850827">
             <MenuItem>
               Help 
               <QuestionMarkIcon/>
           </MenuItem>
-          </a>
+          </Link>
           <MenuItem onClick={handleClose}>User Settings</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
