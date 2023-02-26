@@ -57,32 +57,32 @@ export default function Home() {
     );
   }
 
-  if (userDetails?.role == "WAITER") {
-    return (
-      <Stack sx={{ ...flexBox(), ...size("100vh", "100vw") }}>
-        <Button
-          onClick={() => {
-            router.push("/restaurant/table");
-          }}
-        >
-          Book Table
-        </Button>
-      </Stack>
-    );
-  }
-  if (userDetails?.role == "CHEF") {
-    return (
-      <Stack sx={{ ...flexBox(), ...size("100vh", "100vw") }}>
-        <Button
-          onClick={() => {
-            router.push("/restaurant/currentOrder");
-          }}
-        >
-          Current Orders
-        </Button>
-      </Stack>
-    );
-  }
+  // if (userDetails?.role == "WAITER") {
+  //   return (
+  //     <Stack sx={{ ...flexBox(), ...size("100vh", "100vw") }}>
+  //       <Button
+  //         onClick={() => {
+  //           router.push("/restaurant/table");
+  //         }}
+  //       >
+  //         Book Table
+  //       </Button>
+  //     </Stack>
+  //   );
+  // }
+  // if (userDetails?.role == "CHEF") {
+  //   return (
+  //     <Stack sx={{ ...flexBox(), ...size("100vh", "100vw") }}>
+  //       <Button
+  //         onClick={() => {
+  //           router.push("/restaurant/currentOrder");
+  //         }}
+  //       >
+  //         Current Orders
+  //       </Button>
+  //     </Stack>
+  //   );
+  // }
   return (
     <>
       <Head>

@@ -29,8 +29,9 @@ const CustomCard = ({ tableData }) => {
         sx={{
           width: {
             xs: "45%",
-            md: "30%",
-            lg: "18%"
+            sm: "30%",
+            md: "25%",
+            lg: "15%"
           },
           height: "90px",
           p: 3,
@@ -56,7 +57,7 @@ const CustomCard = ({ tableData }) => {
         >
           <Typography variant='caption' sx={{
             color: varaintSelection == "VACANT" ? tokens().grey[300] : "white"
-          }}>{tableData.waiter ? tableData.waiter.name : tableData.status}</Typography>
+          }}>{tableData.status}</Typography>
         </Stack>
       </Paper>
     </Tooltip>

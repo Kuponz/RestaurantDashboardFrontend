@@ -139,7 +139,7 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
     return (
         <Stack sx={{
             // border:"4px solid green",
-            overflowY: "auto",
+            overflowY: "hidden",
             ...size("100%", "100%"),
             width: {
                 xs: "100%",
@@ -166,47 +166,66 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
                 <TextField label={"search"} value={searchMenuItem.value} onChange={(e)=>changeEventHandler(e)}/>
             </Stack>
             <Stack sx={{
-                height: '5rem',
+                height: '100%',
                 width: "100%",
-            }}>
-                <Categories
-                    setsearchMenuItem ={setsearchMenuItem}
-                    categories={menuInfo.categories}
-                    activeCategory={activeCategory}
-                    filterItems={filterItems}
-                />
-            </Stack>
-            <Stack sx={{
-                height: "100%",
-                maxHeight: "100%",
-                width: "100%",
-                maxWidth: "100%",
-
-                OverflowX: "hidden",
-                overflowY: "auto",
-                flexWrap: {
-                    xs: "nowrap",
-                    md: "wrap"
-                },
-                // border:"5px solid blue",
-                gap: 2,
-                padding: 2,
-                flexDirection: {
-                    xs: "column",
-                    md: "row",
-                },
-                pb: 25
-            }}>
-                {
-                    (searchMenuItem.open && searchMenuItem.menuItem.length > 0)?
-                    searchMenuItem?.menuItem?.map((item, key) => <MenuCard variableip={variableip}  val={val} setValue={setValue} key={key} items={item}/>)
-
-                    :
-                    menuItems?.map((item, key) => <MenuCard variableip={variableip}  val={val} setValue={setValue} key={key} items={item}/>)
+                flexDirection:{
+                    xs:"column",
+                    md:"row"
                 }
-                {/* {
-                } */}
-                {/* <MenuCard items={menuItems} /> */}
+            }}>
+                <Stack sx={{
+                    height:{
+                        xs:"5rem",
+                        md:"100%"
+                    },
+                    width:{
+                        xs:"100%",
+                        md:"8rem"
+                    },
+                    pb:{
+                        xs:0,
+                        md:10
+                    }    
+                }}>
+                    <Categories
+                        setsearchMenuItem ={setsearchMenuItem}
+                        categories={menuInfo.categories}
+                        activeCategory={activeCategory}
+                        filterItems={filterItems}
+                    />
+                </Stack>
+                <Stack sx={{
+                    height: "100%",
+                    maxHeight: "100%",
+                    width: "100%",
+                    maxWidth: "100%",
+
+                    OverflowX: "hidden",
+                    overflowY: "auto",
+                    flexWrap: {
+                        xs: "nowrap",
+                        md: "wrap"
+                    },
+                    // border:"5px solid blue",
+                    gap: 2,
+                    padding: 2,
+                    flexDirection: {
+                        xs: "column",
+                        md: "row",
+                    },
+                    pb: 25
+                }}>
+                    {
+                        (searchMenuItem.open && searchMenuItem.menuItem.length > 0)?
+                        searchMenuItem?.menuItem?.map((item, key) => <MenuCard variableip={variableip}  val={val} setValue={setValue} key={key} items={item}/>)
+
+                        :
+                        menuItems?.map((item, key) => <MenuCard variableip={variableip}  val={val} setValue={setValue} key={key} items={item}/>)
+                    }
+                    {/* {
+                    } */}
+                    {/* <MenuCard items={menuItems} /> */}
+                </Stack>
             </Stack>
         </Stack>
     );

@@ -27,7 +27,7 @@ const AddModal = ({
       return {
         categoryId: {
           value: viewOne?.viewObj?.categoryId ?? "",
-          type: "select",
+          type: "Options",
           name: "categoryId",
           title: "Catgeory",
           selectItem: restroState.restaurant.categories.map((cate) => {
@@ -50,7 +50,7 @@ const AddModal = ({
         //   title:"Item Rank"
         // },
         ignoreTaxes: {
-          value: viewOne?.viewObj?.ignoreTaxes ?? false,
+          value: viewOne?.viewObj?.ignoreTaxes ?? true,
           type: "boolean",
           name: "ignoreTaxes",
         },
@@ -86,6 +86,18 @@ const AddModal = ({
           type: "text",
           name: "itemAttributeid",
           title: "Item Attribute id",
+        },
+        variations:{
+          value: viewOne?.viewObj?.variations ?? [],
+          type: "option",
+          name: "variations",
+          title: "Variations",
+        },
+        addons:{
+          value: viewOne?.viewObj?.addons ?? [],
+          type: "option",
+          name: "addons",
+          title: "Addons",
         },
         // "itemdescription":{
         //   value:"",
@@ -220,7 +232,7 @@ const AddModal = ({
           setData={setData}
           key={index}
           values={data[values]}
-          data={values}
+          data={data}
         />
       ))}
       <Button

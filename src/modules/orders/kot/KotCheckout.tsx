@@ -1,10 +1,12 @@
-import { Button, Stack, TextField, Typography } from "@mui/material";
-import React, { useRef, useState } from "react";
+import { Button, Paper, Stack, TextField, Tooltip, Typography } from "@mui/material";
+import React, { useEffect, useRef, useState } from "react";
 import Orders from "../orders/Orders";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CreateIcon from "@mui/icons-material/Create";
+import { redDeleteStyle } from "common/styles/deleteStyle";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import ClearIcon from "@mui/icons-material/Clear";
+import PrintIcon from '@mui/icons-material/Print';
 import { flexBox } from "theme/defaultFunction";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
@@ -19,6 +21,7 @@ import moment from "moment";
 import SwapVertIcon from "@mui/icons-material/SwapVert";
 import KotModal from "modules/orders/kot/kotModal";
 import LocalSnackBar from "./components/snackBar";
+import TopBar from "common/topBar/TopBar";
 
 const KotCheckout = ({ order }) => {
   const router = useRouter();
@@ -30,6 +33,7 @@ const KotCheckout = ({ order }) => {
   });
 
   const [swapOpen, setSwapOpen] = useState(false);
+  const   [count, setCount] = useState(moment(new Date()));
   const user = useUserStore((state) => state.user);
   const { mutate } = useMutation(updateOrderStatus, {
     onSuccess: (data, variables, context) => {
@@ -90,7 +94,10 @@ const KotCheckout = ({ order }) => {
   const handleSwap = () => {
     setSwapOpen(true);
   };
-
+  useEffect(() => {
+    const timer = setTimeout(() => setCount(timeDiff(order?.details?.createdAt)), 1e3)
+    return () => clearTimeout(timer)
+   })
   return (
     <Stack
       sx={{
@@ -100,42 +107,54 @@ const KotCheckout = ({ order }) => {
       }}
     >
       <Stack>
-        <Typography variant="h3" textAlign={"center"} py={1}>
-          My orders
-        </Typography>
+        <TopBar title={"KOT Order"} backUrl="/restaurant/table" home={false}>
+          <Stack
+            justifyContent={"space-between"}
+            direction={"row"}
+            alignItems={"center"}
+          >
+            <Stack
+              sx={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Typography sx={{ px: 1 }}>Time(HH:MM:SS): </Typography>
+              <Typography>
+                {String(count)}{" "}
+              </Typography>
+            </Stack>
+            <Tooltip title="Print KOT">
+              <Button
+                variant="outlined"
+                sx={{
+                  m: 1,
+                }}
+                startIcon={<PrintIcon/>}
+                onClick={handlePrint}
+              >
+                KOT
+              </Button>
+
+            </Tooltip>
+          </Stack>
+        </TopBar>
         <Stack
           direction={"row"}
           flexWrap={"wrap"}
           justifyContent={"space-between"}
           gap={1}
+          p={1}
         >
           <Button
-            variant="text"
-            onClick={() => router.push("/restaurant/table")}
-            sx={{ ...flexBox() }}
+            variant="outlined"
+            startIcon={<SwapVertIcon />}
+            onClick={handleSwap}
           >
-            <ArrowBackIcon />
-            Table Booking
-          </Button>
-          <Button startIcon={<SwapVertIcon />} onClick={handleSwap}>
             Swap Tables
           </Button>
           <Button
-            variant="text"
-            sx={{ ...flexBox() }}
-            onClick={() => {
-              setOpenCancel({
-                ...openCancel,
-                orderId: order?.details?._id,
-                tableId: order?.details?.table?._id,
-                open: true,
-              });
-            }}
-          >
-            <ClearIcon /> Cancel
-          </Button>
-          <Button
-            variant="text"
+            variant="outlined"
             onClick={() => {
               router.push(
                 `/restaurant/table/menu?edit=${true}&table=${
@@ -147,8 +166,42 @@ const KotCheckout = ({ order }) => {
           >
             <CreateIcon /> Update Order
           </Button>
+        </Stack>
+      </Stack>
+      <Stack sx={{
+        height:"100%",
+        overflowY:"auto"
+      }}>
+        <Orders order={order?.details} />
+      </Stack>
+      <Paper elevation={0} variant="free" sx={{ p: 2, minWidth: "clamp(15rem,80vw,30rem)" }}>
+        <Stack sx={{...flexBox("row", "space-between")}}>
+          {user?.role == "OWNER" || user?.role == "CAPTAIN" ? 
           <Button
-            variant="text"
+            sx={redDeleteStyle}
+            onClick={() => {
+              setOpenCancel({
+                ...openCancel,
+                orderId: order?.details?._id,
+                tableId: order?.details?.table?._id,
+                open: true,
+              });
+            }}
+          >
+            <ClearIcon /> Cancel
+          </Button>
+          :
+          <></>
+          }
+
+          <Button
+            variant="contained"
+            color="inherit"
+            sx={{
+              ml: "auto",
+              backgroundColor: "#fff !important",
+              color: "#000 !important",
+            }}
             onClick={() => {
               let onjForOrder = {
                 orderDetail: {
@@ -161,40 +214,12 @@ const KotCheckout = ({ order }) => {
               console.log(onjForOrder);
               mutate(onjForOrder);
             }}
-            sx={{ ...flexBox() }}
           >
             <ReceiptIcon />
             Generate Bill{" "}
           </Button>
         </Stack>
-      </Stack>
-      <Stack
-        justifyContent={"space-between"}
-        direction={"row"}
-        alignItems={"center"}
-      >
-        <Stack
-          sx={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography sx={{ px: 1 }}>Time(HH:MM:SS): </Typography>
-          <Typography>
-            {String(timeDiff(order?.details?.createdAt))}{" "}
-          </Typography>
-        </Stack>
-        <Button
-          variant="outlined"
-          sx={{
-            m: 1,
-          }}
-          onClick={handlePrint}
-        >
-          Print KOT
-        </Button>
-      </Stack>
-      <Orders order={order?.details} />
+      </Paper>
       <div style={{ display: "none" }}>
         <TablePrint componentRef={componentRef} order={order?.details} />
       </div>

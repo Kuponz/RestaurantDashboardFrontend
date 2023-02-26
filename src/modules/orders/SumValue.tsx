@@ -39,13 +39,16 @@ const SumValue = ({ order}) => {
     return (
         <Stack p={1} height={"100%"}>
             {Object?.keys(order?.details?.orderAmount || {})?.map((data, index)=>{
+                if(data == "orderBeforeAddingGSTValue"){
+                    return null
+                }
                 return (
                     <Stack direction={"row"} key={index} justifyContent={"space-between"} alignItems={"center"} py={1}>
                         {/* {console.log({call:callfortitle(data), data})} */}
                         <Typography variant='h5'>{callfortitle(data)}</Typography>
                         <Stack direction={"row"}>
                             {(data == "total" || data == "orderGst") && <span>₹</span>}
-                            <Typography variant='h5'>{order?.details?.orderAmount[data]}</Typography>
+                            <Typography variant='h5'>{data == "orderExcludeGSTValue" ? order?.details?.orderAmount[data] + order?.details?.orderAmount["orderBeforeAddingGSTValue"]:order?.details?.orderAmount[data] }</Typography>
                         </Stack>
                     </Stack>
                 )
@@ -74,10 +77,10 @@ export const callfortitle = (val:String)=>{
             title="GST"
             break;
         case "orderBeforeAddingGSTValue":
-            title = "Order Total"
+            title = "Order Value"
             break;
         case "orderExcludeGSTValue":
-            title = "Order value with diffrent/No GST"
+            title = "Order value"
             break;
         case "total":
             title="Total"

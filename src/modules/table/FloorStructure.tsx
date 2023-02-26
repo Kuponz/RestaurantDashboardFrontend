@@ -4,7 +4,7 @@ import React from "react";
 const FloorStructure = ({ infoSelected, setinfoSelected, restroDetails }) => {
   return (
     <>
-      <FormControl fullWidth>
+      <FormControl fullWidth sx={{width:"200px"}}>
         <InputLabel>Floor</InputLabel>
         <Select
           label="Floor"

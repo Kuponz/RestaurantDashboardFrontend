@@ -17,6 +17,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
 import ViewListIcon from '@mui/icons-material/ViewList';
+import PrintIcon from '@mui/icons-material/Print';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
@@ -36,84 +37,97 @@ import HookSidebar from './HookSidebar';
 const drawerWidth = 240;
 
 
-export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen, isLoading, user}) {
+export default function SideBar({handleDrawerToggle,largeHide, mobileOpen, setMobileOpen, isLoading, user}) {
     const router = useRouter();
     const tabJSON = [
         {
             title:"Home",
             icons:<HomeRoundedIcon/>,
-            url:"/"
+            url:"/",
+            acess:["OWNER", "CAPTAIN", "WAITER"]
         },
         {
             title:"Book Table",
             icons:<TableRestaurantIcon/>,
-            url:"/restaurant/table"
+            url:"/restaurant/table",
+            acess:["OWNER", "CAPTAIN", "WAITER"]
 
         },
         {
             title: "Current Orders",
             icons:<LocalMallIcon/>,
-            url:"/restaurant/currentOrder"
+            url:"/restaurant/currentOrder",
+            acess:["OWNER", "CAPTAIN", "CHEF"]
 
         },
         {
             title: "Orders",
             icons:<ViewListIcon/>,
-            url:"/restaurant/orders"
+            url:"/restaurant/orders",
+            acess:["OWNER", "CAPTAIN"]
 
         },
         {
             title:"Dashboard",
             icons:<DashboardIcon/>,
-            url:"/restaurant/dashboard"
+            url:"/restaurant/dashboard",
+            acess:["OWNER"]
         },
         {
             title:"Inventory",
             icons:<InventoryIcon/>,
-            url:"/restaurant/inventory"
+            url:"/restaurant/inventory",
+            acess:["OWNER", "CAPTAIN"]
         },
         {
-            title:"Payments",
-            icons:<AccountBalanceWalletIcon/>,
-            url:"/restaurant/payments"
+            title:"Printer Settings",
+            icons:<PrintIcon/>,
+            url:"/restaurant/print",
+            acess:["OWNER", "CAPTAIN"]
         },
         {
             title:"Attendance",
             icons:<CurrencyRupeeIcon/>,
-            url:"/restaurant/attendance"
+            url:"/restaurant/attendance",
+            acess:["OWNER", "CAPTAIN"]
         },
     ]
     const tab2JSON=[
         {
             title:"Manage Table",
             icons:<TableBarIcon/>,
-            url:"/restaurant/manage/table"
+            url:"/restaurant/manage/table",
+            acess:["OWNER", "CAPTAIN"]
         },
         {
             title:"Manage Menu",
             icons:<MenuBookIcon/>,
-            url:"/restaurant/manage/menu"
+            url:"/restaurant/manage/menu",
+            acess:["OWNER", "CAPTAIN"]
         },
         {
             title:"Manage Users",
             icons:<PersonAddAltIcon/>,
-            url:"/restaurant/manage/users"
+            url:"/restaurant/manage/users",
+            acess:["OWNER"]
         },
         {
             title:"Manage Customers",
             icons:<PeopleAltIcon/>,
-            url:"/restaurant/manage/customers"
+            url:"/restaurant/manage/customers",
+            acess:["OWNER", "CAPTAIN"]
         },
         {
             title:"Recharge",
             icons:<PaymentsIcon/>,
-            url:"/restaurant/manage/recharge"
+            url:"/restaurant/manage/recharge",
+            acess:["OWNER", "CAPTAIN"]
         }
     ]
 
   const drawer = (
     <div>
-        <Stack sx={{
+        {largeHide && (<Stack sx={{
             ...flexBox("column"),
             py:3,
             cursor:"pointer"
@@ -122,7 +136,7 @@ export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen, 
             <Typography variant='h3'>etoPOS</Typography>
           </Tooltip>
             <Typography variant='caption'>Restaurant</Typography>
-        </Stack>
+        </Stack>)}
       {/* <Toolbar title='etoPOS' variant='regular' /> */}
       <Divider />
       {isLoading?
@@ -132,12 +146,12 @@ export default function SideBar({handleDrawerToggle, mobileOpen, setMobileOpen, 
       :
       <Stack>
       <List>
-        {tabJSON.map((text, index) =><HookSidebar text={text} key={index}/>
+        {tabJSON.map((text, index) =>text.acess.includes(user.role) && <HookSidebar largeHide= {largeHide} text={text} key={index}/>
         )} 
       </List>
       <Divider />
       <List>
-      {tab2JSON.map((text, index) =><HookSidebar text={text} key={index}/>
+      {tab2JSON.map((text, index) =>text.acess.includes(user.role) && <HookSidebar largeHide= {largeHide} text={text} key={index}/>
         )} 
       </List>
       </Stack>

@@ -231,10 +231,15 @@ const Checkout = ({
           </Button>
         </Stack>
         <Stack
-          direction={"row"}
+          direction={{
+            xs:"row",
+            md:"column",
+            lg:"row"
+          }}
           sx={{
             justifyContent: "space-between",
             p: 1,
+            gap:1
           }}
         >
           <Button

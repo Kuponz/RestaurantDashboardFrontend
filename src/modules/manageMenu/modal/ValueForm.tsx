@@ -1,31 +1,15 @@
-import { FormControl, FormControlLabel, InputLabel, MenuItem, Select, Switch, TextField } from '@mui/material'
+import { Button, FormControl, FormControlLabel, InputLabel, MenuItem, Select, Stack, Switch, TextField, Typography } from '@mui/material'
 import React from 'react'
+import { flexBox } from 'theme/defaultFunction'
+import BooleanField from './fields/BooleanField'
+import VariationsVal from './fields/VariationsVal'
+import TextForm from './fields/TextForm'
 
-const ValueForm = ({values, setData}) => {
+const ValueForm = ({values, setData, data}) => {
     // console.log({values});
     if(values.type == "boolean"){
         return (
-            <>
-            <FormControlLabel
-                sx={{
-                    justifyContent:"flex-start",
-                    flexDirection:"row"
-                }}
-                control={<Switch checked={values?.value} onChange={e=>{
-                    setData(oldData=>(
-                        {
-                         ...oldData, 
-                         [values.name]:{
-                            ...oldData[values.name],
-                            value:!values?.value,
-                        }
-                    }
-                    )) 
-                }}/>}
-                label={values?.name} 
-                labelPlacement="top"
-            />
-            </>
+            <BooleanField setData={setData} values={values}/>
         )
     }else if(values.type == "select"){
         return (<FormControl fullWidth>
@@ -52,20 +36,12 @@ const ValueForm = ({values, setData}) => {
             ))}
             </Select>
           </FormControl>)
-    }else{
+    }else if(values.type == "option"){
+        return (<VariationsVal values={values} setData={setData} data={data}/>)
+    }
+    else{
         return (
-            <>
-                <TextField value={values.value} name={values?.name} onChange={e=>{
-                    setData(dat=>({
-                        ...dat,
-                        [e.target.name]:{
-                            ...dat[e.target.name],
-                            value:e.target.value,
-
-                        },
-                    }))
-                }} variant='filled' label={values.title}/>
-            </>
+            <TextForm values={values} setData={setData}/>
         )
     }
 }

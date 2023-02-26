@@ -68,7 +68,7 @@ const Sales = () => {
               width: "100%",
               pt: 4,
               pr: 0,
-              pl: 0,
+              pl: 1,
             }}
           >
             <TopBar backUrl={"/"} home={true} title={""}>

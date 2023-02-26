@@ -32,8 +32,10 @@ const FloorWiseTable = ({restroDetails, infoSelected}) => {
       floorData?.tables?.map((tableData, index)=>(<CustomCard key={index} tableData={tableData}/>))
       
       :
-        <Typography>No Tables Added</Typography>
-        }
+      <Typography variant='h4'>
+        No Tables Added!
+      </Typography>
+      }
     </>
     )
     )}

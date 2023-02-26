@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import React from 'react'
 import { flexBox } from 'theme/defaultFunction';
 
-const HookSidebar = ({ text}) => {
+const HookSidebar = ({ text, largeHide}) => {
     const router = useRouter();
     let color = text.url == router.asPath ? "white":"#383d4a";
     return (
@@ -28,7 +28,7 @@ const HookSidebar = ({ text}) => {
         m:1
       }}>
         {text.icons}
-        {text.title}
+        {largeHide && text.title}
       </Stack>
     )
 }

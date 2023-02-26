@@ -9,6 +9,7 @@ import { Printer, Text, render } from 'react-thermal-printer';
 import { BillPrint } from 'modules/BillPrint';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import moment from 'moment';
+import PrintIcon from '@mui/icons-material/Print';
 
 
 const EmptyBill = ({order}) => {
@@ -69,8 +70,7 @@ const EmptyBill = ({order}) => {
                 <Typography variant="h3">Bill</Typography>
             </Stack>
             <Stack direction={"row"} gap={2} justifyContent={"center"} alignItems={"center"}>
-                <Button onClick={handlePrint} variant={"outlined"}>Print Bill</Button>
-                <Button variant={"outlined"}>Cancel</Button>
+                <Button onClick={handlePrint} startIcon={<PrintIcon/>} variant={"contained"} sx={{}}>Bill</Button>
             </Stack>
         </Stack>
         <Stack sx={{
