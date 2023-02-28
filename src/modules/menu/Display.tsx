@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import Categories from "./Categories";
 import items from "./data";
 import MenuCard from "./MenuCard";
@@ -8,6 +8,8 @@ import SearchFilter from "react-filter-search";
 import menu from './data';
 import { keys } from "@mui/system";
 import { SortGridMenuItems } from "@mui/x-data-grid";
+import BasicModal from "common/modalGenerator/Modal";
+import Addons from "./Addons";
 
 const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
 
@@ -15,7 +17,13 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
         _id: "ALL",
         categoryName: "All"
     });
-
+    
+    const [extraOpen, setExtraOpen] = useState({
+        open:false,
+        variations:[],
+        addons:[],
+        item:{}
+    })
     const [menuItems, setMenuItems] = useState(() => {
         console.log("ello" + val);
         let newMenu: any[] = [];
@@ -115,6 +123,7 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
             })
         }
     }
+  const [_, forceUpdate] = useReducer((x) => x + 1, 0);
     
     useEffect(()=>{
         // console.log("useEffect Called", menuInfo, activeCategory);
@@ -217,16 +226,25 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
                 }}>
                     {
                         (searchMenuItem.open && searchMenuItem.menuItem.length > 0)?
-                        searchMenuItem?.menuItem?.map((item, key) => <MenuCard variableip={variableip}  val={val} setValue={setValue} key={key} items={item}/>)
+                        searchMenuItem?.menuItem?.map((item, key) => <MenuCard forceUpdate={forceUpdate} extraOpen={extraOpen} setExtraOpen={setExtraOpen} variableip={variableip}  val={val} setValue={setValue} key={key} items={item}/>)
 
                         :
-                        menuItems?.map((item, key) => <MenuCard variableip={variableip}  val={val} setValue={setValue} key={key} items={item}/>)
+                        menuItems?.map((item, key) => <MenuCard forceUpdate={forceUpdate} extraOpen={extraOpen} setExtraOpen={setExtraOpen} variableip={variableip}  val={val} setValue={setValue} key={key} items={item}/>)
                     }
                     {/* {
                     } */}
                     {/* <MenuCard items={menuItems} /> */}
                 </Stack>
             </Stack>
+            {console.log({extraOpen})}
+            <BasicModal title={"Addons"} open={extraOpen?.open} setOpen={(val)=>{
+                extraOpen.open = val;
+                extraOpen.item = {};
+                setExtraOpen(extraOpen);
+                forceUpdate();
+            }}>
+                <Addons forceUpdate={forceUpdate} extraOpen={extraOpen} setExtraOpen={setExtraOpen}/>
+            </BasicModal>
         </Stack>
     );
 };

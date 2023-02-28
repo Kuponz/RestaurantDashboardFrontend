@@ -1,16 +1,15 @@
 
 import { Box, Paper, Stack, Button, IconButton, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { useEffect } from "react";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { flexBox } from "theme/defaultFunction";
 
-const MenuCard = ({ items, val, setValue, variableip }) => {
+const MenuCard = ({ items,extraOpen, val, forceUpdate, setValue, variableip, setExtraOpen }) => {
     const [itemVal, setitemVal] = useState({
-        
-        
     });
+
     // console.log({itemVal})
     useEffect(()=>{
         setitemVal(val.find(vali=>vali.item._id == items._id));
@@ -74,14 +73,24 @@ const MenuCard = ({ items, val, setValue, variableip }) => {
                 }}>
 
                    <Button onClick={()=>{
+                    if(items?.addons?.length > 0 || items.variations.length > 0){
+                        extraOpen.open = true;
+                        extraOpen.item = items;
+                        setExtraOpen(extraOpen);
+                        console.log({extraOpen})
+                        forceUpdate();
+                    }else{
                         setValue([
                             ...val,
                             {
                                 item:items,
-                                quantity:1
+                                quantity:1,
+                                variations:[],
+                                addons:[]
                             }
                         
                         ])
+                    }
                     }} variant="outlined" sx={{...flexBox()}}><AddIcon/>Add</Button>
                 </Box>
                 :

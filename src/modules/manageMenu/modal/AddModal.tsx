@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import ValueForm from "./ValueForm";
 import { useMutation } from "@tanstack/react-query";
 import { createCategory, createItem } from "store/api/axiosSetup";
+import { useRouter } from "next/router";
 
 // {
 //   "categoryName":"Main Course",
@@ -27,7 +28,7 @@ const AddModal = ({
       return {
         categoryId: {
           value: viewOne?.viewObj?.categoryId ?? "",
-          type: "Options",
+          type: "select",
           name: "categoryId",
           title: "Catgeory",
           selectItem: restroState.restaurant.categories.map((cate) => {
@@ -147,6 +148,7 @@ const AddModal = ({
       };
     }
   });
+  const router = useRouter();
   const { mutate, isLoading } = useMutation(createCategory, {
     onSuccess: (data, variables, context) => {
       console.log({
@@ -160,6 +162,7 @@ const AddModal = ({
       ]);
       // setNewUser(false);
       setOpen();
+      
     },
     onError(error, variables, context) {
       console.log({ error });
@@ -190,14 +193,15 @@ const AddModal = ({
       restroState.setCategories([...categoryAddedRestro]);
       setOpen();
       if(viewOne?.open){
+        router.reload();
         setErrorOpener({
           ...errorOpener,
           message: "SuccesFully Updated a menu Item",
           open: true,
           severity: "success",
         });
-
       }else{
+        router.reload();
         setErrorOpener({
           ...errorOpener,
           message: "SuccesFully Added",
@@ -254,8 +258,10 @@ const AddModal = ({
               minimumpreparationtime: data.minimumpreparationtime?.value,
               price: data.price?.value,
               itemTax: data.itemTax?.value,
+              variations:data?.variations?.value,
+              addons: data?.addons?.value
             };
-            console.log(sendData);
+            console.log({sendData});
             if(viewOne?.open && viewOne?.viewObj?._id){
               sendData.menuId = viewOne?.viewObj?._id;
               sendData.isEdit = viewOne?.open;
