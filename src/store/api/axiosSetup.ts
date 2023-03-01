@@ -1,9 +1,9 @@
 import axios from "axios";
 import { GenericResponse } from "./types";
 
-// const BASE_URL = "https://etopos.up.railway.app/";   //QA URL
+const BASE_URL = "https://etoposqa.up.railway.app/";   //QA URL
 //  const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
-const BASE_URL = "http://localhost:5000/"; //LocalHost Url
+// const BASE_URL = "http://localhost:5000/"; //LocalHost Url
 
 const authApi = axios.create({
   baseURL: BASE_URL,

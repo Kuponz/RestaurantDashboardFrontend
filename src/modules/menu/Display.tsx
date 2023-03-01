@@ -6,8 +6,6 @@ import { Stack, TextField } from "@mui/material";
 import { flexBox, size } from "theme/defaultFunction";
 import SearchFilter from "react-filter-search";
 import menu from './data';
-import { keys } from "@mui/system";
-import { SortGridMenuItems } from "@mui/x-data-grid";
 import BasicModal from "common/modalGenerator/Modal";
 import Addons from "./Addons";
 
@@ -22,7 +20,9 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
         open:false,
         variations:[],
         addons:[],
-        item:{}
+        item:{},
+        selected:[],
+        quantity:0,
     })
     const [menuItems, setMenuItems] = useState(() => {
         console.log("ello" + val);
@@ -243,7 +243,8 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
                 setExtraOpen(extraOpen);
                 forceUpdate();
             }}>
-                <Addons forceUpdate={forceUpdate} extraOpen={extraOpen} setExtraOpen={setExtraOpen}/>
+                <Addons val={val} setValue={setValue} forceUpdate={forceUpdate} extraOpen={extraOpen} setExtraOpen={setExtraOpen}/>
+
             </BasicModal>
         </Stack>
     );

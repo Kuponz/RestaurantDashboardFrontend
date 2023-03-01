@@ -76,6 +76,13 @@ const MenuCard = ({ items,extraOpen, val, forceUpdate, setValue, variableip, set
                     if(items?.addons?.length > 0 || items.variations.length > 0){
                         extraOpen.open = true;
                         extraOpen.item = items;
+                        extraOpen.quantity = 1;
+                        extraOpen.selected = [
+                            {
+                                variations:[...items?.variations],
+                                addons:[...items?.addons]
+                            }
+                        ];
                         setExtraOpen(extraOpen);
                         console.log({extraOpen})
                         forceUpdate();
@@ -85,13 +92,11 @@ const MenuCard = ({ items,extraOpen, val, forceUpdate, setValue, variableip, set
                             {
                                 item:items,
                                 quantity:1,
-                                variations:[],
-                                addons:[]
                             }
                         
                         ])
                     }
-                    }} variant="outlined" sx={{...flexBox()}}><AddIcon/>Add</Button>
+                    }} variant="outlined" startIcon={<AddIcon/>} sx={{...flexBox()}}>Add</Button>
                 </Box>
                 :
                 <Box sx={{
