@@ -32,6 +32,7 @@ specifiers:
   react-to-print: ^2.14.11
   tailwindcss: ^3.2.4
   typescript: 4.9.4
+  uuid: ^9.0.0
   zustand: ^4.3.2
 
 dependencies:
@@ -66,6 +67,7 @@ dependencies:
   react-to-print: 2.14.11_biqbaboplfbrettd7655fr4n2y
   tailwindcss: 3.2.4
   typescript: 4.9.4
+  uuid: 9.0.0
   zustand: 4.3.2_react@18.2.0
 
 packages:
@@ -5525,6 +5527,11 @@ packages:
 
   /util-deprecate/1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
+    dev: false
+
+  /uuid/9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
     dev: false
 
   /webidl-conversions/4.0.2:

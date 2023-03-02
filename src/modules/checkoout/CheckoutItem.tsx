@@ -36,6 +36,9 @@ import { stringify } from 'querystring';
 export default function SimpleAccordion({orderValue,setValue, val, variableip, index}) {
   const [specialOpen, setSpecialOpen] = React.useState(false);
   const specialInstruction = React.useRef("");
+  const [_, forceUpdate] = React.useReducer((x) => x + 1, 0);
+    
+  console.log({orderValue});
   return (
       <Accordion TransitionProps={{ unmountOnExit: true }} sx={{ 
         width:"100%",
@@ -71,19 +74,72 @@ export default function SimpleAccordion({orderValue,setValue, val, variableip, i
         </AccordionSummary>
         <AccordionDetails>
             <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
-                <IconButton onClick={()=>{return variableip(orderValue.item, "+")}}><AddIcon/></IconButton>
+                <IconButton 
+                onClick={()=>{
+                  if(orderValue?.item?.selected?.length > 0){
+                    console.log({
+                      v:val[index]
+                    })
+                    // val[index].item.selected.push(val[index].selected[val[index]?.selected?.length - 1]);
+                    console.log({val:val[index].item.selected[val[index].item.selected.length -1]});
+                    let newValInd = val[index].item.selected[val[index].item.selected.length -1];
+                    val[index].item.selected.push(newValInd);
+                    // val[index].item.selected[-1]
+                    val[index].quantity += 1;
+                    setValue(val);
+                    forceUpdate();
+                  }else{
+                    variableip(orderValue.item, "+")
+
+                  }
+                  }}
+                // onClick={()=>{return variableip(orderValue.item, "+")}}
+                
+                ><AddIcon/></IconButton>
                 <Stack sx={{
                         width:"4rem"
                     }}>
                         <TextField value={orderValue.quantity} onChange={e=>variableip(orderValue.item, "*", e.target.value)}/>
                     </Stack>
-                <IconButton onClick={()=>{return variableip(orderValue.item, "-")}}><RemoveIcon/></IconButton>
+                <IconButton onClick={()=>{
+                  if(orderValue?.item?.selected?.length > 0){
+                    console.log({
+                      v:val[index]
+                    })
+                    // val[index].item.selected.push(val[index].selected[val[index]?.selected?.length - 1]);
+                    console.log({val:val[index].item.selected[val[index].item.selected.length -1]});
+                    val[index].item.selected.pop();
+                    // val[index].item.selected[-1]
+                    val[index].quantity -= 1;
+                    setValue(val);
+                    forceUpdate();
+                  }else{
+                    variableip(orderValue.item, "-")
+
+                  }
+                  }}><RemoveIcon/></IconButton>
                 <IconButton color='error'><DeleteIcon/></IconButton>
             </Stack>
             <Stack>
               <Typography my={0.5}>
               {orderValue?.item?.itemName}
               </Typography>
+              <Typography variant='body2' color={"primary"}  sx={{}}>
+              {orderValue?.item?.selected?.map(sel=>{
+                return (
+                  <>
+                  {sel.variations.map((selu, id)=>(
+                  <span key={id}>
+                    {selu?.variationOptions.find(elm=>elm._id == selu.selected).optName} <br/> 
+                  </span>
+                  ))}
+                    x1 <br/> 
+                  </>
+                )
+
+              })}
+              </Typography>
+                  
               <Typography color={"primary.main"} my={0.5}>
                 {orderValue?.specialInstruction}
               </Typography>
