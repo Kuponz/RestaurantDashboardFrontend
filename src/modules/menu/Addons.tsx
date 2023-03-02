@@ -1,6 +1,10 @@
 import {
   Button,
+  FormControl,
+  FormControlLabel,
   FormLabel,
+  Radio,
+  RadioGroup,
   Stack,
   Typography,
 } from "@mui/material";
@@ -112,29 +116,7 @@ const Addons = ({ setExtraOpen, val, setValue, forceUpdate, extraOpen }) => {
               <SelectForm vari={vari} variNa={variNa} extraOpen={extraOpen} forceUpdate={forceUpdate} setExtraOpen={setExtraOpen} />
             </Stack>
           ))}
-          {/* <FormControl>
-              
-              <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
-            name="radio-buttons-group"
-            defaultValue={extraOpen?.selected[k]?.variations[ke]?.selected}
-          >
-            
-            <Stack direction={"row"} flexWrap={"wrap"}>
-              {
-                variNa?.variationOptions?.map((varOps, ik) => (
-                  <FormControlLabel
-                    key={ik}
-                    name={varOps.optName}
-                    value={varOps._id}
-                    control={<Radio />}
-                    label={`${varOps.optName} | ₹${varOps.price} `}
-                  />
-                ))
-              }
-            </Stack>
-          </RadioGroup>
-            </FormControl> */}
+          
           {/* 
           {
             vari?.addons?.map((variNa, ke)=>(

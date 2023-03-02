@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { userestaurantStore } from "store/restaurant/restaurantStore";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import TableRestaurantIcon from '@mui/icons-material/TableRestaurant';
+import moment from "moment";
 
 export const BillPrint = ({order, reference=false, componentRef, setShowPrint}) => {
   const router = useRouter();
@@ -22,7 +23,14 @@ export const BillPrint = ({order, reference=false, componentRef, setShowPrint}) 
       }}><TableRestaurantIcon/>Back to Table Booking</Button>
       </Stack>
       <Stack ref={el=>(componentRef.current = el)}>
-        <Typography variant="h3" textAlign={"center"} pt={5} pb={2}>{restaurant.restaurantInfo.restaurantName}</Typography>
+        <Stack>
+          <Typography variant="h3" textAlign={"center"} pt={1} pb={1}>{restaurant.restaurantInfo.restaurantName}</Typography>
+          <Typography textAlign={"end"} px = {{
+            xs: 1,
+            md: 2,
+          }}>{moment(order?.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</Typography>
+
+        </Stack>
         <Stack sx={{
           p:2
         }}>

@@ -25,24 +25,8 @@ const EmptyBill = ({order}) => {
                 <BillPrint componentRef={componentRef} order={order?.details} setShowPrint={setShowPrint} reference={false}/>
             </Printer>
         );
-        try {
-            const port = await window.navigator.serial.requestPort();
-            console.log(`Serial port opened: ${port.path}`);
-            console.log(await window.navigator.serial.onconnect)
-            console.log(await window.navigator.serial.ondisconnect)
-            console.log({port});
-            const writer = port.writable?.getWriter();
-            if (writer != null) {
-                await writer.write(data);
-                writer.releaseLock();
-            }
-            // Perform additional actions with the port
-        } 
-        catch (error) {
-            console.error(`Error opening serial port: ${error}`);
-            setShowPrint(true);
-            handlePrintPart2();
-        }        
+        setShowPrint(true);
+        handlePrintPart2();
            
     }  
     const timeDiff= (createdAt, updatedAt)=>{

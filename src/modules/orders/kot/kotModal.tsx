@@ -150,16 +150,17 @@ const KotModal = (props: PropType) => {
         }}>
           <Stack alignItems={"center"} gap={2}>
             <Paper
-              variant="free"
+              variant="reserved"
               sx={{
-                minWidth: "20vw",
+                minWidth: "15vw",
                 display: "grid",
+                textAlign:"center"
               }}
             >
               <Typography p={0.5} color={"white"} variant="body2">
                 Current Table
               </Typography>
-              <Typography p={1} variant="h5">
+              <Typography p={1} variant="h5" color={"white"}>
                 {data.details.table.TableName}
               </Typography>
             </Paper>

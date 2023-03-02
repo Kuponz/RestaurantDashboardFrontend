@@ -128,9 +128,9 @@ export default function SimpleAccordion({orderValue,setValue, val, variableip, i
               {orderValue?.item?.selected?.map(sel=>{
                 return (
                   <>
-                  {sel.variations.map((selu, id)=>(
+                  {sel.variations.length > 0 && sel.variations.map((selu, id)=>(
                   <span key={id}>
-                    {selu?.variationOptions.find(elm=>elm._id == selu.selected).optName} <br/> 
+                    {selu?.variationOptions?.find(elm=>elm._id == selu.selected)?.optName} <br/> 
                   </span>
                   ))}
                     x1 <br/> 
