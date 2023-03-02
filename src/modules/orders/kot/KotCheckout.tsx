@@ -163,7 +163,13 @@ const KotCheckout = ({ order }) => {
       }}>
         <Orders order={order?.details} />
       </Stack>
-      <Paper elevation={0} variant="free" sx={{ p: 2, minWidth: "clamp(15rem,80vw,30rem)" }}>
+      <Paper elevation={0} variant="free" sx={{ p: 2, minWidth: "clamp(15rem,80vw,30rem)", mb:{
+        xs:8,
+        md:0
+      }, mx:{
+        xs:2,
+        md:0
+      }}}>
         <Stack sx={{...flexBox("row", "space-between")}}>
           {user?.role == "OWNER" || user?.role == "CAPTAIN" ? 
           <Button

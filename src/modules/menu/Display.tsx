@@ -165,7 +165,7 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
             }}>
                 <Stack sx={{
                     height:{
-                        xs:"5rem",
+                        xs:"4rem",
                         md:"100%"
                     },
                     width:{
@@ -186,7 +186,7 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
                 </Stack>
                 <Stack sx={{
                     height: "100%",
-                    maxHeight: "100%",
+                    maxHeight: "65vh",
                     width: "100%",
                     maxWidth: "100%",
 
