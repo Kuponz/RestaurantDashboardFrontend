@@ -179,7 +179,7 @@ export default function SideBar({handleDrawerToggle,largeHide, mobileOpen, setMo
           variant="permanent"
           sx={{
             display: { xs: 'none', sm: 'block' },
-            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, height:"100%" },
+            '& .MuiDrawer-paper': { boxSizing: 'border-box', width: largeHide?drawerWidth:90, height:"100%" },
           }}
           open
         >
