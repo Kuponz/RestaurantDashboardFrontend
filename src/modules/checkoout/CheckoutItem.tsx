@@ -114,8 +114,15 @@ export default function SimpleAccordion({orderValue,setValue, val, variableip, i
                     val[index].item.selected.pop();
                     // val[index].item.selected[-1]
                     val[index].quantity -= 1;
-                    setValue(val);
-                    forceUpdate();
+                    if(val[index].quantity == 0){
+                      let newValI = val.filter((valu, valI)=>index != valI);
+                      setValue(newValI);
+                      forceUpdate();
+                    }else{
+                      setValue(val);
+                      forceUpdate();
+
+                    }
                   }else{
                     variableip(orderValue.item, "-")
 
