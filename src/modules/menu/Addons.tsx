@@ -8,7 +8,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { redDeleteStyle } from "common/styles/deleteStyle";
 import React, { useEffect } from "react";
 import { flexBox } from "theme/defaultFunction";
@@ -96,9 +96,11 @@ const Addons = ({ setExtraOpen, val, setValue, forceUpdate, extraOpen }) => {
             <Typography variant={"subtitle1"}>Quantity No {k + 1}</Typography>
             <Button
               onClick={() => {
+                console.log(extraOpen);
                 extraOpen.selected = extraOpen.selected.filter(
                   (kom, mid) => mid != k
                 );
+                extraOpen.quantity = extraOpen.quantity - 1;
                 setExtraOpen(extraOpen);
                 forceUpdate();
               }}
@@ -113,10 +115,16 @@ const Addons = ({ setExtraOpen, val, setValue, forceUpdate, extraOpen }) => {
               <FormLabel id="demo-radio-buttons-group-label">
                 {variNa.variationName}
               </FormLabel>
-              <SelectForm vari={vari} variNa={variNa} extraOpen={extraOpen} forceUpdate={forceUpdate} setExtraOpen={setExtraOpen} />
+              <SelectForm
+                vari={vari}
+                variNa={variNa}
+                extraOpen={extraOpen}
+                forceUpdate={forceUpdate}
+                setExtraOpen={setExtraOpen}
+              />
             </Stack>
           ))}
-          
+
           {/* 
           {
             vari?.addons?.map((variNa, ke)=>(

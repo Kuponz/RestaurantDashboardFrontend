@@ -186,7 +186,7 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
                 </Stack>
                 <Stack sx={{
                     height: "100%",
-                    maxHeight: "65vh",
+                    maxHeight: {xs:"65vh",md:"75vh"},
                     width: "100%",
                     maxWidth: "100%",
 
