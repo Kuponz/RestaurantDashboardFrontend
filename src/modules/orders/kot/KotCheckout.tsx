@@ -1,4 +1,4 @@
-import { Button, Paper, Stack, TextField, Tooltip, Typography } from "@mui/material";
+import { Button, CircularProgress, Paper, Stack, TextField, Tooltip, Typography } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import Orders from "../orders/Orders";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -35,7 +35,7 @@ const KotCheckout = ({ order }) => {
   const [swapOpen, setSwapOpen] = useState(false);
   const   [count, setCount] = useState(moment(new Date()));
   const user = useUserStore((state) => state.user);
-  const { mutate } = useMutation(updateOrderStatus, {
+  const { mutate, isLoading } = useMutation(updateOrderStatus, {
     onSuccess: (data, variables, context) => {
       console.log({
         data: data.data.data,
@@ -54,43 +54,30 @@ const KotCheckout = ({ order }) => {
   const handlePrintPart2 = useReactToPrint({
     content: () => componentRef.current,
   });
+  console.log({
+    order
+  })
+  const timeDiff = (createdAt) => {
+    var now = moment(new Date()); //todays date
+    var end = moment(createdAt); // another date
+    var duration = moment.duration(now.diff(end));
+    // console.log({
+    //   now,
+    //   end,
+    //   duration,
+    // });
+    var days = moment.utc(duration.asMilliseconds()).format("HH:mm:ss");
+    // console.log(moment(duration).hour(), moment(duration).minutes(), moment(duration).second())
+    return days;
+  };
   const handlePrint = async () => {
     const data = await render(
       <Printer type="epson">
         <TablePrint componentRef={componentRef} order={order?.details} />
       </Printer>
     );
-    try {
-      const port = await window.navigator.serial.requestPort();
-      console.log(`Serial port opened: ${port.path}`);
-      console.log(await window.navigator.serial.onconnect);
-      console.log(await window.navigator.serial.ondisconnect);
-      console.log({ port });
-      const writer = port.writable?.getWriter();
-      if (writer != null) {
-        await writer.write(data);
-        writer.releaseLock();
-      }
-      // Perform additional actions with the port
-    } catch (error) {
-      console.error(`Error opening serial port: ${error}`);
-      handlePrintPart2();
-    }
+    handlePrintPart2();
   };
-  const timeDiff = (createdAt) => {
-    var now = moment(new Date()); //todays date
-    var end = moment(createdAt); // another date
-    var duration = moment.duration(now.diff(end));
-    console.log({
-      now,
-      end,
-      duration,
-    });
-    var days = moment.utc(duration.asMilliseconds()).format("HH:mm:ss");
-    // console.log(moment(duration).hour(), moment(duration).minutes(), moment(duration).second())
-    return days;
-  };
-
   const handleSwap = () => {
     setSwapOpen(true);
   };
@@ -150,11 +137,13 @@ const KotCheckout = ({ order }) => {
             variant="outlined"
             startIcon={<SwapVertIcon />}
             onClick={handleSwap}
+            disabled={isLoading}
           >
             Swap Tables
           </Button>
           <Button
             variant="outlined"
+            disabled={isLoading}
             onClick={() => {
               router.push(
                 `/restaurant/table/menu?edit=${true}&table=${
@@ -174,11 +163,18 @@ const KotCheckout = ({ order }) => {
       }}>
         <Orders order={order?.details} />
       </Stack>
-      <Paper elevation={0} variant="free" sx={{ p: 2, minWidth: "clamp(15rem,80vw,30rem)" }}>
+      <Paper elevation={0} variant="free" sx={{ p: 2, minWidth: "clamp(15rem,80vw,30rem)", mb:{
+        xs:8,
+        md:0
+      }, mx:{
+        xs:2,
+        md:0
+      }}}>
         <Stack sx={{...flexBox("row", "space-between")}}>
           {user?.role == "OWNER" || user?.role == "CAPTAIN" ? 
           <Button
             sx={redDeleteStyle}
+            disabled={isLoading}
             onClick={() => {
               setOpenCancel({
                 ...openCancel,
@@ -202,6 +198,7 @@ const KotCheckout = ({ order }) => {
               backgroundColor: "#fff !important",
               color: "#000 !important",
             }}
+            disabled={isLoading}
             onClick={() => {
               let onjForOrder = {
                 orderDetail: {
@@ -214,9 +211,9 @@ const KotCheckout = ({ order }) => {
               console.log(onjForOrder);
               mutate(onjForOrder);
             }}
+            startIcon={<ReceiptIcon />}
           >
-            <ReceiptIcon />
-            Generate Bill{" "}
+            {isLoading?<CircularProgress/>:"Generate Bill "}
           </Button>
         </Stack>
       </Paper>

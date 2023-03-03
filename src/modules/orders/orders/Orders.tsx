@@ -2,8 +2,9 @@ import { Stack, Typography } from "@mui/material";
 import React from "react";
 import { SeperateOrder } from "./SeperateOrder";
 import { callfortitle } from "../SumValue";
+import moment from "moment";
 
-const Orders = ({ order, print = false}) => {
+const Orders = ({ order, print = false, isKot=false}) => {
   return (
     <Stack
       sx={{
@@ -32,14 +33,14 @@ const Orders = ({ order, print = false}) => {
           direction={"row"}
           sx={{
             width: "50%",
-            justifyContent: "space-between",
+            justifyContent: isKot ?"flex-end":"space-between",
           }}
         >
           <Stack direction={"row"} gap={1}>
-            <Typography variant="body1">Price</Typography>
+            {!isKot && <Typography variant="body1">Price</Typography>}
             <Typography variant="body1"> Quantity</Typography>
           </Stack>
-          <Typography variant="body1">Total</Typography>
+          {!isKot && <Typography variant="body1">Total</Typography>}
         </Stack>
       </Stack>
       <Stack
@@ -54,7 +55,7 @@ const Orders = ({ order, print = false}) => {
       >
         {order?.order?.map((orderVal, orderINdex) => (
           <>
-            <SeperateOrder orderVal={orderVal} key={orderINdex} />
+            <SeperateOrder isKot={isKot} orderVal={orderVal} key={orderINdex} />
           </>
         ))}
       </Stack>

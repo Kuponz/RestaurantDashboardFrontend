@@ -45,23 +45,31 @@ const MainMenu = () => {
                         categories: data?.data?.data?.category
                     })
 
-                    data?.data?.data?.tableDetails?.orderId?.order.map(ori => {
-                        ori.item = ori.menuId
+                    let newOrder = data?.data?.data?.tableDetails?.orderId?.order.map(ori => {
+                        ori.item = {...ori.menuId, selected:ori.selected};
+                        return ori;
                     })
+                    newOrder = newOrder.filter(newOr=>newOr.quantity != 0)
                     console.log({
-                        valu: val.map(vall => {
-                            let finalData = data?.data?.data?.tableDetails?.orderId?.order?.find(oldo => oldo.item._id == vall.item._id)
+                        newOrder,
+                        vali:val.map(vall => {
+                            let finalData = newOrder.find(oldo => oldo.item._id == vall.item._id)
                             return finalData
-
-                        })
+                        }),
+                        len:val.map(vall => {
+                            let finalData = newOrder.find(oldo => oldo.item._id == vall.item._id)
+                            return finalData
+                        }).length == 0
                     });
 
-                    if (val.map(vall => {
-                        let finalData = data?.data?.data?.tableDetails?.orderId?.order?.find(oldo => oldo.item._id == vall.item._id)
-                        return finalData
-                    }).length == 0) {
-
-                        setValue([...val, ...data?.data?.data?.tableDetails?.orderId?.order])
+                    if (val.length == 0) {
+                        setValue([...newOrder])
+                    }else{
+                        let newValo = val.map(vall => {
+                            let finalData = newOrder.find(oldo => oldo.item._id == vall.item._id)
+                            return finalData
+                        })
+                        setValue(newValo);
                     }
                     setoldOrderId(data?.data?.data?.tableDetails?.orderId?._id)
                     /*
@@ -85,6 +93,7 @@ const MainMenu = () => {
             </Stack>
         )
     }
+    console.log({val})
 
     const variableip = (items, status, ipdata = 0) => {
         let newVal = val.filter((order) => {

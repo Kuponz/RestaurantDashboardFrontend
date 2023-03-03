@@ -146,31 +146,12 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
         }
     }, [activeCategory, menuInfo.categories])
     return (
-        <Stack sx={{
-            // border:"4px solid green",
-            overflowY: "hidden",
-            ...size("100%", "100%"),
-            width: {
-                xs: "100%",
-                md: "70%",
-            },
-            maxWidth: {
-                xs: "100%",
-                md: "70%",
-            },
-            overflowX: "hidden",
-            alignItems: {
-                xs: "center",
-                md: "flex-start",
-            },
-            // flex:1,
-            maxHeight: "100%",
-            pt: 1
-        }}>
+        <Stack sx={{flex:1}}>
             <Stack sx={{
                 height: '5rem',
                 p: 1,
-                width: "100%"
+                width: "100%",
+                flex:1
             }}>
                 <TextField label={"search"} value={searchMenuItem.value} onChange={(e)=>changeEventHandler(e)}/>
             </Stack>
@@ -184,7 +165,7 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
             }}>
                 <Stack sx={{
                     height:{
-                        xs:"5rem",
+                        xs:"4rem",
                         md:"100%"
                     },
                     width:{
@@ -205,7 +186,7 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
                 </Stack>
                 <Stack sx={{
                     height: "100%",
-                    maxHeight: "100%",
+                    maxHeight: "65vh",
                     width: "100%",
                     maxWidth: "100%",
 
@@ -222,6 +203,8 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
                         xs: "column",
                         md: "row",
                     },
+                    justifyContent:"flex-start",
+                    alignContent:"start",
                     pb: 25
                 }}>
                     {

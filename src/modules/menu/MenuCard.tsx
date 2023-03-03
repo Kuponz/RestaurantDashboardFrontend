@@ -31,6 +31,7 @@ const MenuCard = ({ items,extraOpen, val, forceUpdate, setValue, variableip, set
                 lg:"30%",
                 xl:"32%"
             },
+            height:"fit-content",
             backgroundColor:theme=>itemVal && itemVal.quantity > 0 ?theme.palette.secondary.main:theme.palette.background.default
         }}
             elevation={6}

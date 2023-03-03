@@ -22,7 +22,7 @@ const HomeStructure = ({ children }) => {
   const router = useRouter();
   const drawerWidth = 240;
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [largeHide, setlargeHide] = React.useState(true);
+  const [largeHide, setlargeHide] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -122,12 +122,6 @@ const HomeStructure = ({ children }) => {
       </AppBar>
       <Box
         sx={{
-          "& .css-1hssoln-MuiDrawer-docked .MuiDrawer-paper":{
-            width: {
-              sm: largeHide ? 240 : 90,
-            },
-
-          },
           flexShrink: { sm: 0 },
         }}
       >
