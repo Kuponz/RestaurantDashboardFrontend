@@ -1,10 +1,5 @@
-import {
-  Button,
-  FormLabel,
-  Stack,
-  Typography,
-} from "@mui/material";
-import { v4 as uuidv4 } from 'uuid';
+import { Button, FormLabel, Stack, Typography } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
 import { redDeleteStyle } from "common/styles/deleteStyle";
 import React, { useEffect } from "react";
 import { flexBox } from "theme/defaultFunction";
@@ -47,7 +42,7 @@ const Addons = ({ setExtraOpen, val, setValue, forceUpdate, extraOpen }) => {
       {
         variations: [...extraOpen.item.variations],
         addons: [...extraOpen.item.addons],
-        id:uuidv4(),
+        id: uuidv4(),
       },
     ];
     extraOpen.quantity = extraOpen.selected.length;

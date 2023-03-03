@@ -1,7 +1,15 @@
 import { MenuItem, Select } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const SelectForm = ({ vari, variNa, extraOpen, setExtraOpen, forceUpdate }) => {
+  let someOpen = structuredClone(extraOpen);
+  const [current, setcurrent] = useState(extraOpen);
+
+  useEffect(() => {
+    setcurrent(someOpen);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [extraOpen]);
+// ! This is Some Fucked Up Logic But it works
   return (
     <Select
       variant="filled"
@@ -19,7 +27,7 @@ const SelectForm = ({ vari, variNa, extraOpen, setExtraOpen, forceUpdate }) => {
         //   setExtraOpen(extraOpen);
         //   forceUpdate();
         console.log({ variNa, hs: extraOpen.selected, vari });
-        extraOpen.selected = extraOpen.selected.map((seli) => {
+        someOpen.selected = current.selected.map((seli) => {
           if (seli.id == vari.id) {
             seli.variations = seli.variations.map((vair) => {
               if (vair._id == variNa._id) {
@@ -31,7 +39,7 @@ const SelectForm = ({ vari, variNa, extraOpen, setExtraOpen, forceUpdate }) => {
           return seli;
         });
         console.log({ extraOpen });
-        setExtraOpen(extraOpen);
+        setExtraOpen(someOpen);
         forceUpdate();
       }}
     >
