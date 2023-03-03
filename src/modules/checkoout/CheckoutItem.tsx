@@ -76,16 +76,17 @@ export default function SimpleAccordion({orderValue,setValue, val, variableip, i
         <AccordionDetails>
             <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
                 <IconButton 
-                onClick={()=>{
+                onClick={async ()=>{
                   if(orderValue?.item?.selected?.length > 0){
                     console.log({
                       v:val[index]
                     })
                     // val[index].item.selected.push(val[index].selected[val[index]?.selected?.length - 1]);
                     console.log({val:val[index].item.selected[val[index].item.selected.length -1]});
-                    let newValInd = val[index].item.selected[val[index].item.selected.length -1];
-                    newValInd.id = uuidv4();
+                    let newValInd = {...val[index].item.selected[val[index].item.selected.length -1], id:uuidv4()};
+                    console.log({newValInd})
                     val[index].item.selected.push(newValInd);
+                    // val[index].item.selected[val[index].item.selected.length -1].id = await Promise.all(uuidv4());
                     // val[index].item.selected[-1]
                     val[index].quantity += 1;
                     setValue(val);
