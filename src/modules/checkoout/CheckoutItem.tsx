@@ -26,6 +26,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import { v4 as uuidv4 } from "uuid";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Button, IconButton, Stack, TextField } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -83,6 +84,7 @@ export default function SimpleAccordion({orderValue,setValue, val, variableip, i
                     // val[index].item.selected.push(val[index].selected[val[index]?.selected?.length - 1]);
                     console.log({val:val[index].item.selected[val[index].item.selected.length -1]});
                     let newValInd = val[index].item.selected[val[index].item.selected.length -1];
+                    newValInd.id = uuidv4();
                     val[index].item.selected.push(newValInd);
                     // val[index].item.selected[-1]
                     val[index].quantity += 1;
