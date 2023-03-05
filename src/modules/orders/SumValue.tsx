@@ -7,8 +7,10 @@ import { useMutation } from '@tanstack/react-query'
 import { completeOrderStatus } from 'store/api/axiosSetup'
 import { useRouter } from 'next/router'
 import { useUserStore } from 'store/user/userzustandstore'
+import DiscountIcon from '@mui/icons-material/Discount';
+import PaymentsIcon from '@mui/icons-material/Payments';
 
-const SumValue = ({ order}) => {
+const SumValue = ({ order, applyDiscount, setApplyDiscount}) => {
     const [open, setOpen] = useState(false);
     const restaurant = userestaurantStore(state=>state.restaurant);
     const [paymentDetails, settlePaymentDetails] = useState({});
@@ -42,23 +44,47 @@ const SumValue = ({ order}) => {
                 if(data == "orderBeforeAddingGSTValue"){
                     return null
                 }
+                // console.log(order?.details?.orderAmount.discount != 0)
                 return (
+                    data == "discount" ?
+                    (order?.details?.orderAmount.discount != 0 ?
                     <Stack direction={"row"} key={index} justifyContent={"space-between"} alignItems={"center"} py={1}>
                         {/* {console.log({call:callfortitle(data), data})} */}
                         <Typography variant='h5'>{callfortitle(data)}</Typography>
                         <Stack direction={"row"}>
-                            {(data == "total" || data == "orderGst") && <span>₹</span>}
-                            <Typography variant='h5'>{data == "orderExcludeGSTValue" ? order?.details?.orderAmount[data] + order?.details?.orderAmount["orderBeforeAddingGSTValue"]:order?.details?.orderAmount[data] }</Typography>
+                            <span>- ₹</span>
+                            <Typography variant='h5'>{ order?.details?.orderAmount[data]  }</Typography>
+                        
+                        </Stack>
+                    </Stack>
+                    :
+                    <></>)
+                    :
+                    data == "finalTotal" ?
+                    <></>
+                    :
+                    <Stack direction={"row"} key={index} justifyContent={"space-between"} alignItems={"center"} py={1}>
+                        {/* {console.log({call:callfortitle(data), data})} */}
+                        <Typography variant='h5'>{callfortitle(data)}</Typography>
+                        <Stack direction={"row"}>    
+                            {(data == "total" || data == "orderGst" || data == "orderExcludeGSTValue" || data == "orderBeforeAddingGSTValue") && <span>₹</span>}
+                            <Typography variant='h5'>{data == "orderExcludeGSTValue" || data == "orderBeforeAddingGSTValue"? order?.details?.orderAmount[data] + order?.details?.orderAmount["orderBeforeAddingGSTValue"]:order?.details?.orderAmount[data] }</Typography>
                         </Stack>
                     </Stack>
                 )
             })}
-            <Stack direction={"row"} sx={{
+            <Stack direction={{
+                xs:"column",
+                sm:"row"
+            }} sx={{
                 width:"100%",
                 justifyContent:"center",
-                px:2
+                px:2,
+                gap:1
             }}>
-                <Button variant='outlined' onClick={()=>setOpen(true)}>Collect Payment</Button>
+                {/* {(user.role == "OWNER" || user.role == "CAPTAIN")&&<Button variant='outlined' startIcon={<DiscountIcon/>} onClick={()=>setApplyDiscount({...applyDiscount,open:true})}>Apply Discount</Button>} */}
+                <Button variant='outlined' startIcon={<DiscountIcon/>} onClick={()=>setApplyDiscount({...applyDiscount,open:true})}>Apply Discount</Button>
+                <Button variant='outlined' startIcon={<PaymentsIcon/>} onClick={()=>setOpen(true)}>Collect Payment</Button>
             </Stack>
             <BasicModal open={open} setOpen={setOpen} title={"Payment"}>
                 <PaymentModal isLoading={isLoading} settlePayment={settlePayment} order={order.details} paymentDetails={paymentDetails} settlePaymentDetails={settlePaymentDetails}/>
@@ -70,6 +96,9 @@ const SumValue = ({ order}) => {
 export const callfortitle = (val:String)=>{
     let title="";
     switch (val) {
+        case "discount":
+            title = "Discount";
+            break;
         case "totalItem":
             title="Total Items"
             break;

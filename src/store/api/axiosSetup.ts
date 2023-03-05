@@ -2,8 +2,8 @@ import axios from "axios";
 import { GenericResponse } from "./types";
 
 // const BASE_URL = "https://etoposqa.up.railway.app/";   //QA URL
- const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
-// const BASE_URL = "http://localhost:5000/"; //LocalHost Url
+//  const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
+const BASE_URL = "http://localhost:5000/"; //LocalHost Url
 
 const authApi = axios.create({
   baseURL: BASE_URL,
@@ -20,6 +20,18 @@ export const loginUserFn = async (user: any) => {
   const response = await authApi.post("user/login", user);
   return response;
 };
+export const addDiscount = async (disc)=>{
+  const response = await authApi.post(
+    "order/applyDiscount",
+    disc.val,
+    {
+      headers: {
+        Authorization: "Bearer " + disc?.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+}
 export const logoutuserfunction = async (headerAuth: any) => {
   const response = await authApi.post(
     "user/logOut",

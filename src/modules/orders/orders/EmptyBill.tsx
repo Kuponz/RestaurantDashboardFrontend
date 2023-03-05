@@ -10,11 +10,17 @@ import { BillPrint } from 'modules/BillPrint';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import moment from 'moment';
 import PrintIcon from '@mui/icons-material/Print';
+import BasicModal from 'common/modalGenerator/Modal';
+import ApplyDiscount from './ApplyDiscount';
 
 
-const EmptyBill = ({order}) => {
+const EmptyBill = ({order, userDetails}) => {
     const router = useRouter();
     const [showPrint, setShowPrint] = useState(false);
+    const [applyDiscount, setApplyDiscount] = useState({
+        open:false,
+        discount:""
+    })
     let componentRef = useRef(null);
     const handlePrintPart2 = useReactToPrint({
         content: () => componentRef.current,
@@ -105,14 +111,20 @@ const EmptyBill = ({order}) => {
                     <Typography>{String(timeDiff(order?.details?.createdAt, order?.details?.updatedAt))} </Typography>
 
                 </Stack>
-                <SumValue order={order} />
+                <SumValue order={order} applyDiscount={applyDiscount} setApplyDiscount={setApplyDiscount} />
             </Stack>
             
         </Stack>
+        <BasicModal title={"Apply Discount"} open={applyDiscount.open} setOpen={()=>{
+            setApplyDiscount({...applyDiscount, open:false})
+        }}>
+            <ApplyDiscount userDetails={userDetails} applyDiscount={applyDiscount} setApplyDiscount={setApplyDiscount} order={order}/>
+        </BasicModal>
         <div style={{
             display:"none",
         }}>
-            <BillPrint componentRef={componentRef} setShowPrint={setShowPrint} order={order.details} reference={true} />
+            <BillPrint  componentRef={componentRef} setShowPrint={setShowPrint} order={order.details} reference={true} />
+            
         </div>
     </>
   )

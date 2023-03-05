@@ -12,9 +12,9 @@ const PaymentModal = ({order, settlePayment, settlePaymentDetails, paymentDetail
     const [alignment, setAlignment] = useState(()=>{
         settlePaymentDetails({
             ...paymentDetails,
-            paidVia:"CASH"
+            paidVia:"UPI"
         })
-        return "CASH";
+        return "UPI";
     });
     // const [selectTab, setselectTab] = useState('');
 

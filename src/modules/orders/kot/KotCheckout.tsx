@@ -1,4 +1,12 @@
-import { Button, CircularProgress, Paper, Stack, TextField, Tooltip, Typography } from "@mui/material";
+import {
+  Button,
+  CircularProgress,
+  Paper,
+  Stack,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import Orders from "../orders/Orders";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -6,7 +14,7 @@ import CreateIcon from "@mui/icons-material/Create";
 import { redDeleteStyle } from "common/styles/deleteStyle";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import ClearIcon from "@mui/icons-material/Clear";
-import PrintIcon from '@mui/icons-material/Print';
+import PrintIcon from "@mui/icons-material/Print";
 import { flexBox } from "theme/defaultFunction";
 import { useRouter } from "next/router";
 import { useMutation } from "@tanstack/react-query";
@@ -33,7 +41,7 @@ const KotCheckout = ({ order }) => {
   });
 
   const [swapOpen, setSwapOpen] = useState(false);
-  const   [count, setCount] = useState(moment(new Date()));
+  const [count, setCount] = useState(moment(new Date()));
   const user = useUserStore((state) => state.user);
   const { mutate, isLoading } = useMutation(updateOrderStatus, {
     onSuccess: (data, variables, context) => {
@@ -55,8 +63,8 @@ const KotCheckout = ({ order }) => {
     content: () => componentRef.current,
   });
   console.log({
-    order
-  })
+    order,
+  });
   const timeDiff = (createdAt) => {
     var now = moment(new Date()); //todays date
     var end = moment(createdAt); // another date
@@ -81,10 +89,17 @@ const KotCheckout = ({ order }) => {
   const handleSwap = () => {
     setSwapOpen(true);
   };
+  const callTotal = (total, gst) => {
+    let finalTotalforKot = Number(total) - Number(gst);
+    return String(finalTotalforKot);
+  };
   useEffect(() => {
-    const timer = setTimeout(() => setCount(timeDiff(order?.details?.createdAt)), 1e3)
-    return () => clearTimeout(timer)
-   })
+    const timer = setTimeout(
+      () => setCount(timeDiff(order?.details?.createdAt)),
+      1e3
+    );
+    return () => clearTimeout(timer);
+  });
   return (
     <Stack
       sx={{
@@ -107,9 +122,7 @@ const KotCheckout = ({ order }) => {
               }}
             >
               <Typography sx={{ px: 1 }}>Time(HH:MM:SS): </Typography>
-              <Typography>
-                {String(count)}{" "}
-              </Typography>
+              <Typography>{String(count)} </Typography>
             </Stack>
             <Tooltip title="Print KOT">
               <Button
@@ -117,12 +130,11 @@ const KotCheckout = ({ order }) => {
                 sx={{
                   m: 1,
                 }}
-                startIcon={<PrintIcon/>}
+                startIcon={<PrintIcon />}
                 onClick={handlePrint}
               >
                 KOT
               </Button>
-
             </Tooltip>
           </Stack>
         </TopBar>
@@ -157,44 +169,66 @@ const KotCheckout = ({ order }) => {
           </Button>
         </Stack>
       </Stack>
-      <Stack sx={{
-        height:"100%",
-        overflowY:"auto"
-      }}>
+      <Stack
+        sx={{
+          height: "100%",
+          overflowY: "auto",
+        }}
+      >
         <Orders order={order?.details} />
       </Stack>
-      <Paper elevation={0} variant="free" sx={{ p: 2, minWidth: "clamp(15rem,80vw,30rem)", mb:{
-        xs:8,
-        md:0
-      }, mx:{
-        xs:2,
-        md:0
-      }}}>
-        <Stack sx={{...flexBox("row", "space-between")}}>
-          {user?.role == "OWNER" || user?.role == "CAPTAIN" ? 
-          <Button
-            sx={redDeleteStyle}
-            disabled={isLoading}
-            onClick={() => {
-              setOpenCancel({
-                ...openCancel,
-                orderId: order?.details?._id,
-                tableId: order?.details?.table?._id,
-                open: true,
-              });
-            }}
-          >
-            <ClearIcon /> Cancel
-          </Button>
-          :
-          <></>
-          }
+      <Paper
+        elevation={0}
+        variant="free"
+        sx={{
+          p: 2,
+          minWidth: "clamp(15rem,80vw,30rem)",
+          mb: {
+            xs: 8,
+            md: 0,
+          },
+          mx: {
+            xs: 2,
+            md: 0,
+          },
+        }}
+      >
+        <Stack sx={{ 
+          flexDirection:{
+            xs:"column",
+            sm:"row"
+          },
+          justifyContent:"space-between",
+          alignItems:"center",
+          gap:1
+         }}>
+          {user?.role == "OWNER" || user?.role == "CAPTAIN" ? (
+            <Button
+              sx={redDeleteStyle}
+              disabled={isLoading}
+              onClick={() => {
+                setOpenCancel({
+                  ...openCancel,
+                  orderId: order?.details?._id,
+                  tableId: order?.details?.table?._id,
+                  open: true,
+                });
+              }}
+            >
+              <ClearIcon /> Cancel
+            </Button>
+          ) : (
+            <></>
+          )}
 
+          <Stack direction={"row"}>
+            <Typography color={"white"}>Total : </Typography>
+            <Typography color={"white"}> &nbsp;₹{callTotal(order?.details?.orderAmount?.total , order?.details?.orderAmount?.orderGst )}</Typography>
+          </Stack>
           <Button
             variant="contained"
             color="inherit"
             sx={{
-              ml: "auto",
               backgroundColor: "#fff !important",
               color: "#000 !important",
             }}
@@ -213,7 +247,7 @@ const KotCheckout = ({ order }) => {
             }}
             startIcon={<ReceiptIcon />}
           >
-            {isLoading?<CircularProgress/>:"Generate Bill "}
+            {isLoading ? <CircularProgress /> : "Generate Bill "}
           </Button>
         </Stack>
       </Paper>
