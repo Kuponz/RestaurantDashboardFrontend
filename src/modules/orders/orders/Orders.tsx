@@ -3,6 +3,7 @@ import React from "react";
 import { SeperateOrder } from "./SeperateOrder";
 import { callfortitle } from "../SumValue";
 import moment from "moment";
+import { Text } from "react-thermal-printer";
 
 const Orders = ({ order, print = false, isKot=false}) => {
   return (
@@ -73,18 +74,42 @@ const Orders = ({ order, print = false, isKot=false}) => {
                     return null
                 }
                 return (
-                  <Stack direction={"row"} key={index} justifyContent={"space-between"} alignItems={"center"}>
-                      {/* {console.log({call:callfortitle(data), data})} */}
-                      <Typography variant='body1'>{callfortitle(data)}</Typography>
-                      <Stack direction={"row"}>
-                          {(data == "total" || data == "orderGst") && <span>₹</span>}
-                          <Typography variant='body1'>{data == "orderExcludeGSTValue" ? order?.orderAmount[data] + order?.orderAmount["orderBeforeAddingGSTValue"]:order?.orderAmount[data] }</Typography>
-                      </Stack>
-                  </Stack>
+                    data == "discount" ?
+                    (order?.orderAmount.discount != 0 ?
+                    <Stack direction={"row"} key={index} justifyContent={"space-between"} alignItems={"center"} py={0}>
+                        {/* {console.log({call:callfortitle(data), data})} */}
+                        <Text>{callfortitle(data)}</Text>
+                        <Stack direction={"row"}>
+                            <span>- ₹</span>
+                            <Text>{ order?.orderAmount[data]  }</Text>
+                        </Stack>
+                    </Stack>
+                    :
+                    <></>)
+                    :
+                    data == "finalTotal" ?
+                    <></>
+                    :
+                    <Stack direction={"row"} key={index} justifyContent={"space-between"} alignItems={"center"} py={0}>
+                        {/* {console.log({call:callfortitle(data), data})} */}
+                        <Text>{callfortitle(data)}</Text>
+                        <Stack direction={"row"}>    
+                            {(data == "total" || data == "orderGst" || data == "orderExcludeGSTValue" || data == "orderBeforeAddingGSTValue") && <span>₹</span>}
+                            <Text>{data == "orderExcludeGSTValue" || data == "orderBeforeAddingGSTValue"? order?.orderAmount[data] + order?.orderAmount["orderBeforeAddingGSTValue"]:order?.orderAmount[data] }</Text>
+                        </Stack>
+                    </Stack>
                 )
               })}
-            <Typography textAlign={"center"}>Thanks & visit Again!</Typography>
-            <Typography textAlign={"center"} variant="caption" color={"black"}>powered by etoPOS</Typography>
+            <Text style={{
+              textAlign:"center",
+              fontFamily:"monospace"
+            }}>Thanks & visit Again!</Text>
+            <Text style={{
+              textAlign:"center",
+              fontSize:"10px",
+              fontFamily:"monospace"
+              
+            }}>powered by etoPOS</Text>
             
         </Stack>
       )}
