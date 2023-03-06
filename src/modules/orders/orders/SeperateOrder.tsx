@@ -2,7 +2,7 @@ import { Stack, Typography } from '@mui/material'
 import React from 'react'
 
 export const SeperateOrder = ({orderVal, isKot}) => {
-  console.log({orderVal})
+  // console.log({orderVal})
   return (
     <Stack sx={{
       textDecoration : orderVal.quantity == 0 ? 'line-through' : 'none', 

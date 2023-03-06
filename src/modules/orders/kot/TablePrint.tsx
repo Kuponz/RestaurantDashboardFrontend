@@ -13,15 +13,16 @@ const TablePrint = ({order, componentRef}) => {
       }}>KOT</Text>
       <div style={{
         display:"flex",
+        padding:2,
         justifyContent:"space-between"
       }}>
         <Text>{order.table.TableName}</Text>
         <Text>{
         moment(order?.createdAt).format('MMMM Do YYYY, h:mm:ss a')
         }</Text>
+      </div>
       <Orders order={order} isKot={true}/>
 
-      </div>
     </div>
   )
   // <Stack ref={el=>(componentRef.current = el)} sx={{

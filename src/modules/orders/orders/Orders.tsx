@@ -28,7 +28,7 @@ const Orders = ({ order, print = false, isKot=false}) => {
             width: "50%",
           }}
         >
-          <Typography variant="body1">Item Name</Typography>
+          <Typography variant="body1">Item</Typography>
         </Stack>
         <Stack
           direction={"row"}
@@ -38,10 +38,10 @@ const Orders = ({ order, print = false, isKot=false}) => {
           }}
         >
           <Stack direction={"row"} gap={1}>
-            {!isKot && <Typography variant="body1">Price</Typography>}
-            <Typography variant="body1"> Quantity</Typography>
+            {!isKot && <Typography variant="body1">Rate</Typography>}
+            <Typography variant="body1"> Qty</Typography>
           </Stack>
-          {!isKot && <Typography variant="body1">Total</Typography>}
+          {!isKot && <Typography variant="body1">Amount</Typography>}
         </Stack>
       </Stack>
       <Stack
