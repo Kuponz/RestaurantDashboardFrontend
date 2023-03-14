@@ -26,7 +26,7 @@ export const BillPrint = ({order, reference=false, componentRef, setShowPrint}) 
       <Stack ref={el=>(componentRef.current = el)}>
         <Stack sx={{
           px: {
-            xs: 1,
+            xs: 0.5,
             md: 2,
           },
         }}>
@@ -48,12 +48,12 @@ export const BillPrint = ({order, reference=false, componentRef, setShowPrint}) 
           <Divider color="black"></Divider>
           <Stack direction={"row"} flexWrap={"wrap"} justifyContent={"space-between"} alignItems={"center"}>
             <Typography px = {{
-              xs: 1,
+              xs: 0,
               md: 2,
             }}>Order No: {order?._id.slice(order?._id.length- 5,order?._id.length )}</Typography>
 
             <Typography px = {{
-              xs: 1,
+              xs: 0,
               md: 2,
             }}>{moment(order?.createdAt).format('DD-MMM-YYYY h:mm A')}</Typography>
           </Stack>
