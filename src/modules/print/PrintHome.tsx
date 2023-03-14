@@ -23,6 +23,7 @@ const PrintHome = () => {
     })
   })
   const restroDetails = userestaurantStore(state=>state.restaurant)
+  const setRestaurantDetails = userestaurantStore(state=>state.setRestaurantDetails)
   const userDetails = useUserStore(state=>state.user);
   const { isLoading, isError, data, error } = useQuery(
     {
@@ -37,8 +38,8 @@ const PrintHome = () => {
           console.log({data:data?.data?.data?.restaurantData})
           console.log({userDetails})
           setprintData({...printData, value:data?.data?.data?.restaurantData?.print})
-          
           setRestaurantDetails(data?.data?.data?.restaurantData)
+          
         // setOrder(data?.data?.data?.orderInfo)
       }
   })

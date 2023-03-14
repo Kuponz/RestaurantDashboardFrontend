@@ -22,11 +22,15 @@ export const SeperateOrder = ({orderVal, isKot}) => {
                   ))
                 ))}
         </Stack>
-        <Stack direction={"row"} gap={5} sx={{
+        <Stack direction={"row"} gap={{
+          xs:0,
+          sm:5
+        }}
+          sx={{
           width:"50%",
           justifyContent:isKot ?"flex-end":"space-between"
         }}>
-          <Stack direction={"row"} gap={1}>
+          <Stack direction={"row"} gap={{xs:0.25, sm:1}}>
             {!isKot && (
               <Stack>
                 <Typography>
@@ -45,7 +49,10 @@ export const SeperateOrder = ({orderVal, isKot}) => {
 
             )}
             <Stack direction={"column"}>
-              <Stack direction={"row"} gap={1}>
+              <Stack direction={"row"} gap={{
+                xs:0,
+                sm:1
+              }}>
                 <Typography>
                   x
                 </Typography>

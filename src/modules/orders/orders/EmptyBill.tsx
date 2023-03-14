@@ -26,11 +26,11 @@ const EmptyBill = ({order, userDetails}) => {
         content: () => componentRef.current,
       });
     const handlePrint = async () => {
-        const data = await render(
-            <Printer type="epson">
-                <BillPrint componentRef={componentRef} order={order?.details} setShowPrint={setShowPrint} reference={false}/>
-            </Printer>
-        );
+        // const data = await render(
+        //     <Printer type="epson">
+        //         <BillPrint componentRef={componentRef} order={order?.details} setShowPrint={setShowPrint} reference={false}/>
+        //     </Printer>
+        // );
         setShowPrint(true);
         handlePrintPart2();
            
