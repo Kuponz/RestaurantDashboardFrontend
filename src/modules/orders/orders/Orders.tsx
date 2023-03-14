@@ -117,11 +117,11 @@ const Orders = ({ order, print = false, isKot = false }) => {
                 {/* {console.log({call:callfortitle(data), data})} */}
                 <Text>{callfortitle(data)}</Text>
                 <Stack direction={"row"}>
-                  {(data == "total" ||
+                  <Text>
+                    {(data == "total" ||
                     data == "orderGst" ||
                     data == "orderExcludeGSTValue" ||
                     data == "orderBeforeAddingGSTValue") && <span>₹</span>}
-                  <Text>
                     {data == "orderExcludeGSTValue" ||
                     data == "orderBeforeAddingGSTValue"
                       ? order?.orderAmount[data] +
@@ -167,7 +167,6 @@ const Orders = ({ order, print = false, isKot = false }) => {
               <Stack
                 sx={{
                   flexDirection: "row",
-
                   flexWrap: "wrap",
                   justifyContent: "space-between",
                 }}
