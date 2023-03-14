@@ -113,21 +113,20 @@ const AuthRoleLogin = () => {
                 },
                 padding:2,
                 ...flexBox("column"),
-
             }}>
-                    <Typography variant='h3'>etoPOS<sup>TM</sup></Typography>
                     <Box sx={{
                         position:"relative",
-                        width:"3rem",
-                        height:"3rem",
-                        mb:5
+                        width:"5rem",
+                        height:"5rem",
                     }}>
-                        <Image src="/thirteen.svg" layout='fill' objectFit='contain' alt="Login Logo" />
+                        <Image src="/icon-512x512.png" layout='fill' objectFit='contain' alt="Login Logo" />
                     </Box>
+                    <Typography variant='body2'>Restaurant</Typography>
 
                     <Stack sx={{
                         gap:2,
-                        width:"100%"
+                        width:"100%",
+                        pt:3
                     }}>
                         {InputJson.map((fields, val)=>(
                             <TextInput erroRef={erroRef} errorM={erroRef.current.errorM} errorP={erroRef.current.errorP} userObj={userObj} setUserObj={setUserObj} fields={fields} key={val}/>
@@ -151,7 +150,7 @@ const AuthRoleLogin = () => {
                         pt:5
                     }}>
 
-                        <Typography variant='caption'>Powered by etoPOS<sup>TM</sup></Typography>
+                        <Typography variant='caption'>Powered by kuponz<sup>TM</sup></Typography>
                     </Stack>
             </Paper>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

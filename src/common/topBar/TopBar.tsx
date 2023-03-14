@@ -10,7 +10,6 @@ const TopBar = ({title, backUrl, home=false, children}:{backUrl:string, title?:S
         xs:"column",
         sm:"row"
       }} 
-      ml={1} 
       gap={1}
       sx={{
         justifyContent:{

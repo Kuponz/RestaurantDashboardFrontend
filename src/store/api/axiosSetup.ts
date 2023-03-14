@@ -1,8 +1,8 @@
 import axios from "axios";
 import { GenericResponse } from "./types";
 
-// const BASE_URL = "https://etoposqa.up.railway.app/";   //QA URL
- const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
+const BASE_URL = "https://etoposqa.up.railway.app/";   //QA URL
+//  const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
 // const BASE_URL = "http://localhost:5000/"; //LocalHost Url
 
 const authApi = axios.create({
@@ -105,7 +105,34 @@ export const deleteItem = async (props) =>{
   );
   return response;
 }
+export const getPrintByRestaurant = async (props)=>{
+  const response = await authApi.get(
+    `restaurant/getPrintData?restaurantId=${props?.restaurantId}`,
+    {
+      headers: {
 
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      }
+    }
+  );
+  return response;
+}
+export const savePrintByRestaurant = async (props)=>{
+  const response = await authApi.post(
+    `restaurant/savePrintData`,
+    {
+      ...props.printData?.value,
+      restaurantId:props.restaurantId
+    },
+    {
+      headers: {
+
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      }
+    }
+  );
+  return response;
+}
 export const getTables = async (headerAuth, restaurantId) => {
   let reId = restaurantId.length != 0 ? restaurantId[0] : "";
   const response = await authApi.get(

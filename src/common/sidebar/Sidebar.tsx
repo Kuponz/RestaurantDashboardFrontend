@@ -44,7 +44,7 @@ export default function SideBar({handleDrawerToggle,largeHide, mobileOpen, setMo
             title:"Home",
             icons:<HomeRoundedIcon/>,
             url:"/",
-            acess:["OWNER", "CAPTAIN", "WAITER"]
+            acess:["OWNER", "CAPTAIN", "WAITER", "CHEF"]
         },
         {
             title:"Book Table",
@@ -73,24 +73,24 @@ export default function SideBar({handleDrawerToggle,largeHide, mobileOpen, setMo
             url:"/restaurant/dashboard",
             acess:["OWNER"]
         },
-        {
-            title:"Inventory",
-            icons:<InventoryIcon/>,
-            url:"/restaurant/inventory",
-            acess:["OWNER", "CAPTAIN"]
-        },
+        // {
+        //     title:"Inventory",
+        //     icons:<InventoryIcon/>,
+        //     url:"/restaurant/inventory",
+        //     acess:["OWNER", "CAPTAIN"]
+        // },
         {
             title:"Printer Settings",
             icons:<PrintIcon/>,
             url:"/restaurant/print",
             acess:["OWNER", "CAPTAIN"]
         },
-        {
-            title:"Attendance",
-            icons:<CurrencyRupeeIcon/>,
-            url:"/restaurant/attendance",
-            acess:["OWNER", "CAPTAIN"]
-        },
+        // {
+        //     title:"Attendance",
+        //     icons:<CurrencyRupeeIcon/>,
+        //     url:"/restaurant/attendance",
+        //     acess:["OWNER", "CAPTAIN"]
+        // },
     ]
     const tab2JSON=[
         {

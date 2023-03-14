@@ -139,10 +139,18 @@ const HomeStructure = ({ children }) => {
         sx={{
           flexGrow: 1,
           height: "100vh",
-          // width: largeHide? "100%" : "80vw",
-          pl:{
-            sm:largeHide ? 30 : 10
+          width: {
+            sm: largeHide
+              ? `calc(100% - ${drawerWidth}px)`
+              : `calc(100% - ${90}px)`,
+            // sm: `calc(100% - ${drawerWidth}px)`
           },
+          ml: { sm: largeHide
+            ? `${drawerWidth}px`
+            : `${90}px`, 
+          },
+          // width: largeHide? "100%" : "80vw",
+          // ml: { sm: largeHide?"${drawerWidth}px":"90px" },
           ...flexBox("column"),
           overflow: "hidden",
           // border:"12px solid blue"

@@ -55,10 +55,10 @@ const IndexHome = () => {
             acess:["OWNER"]
         },
         {
-            title:"Inventory",
+            title:"Inventory(Coming Soon)",
             icons:<InventoryIcon/>,
             url:"/restaurant/inventory",
-            acess:["OWNER", "CAPTAIN"]
+            acess:["OWNER", "CAPTAIN", "CHEF"]
         },
         {
             title:"Printer Settings",
@@ -67,7 +67,7 @@ const IndexHome = () => {
             acess:["OWNER", "CAPTAIN"]
         },
         {
-            title:"Attendance",
+            title:"Attendance(Coming Soon)",
             icons:<CurrencyRupeeIcon/>,
             url:"/restaurant/attendance",
             acess:["OWNER", "CAPTAIN"]
