@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   FormControl,
   IconButton,
   InputLabel,
@@ -259,7 +260,7 @@ const Checkout = ({
             disabled={val.length <= 0 || isLoading}
             sx={{}}
           >
-            Generate Bill
+            {isLoading ? <CircularProgress /> : "Generate Bill "}
           </Button>
           <Button
             variant="contained"
@@ -267,7 +268,7 @@ const Checkout = ({
             onClick={(e) => onClickKOT(e)}
             disabled={val.length <= 0 || isLoading}
           >
-            KOT
+            {isLoading ? <CircularProgress /> : "KOT"}          
           </Button>
         </Stack>
       </Stack>

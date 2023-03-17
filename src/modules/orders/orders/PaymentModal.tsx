@@ -2,7 +2,7 @@
 // import React, { useState } from 'react'
 // import { flexBox } from 'theme/defaultFunction'
 
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { useState } from "react";
 import { flexBox } from "theme/defaultFunction";
 
@@ -31,11 +31,13 @@ const PaymentModal = ({order, settlePayment, settlePaymentDetails, paymentDetail
         event: React.MouseEvent<HTMLElement>,
         newAlignment: string,
     ) => {
-        setAlignment(newAlignment);
-        settlePaymentDetails({
-            ...paymentDetails,
-            paidVia:newAlignment
-        })
+        if (newAlignment !== null) {
+            setAlignment(newAlignment);
+            settlePaymentDetails({
+                ...paymentDetails,
+                paidVia:newAlignment
+            })
+        }
     };
     // const valChange = (e)=>{
     //     settlePaymentDetails({
@@ -195,7 +197,7 @@ const PaymentModal = ({order, settlePayment, settlePaymentDetails, paymentDetail
                 }
             </Stack> */}
             <Stack direction={"row"} gap={1} justifyContent={"center"}>
-                <Button disabled={isLoading} variant='outlined' onClick={settlePayment}>Settle</Button>
+                <Button disabled={isLoading} variant='outlined' onClick={settlePayment}>{isLoading?<CircularProgress/>:"Settle"}</Button>
             </Stack>
         </Stack>
       )
