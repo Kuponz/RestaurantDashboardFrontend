@@ -25,10 +25,7 @@ export const BillPrint = ({order, reference=false, componentRef, setShowPrint}) 
       </Stack>
       <Stack ref={el=>(componentRef.current = el)}>
         <Stack sx={{
-          px: {
-            xs: 0.5,
-            md: 2,
-          },
+          p:0.25
         }}>
           <Stack>
             <Typography variant="h3" textAlign={"center"} pt={1}>{restaurant.restaurantInfo?.print?.billing?.restaurantName || restaurant.restaurantInfo?.restaurantName}</Typography>
@@ -50,16 +47,17 @@ export const BillPrint = ({order, reference=false, componentRef, setShowPrint}) 
             <Typography px = {{
               xs: 0,
               md: 2,
-            }}>Order No: {order?._id.slice(order?._id.length- 5,order?._id.length )}</Typography>
-
+            }}>Order No: {order?._id.slice(order?._id.length - 3,order?._id.length )}</Typography>
             <Typography px = {{
               xs: 0,
               md: 2,
-            }}>{moment(order?.createdAt).format('DD-MMM-YYYY h:mm A')}</Typography>
+            }}>Tbl No: {order?.table?.TableName}</Typography>
+            
           </Stack>
+          <Typography px ={0} textAlign={"center"}>{moment(order?.createdAt).format('DD-MMM-YYYY h:mm A')}</Typography>
         </Stack>
         <Stack sx={{
-          p:1
+          p:0.25
         }}>
           <Divider variant="fullWidth" color="black" ></Divider>
           <Orders print={true} order={order}/>
