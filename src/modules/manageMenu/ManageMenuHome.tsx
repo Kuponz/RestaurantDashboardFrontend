@@ -34,6 +34,7 @@ const ManageMenuHome = () => {
   const { isLoading, } = useQuery({
     enabled: !!restroState && !!userToken,
     queryKey: ["getWorkMenu"],
+    refetchOnWindowFocus:false,
     queryFn: () =>
       getWorkMenu({
         restaurantId: restroState.restaurant.restaurantInfo._id,
@@ -164,9 +165,13 @@ const ManageMenuHome = () => {
                   <>
                     <ManageMenuCard
                       key={index}
+                      setisItem={setisItem}
+                      setViewOne={setViewOne}
+                      viewOne={viewOne}
                       deleteMutate={deleteMutate}
                       isCategory={true}
                       menuVal={category}
+                      setOpen={setOpen}
                       userToken={userToken}
                     />
                   </>
@@ -233,9 +238,9 @@ const ManageMenuHome = () => {
                 return category?.menu.map((menuVal) => (
                   <ManageMenuCard
                     key={index}
-                    isCategory={false}
                     setViewOne={setViewOne}
                     viewOne={viewOne}
+                    isCategory={false}
                     userToken={userToken}
                     setisItem={setisItem}
                     setOpen={setOpen}
