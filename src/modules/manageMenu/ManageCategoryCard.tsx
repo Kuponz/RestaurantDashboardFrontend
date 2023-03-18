@@ -47,6 +47,7 @@ const ManageMenuCard = ({
   userToken: {
     login: boolean;
   };
+  setOpen:React.Dispatch<React.SetStateAction<boolean>>;
   deleteMutate:UseMutationResult<AxiosResponse<any, any>, unknown, any, unknown>;
   menuVal:
     | {
@@ -112,7 +113,11 @@ const ManageMenuCard = ({
         </Typography>
       </Stack>
       <Stack direction="row" justifyContent="space-between" alignItems="center">
-        <IconButton>
+        <IconButton onClick={() => {
+          setisItem(false);
+          setOpen(true);
+          setViewOne({...viewOne, open:true, viewObj:menuVal})
+        }}>
           <VisibilityIcon />
         </IconButton>
         <IconButton sx={redDeleteStyle} disabled={true}>
@@ -176,11 +181,14 @@ const ManageMenuCard = ({
           <VisibilityIcon />
         </IconButton>
         <IconButton sx={redDeleteStyle} onClick={()=>{
-          deleteMutate?.mutate({
-            menuId: menuVal._id,
-            restaurantId:menuVal.restaurantId,
-            headerAuth:userToken?.jwtToken
-          })
+          if(confirm("Are you sure You want to delete this?"))
+          {
+            deleteMutate?.mutate({
+              menuId: menuVal._id,
+              restaurantId:menuVal.restaurantId,
+              headerAuth:userToken?.jwtToken
+            })
+          }
         }}
         disabled={deleteMutate?.isLoading}
         >

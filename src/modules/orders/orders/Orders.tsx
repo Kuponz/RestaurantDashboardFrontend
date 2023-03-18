@@ -23,8 +23,7 @@ const Orders = ({ order, print = false, isKot = false }) => {
           flexWrap: "wrap",
           justifyContent: "space-between",
           px: {
-            xs: 1,
-            md: 2,
+            xs: 0.25,
           },
         }}
       >
@@ -58,8 +57,7 @@ const Orders = ({ order, print = false, isKot = false }) => {
           overflowY: "auto",
           pb: print ? 1 : 20,
           px: {
-            xs: 1,
-            md: 2,
+            xs: 0.25,
           },
         }}
       >
@@ -74,11 +72,7 @@ const Orders = ({ order, print = false, isKot = false }) => {
         <Stack
           sx={{
             overflowY: "auto",
-            pb: 1,
-            px: {
-              xs: 1,
-              md: 2,
-            },
+            px:0.25
           }}
         >
           {Object?.keys(order?.orderAmount || {})?.map((data, index) => {
@@ -136,34 +130,10 @@ const Orders = ({ order, print = false, isKot = false }) => {
           {print && (
             <Stack
               sx={{
-                px: 1,
+                px: 0,
               }}
             >
-              <Stack
-                sx={{
-                  flexDirection: "row",
-
-                  flexWrap: "wrap",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontFamily: "monospace",
-                  }}
-                >
-                  Table No.{" "}
-                </Text>
-                <Text
-                  style={{
-                    textAlign: "center",
-                    fontFamily: "monospace",
-                  }}
-                >
-                  {order?.table?.TableName}
-                </Text>
-              </Stack>
+              
               <Stack
                 sx={{
                   flexDirection: "row",
@@ -192,7 +162,7 @@ const Orders = ({ order, print = false, isKot = false }) => {
               </Stack>
             </Stack>
           )}
-          <hr style={{ borderTop: "dotted 1px", width: "100%", borderColor:"black" }} />
+          <hr style={{ borderTop: "dotted 1px", width: "100%" }} />
           {restaurant?.print?.billing?.billEndMessage != "" && (
             <Text
               style={{
