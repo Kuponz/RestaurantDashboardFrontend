@@ -32,14 +32,13 @@ const IndexHome = () => {
             icons:<TableRestaurantIcon/>,
             url:"/restaurant/table",
             acess:["OWNER", "CAPTAIN", "WAITER"]
-
+            
         },
         {
-            title: "Current Orders",
-            icons:<LocalMallIcon/>,
-            url:"/restaurant/currentOrder",
-            acess:["OWNER", "CAPTAIN", "CHEF"]
-
+            title:"Dashboard",
+            icons:<DashboardIcon/>,
+            url:"/restaurant/dashboard",
+            acess:["OWNER"]
         },
         {
             title: "Orders",
@@ -49,10 +48,11 @@ const IndexHome = () => {
 
         },
         {
-            title:"Dashboard",
-            icons:<DashboardIcon/>,
-            url:"/restaurant/dashboard",
-            acess:["OWNER"]
+            title: "Current Orders",
+            icons:<LocalMallIcon/>,
+            url:"/restaurant/currentOrder",
+            acess:["OWNER", "CAPTAIN", "CHEF"]
+
         },
         {
             title:"Inventory(Coming Soon)",

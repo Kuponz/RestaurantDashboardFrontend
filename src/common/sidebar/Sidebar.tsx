@@ -54,11 +54,10 @@ export default function SideBar({handleDrawerToggle,largeHide, mobileOpen, setMo
 
         },
         {
-            title: "Current Orders",
-            icons:<LocalMallIcon/>,
-            url:"/restaurant/currentOrder",
-            acess:["OWNER", "CAPTAIN", "CHEF"]
-
+            title:"Dashboard",
+            icons:<DashboardIcon/>,
+            url:"/restaurant/dashboard",
+            acess:["OWNER"]
         },
         {
             title: "Orders",
@@ -68,10 +67,11 @@ export default function SideBar({handleDrawerToggle,largeHide, mobileOpen, setMo
 
         },
         {
-            title:"Dashboard",
-            icons:<DashboardIcon/>,
-            url:"/restaurant/dashboard",
-            acess:["OWNER"]
+            title: "Current Orders",
+            icons:<LocalMallIcon/>,
+            url:"/restaurant/currentOrder",
+            acess:["OWNER", "CAPTAIN", "CHEF"]
+
         },
         // {
         //     title:"Inventory",

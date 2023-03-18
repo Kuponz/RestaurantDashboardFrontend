@@ -156,12 +156,20 @@ const AddModal = ({
         variables,
         context,
       });
-      restroState.setCategories([
-        ...restroState.restaurant.categories,
-        data.data.data?.categoryResult,
-      ]);
-      // setNewUser(false);
-      setOpen();
+      if(data?.data?.data?.edit){
+        let newData = restroState.restaurant.categories.map(val=>val._id == data.data.data?.categoryResult._id?data.data.data?.categoryResult:val)
+        restroState.setCategories([
+          ...newData
+        ]);
+        setOpen();
+      }else{
+        restroState.setCategories([
+          ...restroState.restaurant.categories,
+          data.data.data?.categoryResult,
+        ]);
+        // setNewUser(false);
+        setOpen();
+      }
       
     },
     onError(error, variables, context) {
@@ -283,16 +291,28 @@ const AddModal = ({
               });
             }
           } else {
-            sendData = {
-              categoryName: data["categoryName"]?.value,
-              isAvailable: data.isAvailable?.value,
-              categoryRank: data.categoryRank?.value,
-            };
-            console.log(sendData);
-            mutate({
-              sendData,
-              headerAuth: userToken.jwtToken,
-            });
+            let editVal = viewOne?.open ? viewOne?.viewObj?.categoryName != data["categoryName"]?.value : false;
+            console.log(editVal);
+            if(data["categoryName"]?.value != "" && (viewOne?.open? editVal: true)){
+              sendData = {
+                categoryName: data["categoryName"]?.value,
+                isAvailable: data.isAvailable?.value,
+                categoryRank: data.categoryRank?.value,
+                categoryId:viewOne?.viewObj?._id ?? null, 
+                edit:viewOne?.open
+              };
+              console.log(sendData);
+              mutate({
+                sendData,
+                headerAuth: userToken.jwtToken,
+              });
+            }else{
+              if(!editVal && viewOne?.open){
+                alert("No update made in Categeory Name");
+              }else{
+                alert("Enter Category Name");
+              }
+            }
           }
         }}
         variant="contained"
