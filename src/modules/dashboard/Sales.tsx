@@ -51,7 +51,7 @@ const Sales = () => {
   const [watchOrder, setWatchOrder] = useState({});
   const { mutate, isLoading } = useMutation(getdashboardHistory, {
     onSuccess: (state) => {
-      console.log(state.data.data);
+      console.log(state);
       setValue({ ...value });
       setOrder(state.data.data);
     },
@@ -193,7 +193,7 @@ const Sales = () => {
                         sx={{
                           p: 1,
                           overflowY: "auto",
-                          height: { xs: "65vh", md: "50vh" },
+                          height: { xs: "65vh", md: "35vh" },
                           // mt: { md: 5 },
                         }}
                       >

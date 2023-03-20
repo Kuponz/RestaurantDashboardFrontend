@@ -14,6 +14,8 @@ import AdjustIcon from "@mui/icons-material/Adjust";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import { flexBox } from "theme/defaultFunction";
 import { tokens } from "theme/theme";
+import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
+import ViewListIcon from "@mui/icons-material/ViewList";
 
 export default function SalesBox(prop) {
   return (
@@ -49,9 +51,9 @@ export default function SalesBox(prop) {
       }}
       elevation={2}
     >
-      <Stack>
+      {/* <Stack>
         <AdjustIcon />
-      </Stack>
+      </Stack> */}
       <Stack
         sx={{
           // justifyContent: {
@@ -87,7 +89,13 @@ export default function SalesBox(prop) {
           justifyContent: "space-between",
         }}
       >
-        <Typography
+        {prop.name === "totalPayment" ? (
+          <CurrencyRupeeIcon />
+        ) : (
+          <ViewListIcon />
+        )}
+
+        {/* <Typography
           variant="body2"
           sx={{
             fontSize: "18px",
@@ -96,7 +104,7 @@ export default function SalesBox(prop) {
           color="black"
         >
           <SignalCellularAltIcon />
-        </Typography>
+        </Typography> */}
       </Box>
     </Paper>
   );
