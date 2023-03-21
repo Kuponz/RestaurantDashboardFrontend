@@ -45,6 +45,9 @@ const Reports = () => {
     headerAuth: user.jwtToken,
   });
 
+  console.log(printData);
+  
+
   const printDoc = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: Report,

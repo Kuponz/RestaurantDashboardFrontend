@@ -91,14 +91,14 @@ const PrintReport = ({
             </Stack> */}
             {/* <TableContainer> */}
             <Table
-              // sx={{ minWidth: 650 }}
+              //   sx={{ minWidth: 180 }}
               size="small"
               stickyHeader
-            //   padding="none"
+              // padding="none"
             >
               <TableHead>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 900 }}>Bill No.</TableCell>
+                  <TableCell sx={{ fontWeight: 900 }}>Sr No.</TableCell>
                   <TableCell align="center" sx={{ fontWeight: 900 }}>
                     T. No
                   </TableCell>
@@ -125,21 +125,22 @@ const PrintReport = ({
                     // selected
                     // sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell>{e.billNo.slice(-3)}</TableCell>
+                    <TableCell>{i + 1}</TableCell>
+                    {/* <TableCell>{e.billNo.slice(-3)}</TableCell> */}
                     <TableCell align="center">{e.table}</TableCell>
                     <TableCell align="right">
-                      {/* {Math.round(e.foodBillAmount * 100) / 100} */}
-                      {e.foodBillAmount.toFixed(2)}
+                      {Math.round(e.foodBillAmount * 100) / 100}
+                      {/* {e.foodBillAmount.toFixed(2)} */}
                       {/* {e.foodBillAmount} */}
                     </TableCell>
                     <TableCell align="right">
-                      {/* {Math.round(e.discount * 100) / 100} */}
-                      {e.discount.toFixed(2)}
+                      {Math.round(e.discount * 100) / 100}
+                      {/* {e.discount.toFixed(2)} */}
                       {/* {e.discount} */}
                     </TableCell>
                     <TableCell align="right">
-                      {/* {Math.round(e.received * 100) / 100} */}
-                      {e.received.toFixed(2)}
+                      {Math.round(e.received * 100) / 100}
+                      {/* {e.received.toFixed(2)} */}
                       {/* {e.received} */}
                     </TableCell>
                   </TableRow>
@@ -152,26 +153,26 @@ const PrintReport = ({
                 <Stack gap={1}>
                   <Typography>
                     <strong>Total:</strong> ₹
-                    {/* {Math.round(printData.totalCollection * 100) / 100} */}
-                    {printData.totalCollection.toFixed(2)}
+                    {Math.round(printData.totalCollection * 100) / 100}
+                    {/* {printData.totalCollection.toFixed(2)} */}
                   </Typography>
                   <Typography>
                     <strong>Total GST:</strong> ₹
-                    {/* {Math.round(printData.totalGST * 100) / 100} */}
-                    {printData.totalGST.toFixed(2)}
+                    {Math.round(printData.totalGST * 100) / 100}
+                    {/* {printData.totalGST.toFixed(2)} */}
                   </Typography>
                 </Stack>
               ) : (
                 <Stack gap={1}>
                   <Typography>
                     <strong>Total Discount:</strong> ₹
-                    {/* {Math.round(printData.totalDiscount * 100) / 100} */}
-                    {printData.totalDiscount.toFixed(2)}
+                    {Math.round(printData.totalDiscount * 100) / 100}
+                    {/* {printData.totalDiscount.toFixed(2)} */}
                   </Typography>
                   <Typography>
                     <strong>Total Recived:</strong> ₹
-                    {/* {Math.round(printData.totalReceived * 100) / 100} */}
-                    {printData.totalReceived.toFixed(2)}
+                    {Math.round(printData.totalReceived * 100) / 100}
+                    {/* {printData.totalReceived.toFixed(2)} */}
                   </Typography>
                 </Stack>
               )}

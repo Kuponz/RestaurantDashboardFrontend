@@ -1,11 +1,16 @@
 import Head from "next/head";
 import { Waiter } from "modules/table";
 import HomeStructure from "modules/home/HomeStructure";
-import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
-import { Button, Stack, Typography } from "@mui/material";
+import EastOutlinedIcon from "@mui/icons-material/EastOutlined";
+import { Button, Stack, Typography, CircularProgress } from "@mui/material";
 import { flexBox } from "theme/defaultFunction";
 import { useRouter } from "next/router";
-import Sales from "modules/dashboard/Sales";
+// import Sales from "modules/dashboard/Sales";
+import dynamic from "next/dynamic";
+
+const Sales = dynamic(() => import("modules/dashboard/Sales"), {
+  loading: () => <CircularProgress />,
+});
 
 export default function Dashboard() {
   const router = useRouter();
