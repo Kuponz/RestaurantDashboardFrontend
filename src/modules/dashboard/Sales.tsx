@@ -22,6 +22,9 @@ import Payment from "./Payment";
 import HomeStructure from "modules/home/HomeStructure";
 import { flexBox, size } from "theme/defaultFunction";
 import { CloseOutlined } from "@mui/icons-material";
+import { Divider } from "@mui/material";
+import { tokens } from "theme/theme";
+import Reports from "modules/dashboard/Reports";
 
 type Tfilter = {
   startDate: dayjs.Dayjs;
@@ -32,8 +35,8 @@ type Tfilter = {
 };
 const Sales = () => {
   const [open, setOpen] = useState({
-    work: false,
-    forWork: "",
+    work: true,
+    forWork: "totalPayment",
   });
   const restaurant = userestaurantStore((state) => state.restaurant);
   const user = useUserStore((state) => state.user);
@@ -48,7 +51,7 @@ const Sales = () => {
   const [watchOrder, setWatchOrder] = useState({});
   const { mutate, isLoading } = useMutation(getdashboardHistory, {
     onSuccess: (state) => {
-      console.log(state.data.data);
+      console.log(state);
       setValue({ ...value });
       setOrder(state.data.data);
     },
@@ -60,8 +63,7 @@ const Sales = () => {
   return (
     <>
       <HomeStructure>
-        {
-          user.role == "OWNER" ?
+        {user.role == "OWNER" ? (
           <Stack
             sx={{
               height: "100vh",
@@ -140,105 +142,170 @@ const Sales = () => {
                 <CircularProgress />
               </Stack>
             ) : (
-              <Stack sx={{ overflowY:"auto",overflowX: "hidden", height:"100%", width:"100%" }}>
+              <Stack
+                sx={{
+                  overflowY: "auto",
+                  overflowX: "hidden",
+                  // height: "100%",
+                  // width: "100%",
+                }}
+              >
+                <Stack>
+                  {/* <Stack direction={{ md: "row" }} sx={{ minHeight: "85vh" }}> */}
+                  <Stack
+                    sx={{
+                      p: 1.5,
+                      // pb: 3,
+                      pt: 5,
+                      // paddingBlock: { md: 5 },
+                      flex: 0.5,
+                      gap: 4,
+                      flexDirection: { md: "row", xs: "column" },
+                      flexWrap: "wrap",
+                      justifyContent: "space-around",
+                      // gap: 1,
+                      paddingInline:{md:"5rem"}
+                    }}
+                  >
+                    <SalesBox
+                      setOpen={setOpen}
+                      open={open}
+                      title="Total Earning"
+                      name={"totalPayment"}
+                      orders={`₹ ${orders?.totalPayment?.total}`}
+                    />
+                    <SalesBox
+                      setOpen={setOpen}
+                      open={open}
+                      title="Total Completed Orders"
+                      name={"totalOrders"}
+                      orders={orders?.totalOrders?.completedOrders}
+                    />
+                  </Stack>
+                  <Stack
+                    sx={{
+                      p: 1,
+                      // pb: 10,
+                      flex: 1,
+                    }}
+                  >
+                    {open.work && (
+                      <Stack
+                        sx={{
+                          p: 1,
+                          overflowY: "auto",
+                          height: { xs: "65vh", md: "35vh" },
+                          // mt: { md: 5 },
+                        }}
+                      >
+                        {/* <Stack
+                          sx={{
+                            flexDirection: "row",
+                            justifyContent: "flex-end",
+                          }}
+                        >
+                          <IconButton
+                            onClick={() => {
+                              setOpen({
+                                work: false,
+                                forWork: "",
+                              });
+                            }}
+                          >
+                            <CloseOutlined />
+                          </IconButton>
+                        </Stack> */}
+                        {open.forWork == "totalPayment" ? (
+                          <Stack
+                            sx={{
+                              p: 1,
+                              pb: 3,
+                              pt: 0,
+                              flexDirection: "row",
+                              flexWrap: "wrap",
+                              justifyContent: "flex-start",
+                              gap: 2,
+                            }}
+                          >
+                            <Payment
+                              title="UPI Payment"
+                              isRupee={true}
+                              payment={orders?.totalPayment?.UPI}
+                            />
+                            <Payment
+                              title="Cash Payment"
+                              isRupee={true}
+                              payment={orders?.totalPayment?.CASH}
+                            />
+                            <Payment
+                              title="Card Paymment"
+                              isRupee={true}
+                              payment={orders?.totalPayment?.CARD}
+                            />
+                            <Payment
+                              title="OTHERS "
+                              isRupee={true}
+                              payment={orders?.totalPayment?.OTHERS}
+                            />
+                          </Stack>
+                        ) : (
+                          <Stack
+                            sx={{
+                              p: 1,
+                              pb: 3,
+                              pt: 0,
+                              flexDirection: "row",
+                              flexWrap: "wrap",
+                              justifyContent: "flex-start",
+                              gap: 2,
+                            }}
+                          >
+                            <Payment
+                              title="Complete Orders"
+                              payment={orders?.totalOrders?.completedOrders}
+                            />
+                            <Payment
+                              title="Cancelled Orders"
+                              payment={orders?.totalOrders?.cancelledOrders}
+                            />
+                            <Payment
+                              title="Currently Running"
+                              payment={
+                                orders?.totalOrders?.orderCurrentlyRunning
+                              }
+                            />
+                          </Stack>
+                        )}
+                      </Stack>
+                    )}
+                  </Stack>
+
+                  {/* Reports Below This  */}
+                </Stack>
                 <Stack
                   sx={{
-                    p: 1,
-                    pb: 3,
-                    pt: 5,
-
-                    flexDirection: "row",
-                    flexWrap: "wrap",
-                    justifyContent: "space-around",
+                    p: 1.5,
                     gap: 1,
+                    // pb: 15,
+                    // ! Css overflow and height setting has caused major bug
+                    // mt: { xs: 10, md: 0 },
+                    mb: 10,
                   }}
                 >
-                  <SalesBox
-                    setOpen={setOpen}
-                    title="Total Earning"
-                    name={"totalPayment"}
-                    orders={`₹ ${orders?.totalPayment?.total}`}
-                  />
-                  <SalesBox
-                    setOpen={setOpen}
-                    title="Total Completed Orders"
-                    name={"totalOrders"}
-                    orders={orders?.totalOrders?.completedOrders}
-                  />
+                  <Typography color={tokens().greenAccent[500]} variant="h3">
+                    Reports
+                  </Typography>
+                  <Divider />
+                  <Reports />
                 </Stack>
-                <Stack sx={{
-                  p:1,
-                  pb:10
-                }}>
-                  {open.work && (
-                      <Stack
-                      sx={{
-                          p: 1,
-                          overflow: "hidden",
-                      }}
-                      >
-                      <Stack
-                          sx={{
-                          flexDirection: "row",
-                          justifyContent: "flex-end",
-                          }}
-                      >
-                          <IconButton
-                          onClick={() => {
-                              setOpen({
-                              work: false,
-                              forWork: "",
-                              });
-                          }}
-                          >
-                          <CloseOutlined />
-                          </IconButton>
-                      </Stack>
-                      {open.forWork == "totalPayment" ?
-                      <Stack
-                          sx={{
-                          p: 1,
-                          pb: 3,
-                          pt: 0,
-                          flexDirection: "row",
-                          flexWrap: "wrap",
-                          justifyContent: "flex-start",
-                          gap: 2,
-                          }}
-                      >
-                          <Payment title="UPI Payment" isRupee={true} payment={orders?.totalPayment?.UPI} />
-                          <Payment title="Cash Payment" isRupee={true} payment={orders?.totalPayment?.CASH} />
-                          <Payment title="Card Paymment" isRupee={true} payment={orders?.totalPayment?.CARD} />
-                          <Payment title="OTHERS " isRupee={true} payment={orders?.totalPayment?.OTHERS} />
-                      </Stack>
-                      :
-                      <Stack
-                          sx={{
-                          p: 1,
-                          pb: 3,
-                          pt: 0,
-                          flexDirection: "row",
-                          flexWrap: "wrap",
-                          justifyContent: "flex-start",
-                          gap: 2,
-                          }}
-                      >
-                          <Payment title="Complete Orders" payment={orders?.totalOrders?.completedOrders} />
-                          <Payment title="Cancelled Orders" payment={orders?.totalOrders?.cancelledOrders} />
-                          <Payment title="Currently Running" payment={orders?.totalOrders?.orderCurrentlyRunning} />
-                      </Stack>
-                      }
-                      </Stack>
-                  )}
-                  </Stack>
               </Stack>
             )}
           </Stack>
-          :
+        ) : (
           <Stack>
             <Typography>Not Authorized</Typography>
           </Stack>
-        }
+        )}
       </HomeStructure>
     </>
   );

@@ -1,11 +1,17 @@
 import Head from "next/head";
-import { Waiter } from "modules/table";
+// import { Waiter } from "modules/table";
 import HomeStructure from "modules/home/HomeStructure";
-import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
-import { Button, Stack, Typography } from "@mui/material";
+import EastOutlinedIcon from "@mui/icons-material/EastOutlined";
+import { Button, CircularProgress, Stack, Typography } from "@mui/material";
 import { flexBox } from "theme/defaultFunction";
 import { useRouter } from "next/router";
 import { useUserStore } from "store/user/userzustandstore";
+import dynamic from "next/dynamic";
+
+const Waiter = dynamic(
+  () => import("modules/table").then((mod) => mod.Waiter),
+  { loading: () => <CircularProgress /> }
+);
 
 export default function table() {
   const router = useRouter();
@@ -26,14 +32,13 @@ export default function table() {
         {/* Auth Stuff Here */}
         {/* <Waiter /> */}
         <HomeStructure>
-        {
-          user.role != "CHEF" ?
-          <Waiter/>
-          :
-          <Stack>
-            <Typography>Not Authorized</Typography>
-          </Stack>
-        }
+          {user.role != "CHEF" ? (
+            <Waiter />
+          ) : (
+            <Stack>
+              <Typography>Not Authorized</Typography>
+            </Stack>
+          )}
         </HomeStructure>
       </div>
     </>
