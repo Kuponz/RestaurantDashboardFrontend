@@ -87,7 +87,7 @@ const ManageUserHome = () => {
                 newUser?
                 <AddUser setOpen={setOpen} setNewUser={setNewUser}/>
                 :
-                <ViewUserModal userIndex={userIndex} edit={edit} setEdit={setEdit}/>
+                <ViewUserModal setuserIndex={setuserIndex} setAllUserProfile={setAllUserProfile} userIndex={userIndex} edit={edit} setEdit={setEdit}/>
 
             }
         </BasicModal>

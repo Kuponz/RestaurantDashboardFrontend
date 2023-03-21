@@ -104,7 +104,7 @@ const AddUser = ({setNewUser, setOpen}) => {
     </Stack>
     :
     <Stack>
-        {error && <Alert>{err}</Alert>}
+        {error && (<Alert>{err}</Alert>)}
         {addUser.viewForm.map((userInfo, index)=>{
             if(userInfo.type == "select"){
                 return (
@@ -129,7 +129,14 @@ const AddUser = ({setNewUser, setOpen}) => {
 
             }else{
                 return (
-                   <TextField key={index} sx={{my:2}} variant='filled' value={addUser?.userData[userInfo.name]} onChange={(e)=>handleChange(e, userInfo.name)} label={userInfo.title}/>
+                   <TextField 
+                    key={index} 
+                    sx={{my:2}} 
+                    variant='filled' 
+                    value={addUser?.userData[userInfo.name]} 
+                    onChange={e=>handleChange(e, userInfo.name)} 
+                    label={userInfo.title}
+                    />
                 )
             }
     })}
