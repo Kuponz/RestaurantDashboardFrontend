@@ -52,7 +52,7 @@ const info=[
     ]
     }
 ]
-const AddUser = ({setNewUser, setOpen}) => {
+const AddUser = ({setNewUser, setAllUserProfile, setOpen}) => {
     const [addUser, setAddUser] = useState({
         "userData":{
             "mobileNumber":"",
@@ -73,6 +73,7 @@ const AddUser = ({setNewUser, setOpen}) => {
             //     variables,
             //     context,
             // })
+            setAllUserProfile(alp=>[...alp, data.data.data?.user])
             setNewUser(false);
             setOpen(false);
         },

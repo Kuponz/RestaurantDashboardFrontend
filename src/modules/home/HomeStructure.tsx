@@ -37,8 +37,12 @@ const HomeStructure = ({ children }) => {
   const matches = useMediaQuery(theme.breakpoints.down("sm"));
   const restaurant = userestaurantStore((state) => state.restaurant);
   useEffect(() => {
-    if (!userState || !userState.login || !userState._id) {
+    if ((!userState || !userState.login || !userState._id || userState.jwtToken == "") && router.route != "/auth") {
+      logout();
       router.push("/auth");
+      console.log({
+        router
+      })
     }
   }, [userState, router]);
   useEffect(()=>{

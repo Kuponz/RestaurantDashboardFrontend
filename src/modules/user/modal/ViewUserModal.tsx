@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import { useUserStore } from 'store/user/userzustandstore';
 
-const ViewUserModal = ({userIndex, setuserIndex, edit, setEdit, setAllUserProfile}:{
+const ViewUserModal = ({userIndex, editUserMut, setuserIndex, edit, setEdit, setAllUserProfile}:{
     setuserIndex:  React.Dispatch<React.SetStateAction<{
         user: {
             mobileNumber: string;
@@ -69,17 +69,41 @@ const ViewUserModal = ({userIndex, setuserIndex, edit, setEdit, setAllUserProfil
         <Stack direction={"row"} width={"100%"} justifyContent={"flex-end"}>
             {
                 edit?
-                <Button variant='outlined' onClick={()=>{
-                    setEdit(false)
+                <Button variant='outlined' disabled={editUserMut.isLoading} onClick={()=>{
                     if(confirm("You Sure?"))
                     {
                         console.log({
                             info
                         })
+                        const props={
+                            userData:{
+                                name:info.find(e=>e.name == "name")?.value,
+                                role:info.find(e=>e.name == "role")?.value,
+                                _id:userIndex?.user?._id,
+                            },
+                            headerAuth:user?.jwtToken
+                        }
+                        let b = true;
+                        if(info.find(e=>e.name == "pin")?.value != ""){
+                            if(confirm("Set New Pin?[If Not Kindly Clear Pin Details]"))
+                            {
+                                props?.userData["pin"] = info.find(e=>e.name == "pin")?.value;
+                                console.log({props});
+                                editUserMut.mutate(props);
+                            }else{
+                                b = false;
+                            }
+                            
+                        }else{
+                            if(b){
+                                editUserMut.mutate(props);
+                                console.log({props});
+                            }
+                        }
                     }
                 }}><SaveIcon/>Save</Button>
                 :
-                <Button variant='outlined' onClick={()=>setEdit(true)}><EditIcon/>Edit</Button>
+                <Button variant='outlined' disabled={editUserMut.isLoading}  onClick={()=>setEdit(true)}><EditIcon/>Edit</Button>
             }
         </Stack>
     </Stack>
