@@ -164,6 +164,7 @@ const Sales = () => {
                       flexWrap: "wrap",
                       justifyContent: "space-around",
                       // gap: 1,
+                      paddingInline:{md:"5rem"}
                     }}
                   >
                     <SalesBox

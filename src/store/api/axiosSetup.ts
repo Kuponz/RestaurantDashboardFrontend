@@ -329,7 +329,7 @@ export const getOrderReport = async (params) => {
       },
     }
   );
-  return null;
+  return response;
 };
 
 export const getOrderDiscount = async (params) => {
@@ -341,7 +341,7 @@ export const getOrderDiscount = async (params) => {
       },
     }
   );
-  return null;
+  return response;
 };
 
 export default authApi;

@@ -69,7 +69,7 @@ export default function SalesBox(prop) {
           </Typography>
           <Typography
             variant="body2"
-            textAlign={"center"}
+            // textAlign={"center"}
             sx={{
               fontSize: "18px",
               pt: 1,
