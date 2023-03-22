@@ -101,6 +101,42 @@ export const deleteItem = async (props) => {
   );
   return response;
 };
+export const deleteUser = async (props) => {
+  // console.log({props, userData:props.userObj.userData});
+  const response = await authApi.post(
+    "user/deleteUser",
+    {
+      userData: {
+        restaurantId: props.restaurantId,
+        _id: props._id,
+      },
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+};
+export const editUser = async (props) => {
+  // console.log({props, userData:props.userObj.userData});
+  const response = await authApi.post(
+    "user/editUser",
+    {
+      userData:{
+        ...props.userData
+      }
+        
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+};
 export const getPrintByRestaurant = async (props) => {
   const response = await authApi.get(
     `restaurant/getPrintData?restaurantId=${props?.restaurantId}`,

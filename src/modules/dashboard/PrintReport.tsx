@@ -152,14 +152,14 @@ const PrintReport = ({
               {Report === "Bill Summary" ? (
                 <Stack gap={1}>
                   <Typography>
+                    <strong>GST Total:</strong> ₹
+                    {Math.round(printData.totalGST * 100) / 100}
+                    {/* {printData.totalGST.toFixed(2)} */}
+                  </Typography>
+                  <Typography>
                     <strong>Total:</strong> ₹
                     {Math.round(printData.totalCollection * 100) / 100}
                     {/* {printData.totalCollection.toFixed(2)} */}
-                  </Typography>
-                  <Typography>
-                    <strong>Total GST:</strong> ₹
-                    {Math.round(printData.totalGST * 100) / 100}
-                    {/* {printData.totalGST.toFixed(2)} */}
                   </Typography>
                 </Stack>
               ) : (
