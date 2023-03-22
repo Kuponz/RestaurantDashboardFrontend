@@ -45,9 +45,6 @@ const Reports = () => {
     headerAuth: user.jwtToken,
   });
 
-  console.log(printData);
-  
-
   const printDoc = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: Report,
@@ -70,12 +67,16 @@ const Reports = () => {
   const getOrderData = useMutation(getOrderReport, {
     onSuccess: ({ data }) => {
       SetprintData(data.data);
+      console.log(data.data.report);
+      
     },
   });
 
   const getDiscountData = useMutation(getOrderDiscount, {
     onSuccess: ({ data }) => {
       SetprintData(data.data);
+      console.log(data.data.report);
+      
     },
   });
 
@@ -93,7 +94,6 @@ const Reports = () => {
       // if (printData) {
       //   // PrintSomething
       //   printDoc();
-      //   console.log(printData);
       // }
     }
     if (Report === "Discounts") {
@@ -101,7 +101,6 @@ const Reports = () => {
       // if (printData) {
       //   // PrintSomething
       //   printDoc();
-      //   console.log(printData);
       // }
     }
   };
