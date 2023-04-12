@@ -136,9 +136,24 @@ const AuthRoleLogin = () => {
                                 <MuiLink>Pin</MuiLink>
                             </Link>
                         </Typography>
+
                         <Button variant='contained' disabled={isLoading} onClick={(e)=>submitLogin(e)}>{isLoading?<CircularProgress /> :"Login"}</Button>
+                        <Stack direction={{xs:"column", sm:"row"}} justifyContent={"center"} alignItems={"center"} gap={2}>
+                            <Button variant='outlined' disabled={isLoading} onClick={(e)=>{
+                                mutate({
+                                    mobileNumber:"9999999991",
+                                    pin:"123456",
+                                    showPin:false,
+                                })
+                            }}>{isLoading?<CircularProgress /> :"Demo Account"}</Button>
+                            
+                            <Link href="https://wa.me/+918180850827?text=book%20demo">
+                                <MuiLink>Book Demo</MuiLink>
+                            </Link>
+                            
+                        </Stack>
                         <Typography variant='body2' textAlign={"center"} sx={{...flexBox()}}>Contact &nbsp; 
-                            <Link target='_blank' href="https://wa.me/+918180850827" >
+                            <Link target='_blank' href="https://wa.me/+918180850827?text=support" >
                                 <MuiLink sx={{...flexBox()}}>
                                     Support
                                     <Icon><SupportAgentOutlined/></Icon>
