@@ -19,7 +19,11 @@ import type { Dayjs } from "dayjs";
 import type { SelectChangeEvent } from "@mui/material";
 import { userestaurantStore } from "store/restaurant/restaurantStore";
 import { useUserStore } from "store/user/userzustandstore";
-import { getOrderDiscount, getOrderReport } from "store/api/axiosSetup";
+import {
+  getOrderDiscount,
+  getOrderReport,
+  getTopHistory,
+} from "store/api/axiosSetup";
 import { useMutation } from "@tanstack/react-query";
 import ReactToPrint, { useReactToPrint } from "react-to-print";
 import PrintReport from "./PrintReport";
@@ -30,6 +34,7 @@ const reportList = [
   { name: "Expense Detail" },
   { name: "Counter Cashier" },
   { name: "Discounts" },
+  { name: "Top History" },
 ];
 
 const Reports = () => {
@@ -68,7 +73,6 @@ const Reports = () => {
     onSuccess: ({ data }) => {
       SetprintData(data.data);
       console.log(data.data.report);
-      
     },
   });
 
@@ -76,7 +80,12 @@ const Reports = () => {
     onSuccess: ({ data }) => {
       SetprintData(data.data);
       console.log(data.data.report);
-      
+    },
+  });
+
+  const getTopHistoryData = useMutation(getTopHistory, {
+    onSuccess: ({ data }) => {
+      SetprintData(data.data);
     },
   });
 
@@ -103,7 +112,12 @@ const Reports = () => {
       //   printDoc();
       // }
     }
+    if (Report === "Top History") {
+      getTopHistoryData.mutate(params);
+    }
   };
+
+  console.log(printData);
   return (
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>

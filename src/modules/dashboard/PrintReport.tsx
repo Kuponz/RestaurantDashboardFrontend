@@ -20,6 +20,86 @@ const PrintReport = ({
     printFn();
   };
 
+  console.log(printData);
+
+  if (Report === "Top History")
+    return (
+      <>
+        {printData ? (
+          <>
+            <Stack>
+              <Stack
+                ref={(el) => (componentRef.current = el)}
+                p={1}
+                gap={2}
+                sx={{ minWidth: "180px" }}
+              >
+                <Stack direction={"row"} alignItems="center">
+                  <Typography variant="h2">
+                    {restaurant.restaurantInfo?.restaurantName}
+                  </Typography>
+                  {restaurant.restaurantInfo?.print?.billing
+                    ?.restaurantMobileNumber != "" && (
+                    <Typography
+                      ml={"auto"}
+                      variant="body1"
+                      textAlign={"center"}
+                    >
+                      Mo:{" "}
+                      {
+                        restaurant.restaurantInfo?.print?.billing
+                          ?.restaurantMobileNumber
+                      }
+                    </Typography>
+                  )}
+                </Stack>
+                <Typography variant="caption" color={"#000"}>
+                  Report From{" "}
+                  <strong>{duration.startDate.format("DD/MM/YYYY")}</strong> to{" "}
+                  <strong>{duration.endDate.format("DD/MM/YYYY")}</strong>
+                </Typography>
+                <Divider color="#000" />
+                <Table
+                  //   sx={{ minWidth: 180 }}
+                  size="small"
+                  stickyHeader
+                  // padding="none"
+                >
+                  <TableHead>
+                    <TableRow>
+                      <TableCell sx={{ fontWeight: 900 }}>Sr No.</TableCell>
+                      <TableCell align="center" sx={{ fontWeight: 900 }}>
+                        Item Name
+                      </TableCell>
+                      <TableCell align="right" sx={{ fontWeight: 900 }}>
+                        Count
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody sx={{ pageBreakAfter: "auto" }}>
+                    {printData.data.map((e, i) => (
+                      <TableRow
+                        key={i}
+                        sx={{
+                          "& td, & th": { border: 0 },
+                        }}
+                        hover
+                      >
+                        <TableCell>{i + 1}</TableCell>
+                        <TableCell align="center">{e.itemName}</TableCell>
+
+                        <TableCell align="right">{e.count}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Stack>
+            </Stack>
+          </>
+        ) : null}
+      </>
+    );
+
   return (
     <>
       {printData ? (
@@ -51,45 +131,6 @@ const PrintReport = ({
               <strong>{duration.endDate.format("DD/MM/YYYY")}</strong>
             </Typography>
             <Divider color="#000" />
-            {/* <Stack gap={1}>
-              <Stack direction={"row"} gap={1} justifyContent={"center"}>
-                <Typography fontWeight={900} flex={1}>
-                  Bill No.
-                </Typography>
-                <Typography fontWeight={900} flex={1}>
-                  T No.
-                </Typography>
-                <Typography fontWeight={900} flex={1}>
-                  Food Bill Amt.
-                </Typography>
-                <Typography fontWeight={900} flex={1}>
-                  Discount
-                </Typography>
-                <Typography fontWeight={900} flex={1}>
-                  Recived Amt.
-                </Typography>
-              </Stack>
-              <Divider />
-
-              {printData.report.map((e, i) => (
-                <React.Fragment key={i}>
-                  <Stack direction={"row"} gap={1} justifyContent={"center"}>
-                    <Typography flex={1}>{e.billNo.slice(-3)}</Typography>
-                    <Typography flex={1}>{e.table}</Typography>
-                    <Typography flex={1}>
-                      {Math.round(e.foodBillAmount * 100) / 100}
-                    </Typography>
-                    <Typography flex={1}>
-                      {Math.round(e.discount * 100) / 100}
-                    </Typography>
-                    <Typography flex={1}>
-                      {Math.round(e.received * 100) / 100}
-                    </Typography>
-                  </Stack>
-                </React.Fragment>
-              ))}
-            </Stack> */}
-            {/* <TableContainer> */}
             <Table
               //   sx={{ minWidth: 180 }}
               size="small"

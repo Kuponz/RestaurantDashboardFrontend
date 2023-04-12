@@ -1,8 +1,8 @@
 import axios from "axios";
 import { GenericResponse } from "./types";
 
-// const BASE_URL = "https://etoposqa.up.railway.app/"; //QA URL
- const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
+const BASE_URL = "http://qaetopos.azurewebsites.net/"; //QA URL
+//  const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
 // const BASE_URL = "http://localhost:5000/"; //LocalHost Url
 
 const authApi = axios.create({
@@ -124,10 +124,9 @@ export const editUser = async (props) => {
   const response = await authApi.post(
     "user/editUser",
     {
-      userData:{
-        ...props.userData
-      }
-        
+      userData: {
+        ...props.userData,
+      },
     },
     {
       headers: {
@@ -371,6 +370,17 @@ export const getOrderReport = async (params) => {
 export const getOrderDiscount = async (params) => {
   const response = await authApi.get(
     `order/getOrderDiscount?restaurantId=${params.restaurantId}&startDate=${params.startDate}&endDate=${params.endDate}`,
+    {
+      headers: {
+        Authorization: "Bearer " + params.headerAuth, // idk what this is but it seems to be common(passing usertoken)
+      },
+    }
+  );
+  return response;
+};
+export const getTopHistory = async (params) => {
+  const response = await authApi.get(
+    `order/topHistory?restaurantId=${params.restaurantId}&startDate=${params.startDate}&endDate=${params.endDate}`,
     {
       headers: {
         Authorization: "Bearer " + params.headerAuth, // idk what this is but it seems to be common(passing usertoken)
