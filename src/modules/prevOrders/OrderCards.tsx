@@ -45,6 +45,9 @@ const OrderCards = ({order, open, setOpen, setWatchOrder}:{
     open:Boolean,
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
+    console.log(moment.utc(order?.updatedAt).format("DD/MM/YYYY HH:MM").toString());
+    console.log(order?.updatedAt);
+    console.log( moment.utc(order?.updatedAt).local().startOf('seconds').fromNow());
   return (
     <Paper sx={{
         height:"fit-content",
