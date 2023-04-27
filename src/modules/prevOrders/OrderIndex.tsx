@@ -39,6 +39,7 @@ const OrderIndex = () => {
     const {mutate, isLoading } = useMutation(getorderHistory,{
         onSuccess:(state)=>{
             console.log(state.data.data);
+            console.log(state.data.data.orders);
             // {
             //     "orders": [
             //         {

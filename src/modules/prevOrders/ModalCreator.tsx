@@ -71,6 +71,21 @@ const ModalCreator = ({ setWatchOrder, watchOrder, open, setOpen }) => {
           </Typography>
           
         </Stack>
+
+        <Stack direction={"row"} py={0.25} justifyContent={"space-between"} sx={{
+          width:"100%",
+          flexWrap:"wrap"
+        }}>
+          <Typography variant="body2" width={{
+            xs:"100%",
+            md:"45%"
+          }}>
+            Payment Mode: {watchOrder.paymentStatus ? watchOrder?.paymentDetails?.paidVia : "NONE"}
+          </Typography>
+         
+        </Stack>
+
+
       </Stack>
       <Stack>
         <Stack
