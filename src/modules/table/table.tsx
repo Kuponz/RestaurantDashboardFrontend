@@ -36,6 +36,8 @@ import FloorWiseTable from "./FloorWiseTable";
 import { useQuery } from "@tanstack/react-query";
 import { getTables } from "store/api/axiosSetup";
 import { useUserStore } from "store/user/userzustandstore";
+import TopBar from "common/topBar/TopBar";
+import { flexBox } from "theme/defaultFunction";
 
 
 export const Waiter = () => {
@@ -63,22 +65,34 @@ export const Waiter = () => {
   })
   return (
     <div className={styles.container}>
-      <div className={styles.floor}>
-        <FloorStructure infoSelected={infoSelected} setinfoSelected={setinfoSelected} restroDetails={restroDetails?.restaurant?.floors} />
-        <Tooltip title="Help">
-          <IconButton onClick={() => setOpenModel(true)}><QuestionMarkIcon /></IconButton>
-        </Tooltip>
-        <Tooltip title="Refresh">
-        <IconButton onClick={()=>{router.reload()}}><RefreshIcon /></IconButton>
-        </Tooltip>
-      </div>
+      <Stack sx={{
+        width:"100%",
+        pl:{
+          xs:0,
+          sm:2
+        },
+        pt:{
+          xs:1,
+          sm:0
+        }
+      }}>
+        <TopBar title={"Table Booking"} backUrl="/" home={true}>
+          <Stack direction={"row"} sx={{...flexBox(), p:1, pt:2, gap:1, flex:1}}>
+            <FloorStructure infoSelected={infoSelected} setinfoSelected={setinfoSelected} restroDetails={restroDetails?.restaurant?.floors} />
+            <Tooltip title="Help">
+              <IconButton onClick={() => setOpenModel(true)}><QuestionMarkIcon /></IconButton>
+            </Tooltip>
+          </Stack>
+
+        </TopBar>
+      </Stack>
       {isLoading?
       <Stack>
         <CircularProgress/>
       </Stack>
       :
       <Stack sx={{
-        height: "100%",
+        height: "fit-content",
         width: "100%",
         overflowY: "auto",
         p: 2,

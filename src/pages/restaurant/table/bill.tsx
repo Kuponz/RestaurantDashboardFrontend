@@ -61,7 +61,7 @@ const Bill = () => {
                     </Alert>
                 }
                 {/* {order?.details?.orderStatus  != "BILLING"? */}
-                <EmptyBill order={order}/>
+                <EmptyBill order={order} userDetails={userDetails}/>
                 
             </Stack>
         }

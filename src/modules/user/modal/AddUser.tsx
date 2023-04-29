@@ -52,7 +52,7 @@ const info=[
     ]
     }
 ]
-const AddUser = ({setNewUser, setOpen}) => {
+const AddUser = ({setNewUser, setAllUserProfile, setOpen}) => {
     const [addUser, setAddUser] = useState({
         "userData":{
             "mobileNumber":"",
@@ -73,6 +73,7 @@ const AddUser = ({setNewUser, setOpen}) => {
             //     variables,
             //     context,
             // })
+            setAllUserProfile(alp=>[...alp, data.data.data?.user])
             setNewUser(false);
             setOpen(false);
         },
@@ -104,7 +105,7 @@ const AddUser = ({setNewUser, setOpen}) => {
     </Stack>
     :
     <Stack>
-        {error && <Alert>{err}</Alert>}
+        {error && (<Alert>{err}</Alert>)}
         {addUser.viewForm.map((userInfo, index)=>{
             if(userInfo.type == "select"){
                 return (
@@ -129,7 +130,14 @@ const AddUser = ({setNewUser, setOpen}) => {
 
             }else{
                 return (
-                   <TextField key={index} sx={{my:2}} variant='filled' value={addUser?.userData[userInfo.name]} onChange={(e)=>handleChange(e, userInfo.name)} label={userInfo.title}/>
+                   <TextField 
+                    key={index} 
+                    sx={{my:2}} 
+                    variant='filled' 
+                    value={addUser?.userData[userInfo.name]} 
+                    onChange={e=>handleChange(e, userInfo.name)} 
+                    label={userInfo.title}
+                    />
                 )
             }
     })}

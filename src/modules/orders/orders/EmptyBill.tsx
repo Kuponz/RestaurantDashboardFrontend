@@ -8,42 +8,44 @@ import  ReactToPrint, { useReactToPrint } from 'react-to-print';
 import { Printer, Text, render } from 'react-thermal-printer';
 import { BillPrint } from 'modules/BillPrint';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import moment from 'moment';
+import PrintIcon from '@mui/icons-material/Print';
+import BasicModal from 'common/modalGenerator/Modal';
+import ApplyDiscount from './ApplyDiscount';
 
 
-const EmptyBill = ({order}) => {
+const EmptyBill = ({order, userDetails}) => {
     const router = useRouter();
     const [showPrint, setShowPrint] = useState(false);
+    const [applyDiscount, setApplyDiscount] = useState({
+        open:false,
+        discount:""
+    })
     let componentRef = useRef(null);
     const handlePrintPart2 = useReactToPrint({
         content: () => componentRef.current,
       });
     const handlePrint = async () => {
-        const data = await render(
-            <Printer type="epson">
-                <BillPrint componentRef={componentRef} order={order?.details} setShowPrint={setShowPrint} reference={false}/>
-            </Printer>
-        );
-        try {
-            const port = await window.navigator.serial.requestPort();
-            console.log(`Serial port opened: ${port.path}`);
-            console.log(await window.navigator.serial.onconnect)
-            console.log(await window.navigator.serial.ondisconnect)
-            console.log({port});
-            const writer = port.writable?.getWriter();
-            if (writer != null) {
-                await writer.write(data);
-                writer.releaseLock();
-            }
-            // Perform additional actions with the port
-        } 
-        catch (error) {
-            console.error(`Error opening serial port: ${error}`);
-            setShowPrint(true);
-            handlePrintPart2();
-        }        
+        // const data = await render(
+        //     <Printer type="epson">
+        //         <BillPrint componentRef={componentRef} order={order?.details} setShowPrint={setShowPrint} reference={false}/>
+        //     </Printer>
+        // );
+        setShowPrint(true);
+        handlePrintPart2();
            
     }  
-    
+    const timeDiff= (createdAt, updatedAt)=>{
+        var now = moment(new Date(updatedAt)); //todays date
+        var end = moment(createdAt); // another date
+        var duration = moment.duration(now.diff(end));
+        console.log({
+            now, end, duration
+        })
+        var days = moment.utc(duration.asMilliseconds()).format("HH:mm:ss");
+        // console.log(moment(duration).hour(), moment(duration).minutes(), moment(duration).second())
+        return days;
+    }
   return (
     <>
         <Stack direction={"row"} sx={{
@@ -58,8 +60,7 @@ const EmptyBill = ({order}) => {
                 <Typography variant="h3">Bill</Typography>
             </Stack>
             <Stack direction={"row"} gap={2} justifyContent={"center"} alignItems={"center"}>
-                <Button onClick={handlePrint} variant={"outlined"}>Print Bill</Button>
-                <Button variant={"outlined"}>Cancel</Button>
+                <Button onClick={handlePrint} startIcon={<PrintIcon/>} variant={"contained"} sx={{}}>Bill</Button>
             </Stack>
         </Stack>
         <Stack sx={{
@@ -102,14 +103,28 @@ const EmptyBill = ({order}) => {
                     lg:2
                 }
             }}>
-                <SumValue order={order} />
+                <Stack sx={{
+                    flexDirection:"row",
+                    justifyContent:"space-between"
+                }}>
+                    <Typography sx={{px:1}}>Time(HH:MM:SS): </Typography>
+                    <Typography>{String(timeDiff(order?.details?.createdAt, order?.details?.updatedAt))} </Typography>
+
+                </Stack>
+                <SumValue order={order} applyDiscount={applyDiscount} setApplyDiscount={setApplyDiscount} />
             </Stack>
             
         </Stack>
+        <BasicModal title={"Apply Discount"} open={applyDiscount.open} setOpen={()=>{
+            setApplyDiscount({...applyDiscount, open:false})
+        }}>
+            <ApplyDiscount userDetails={userDetails} applyDiscount={applyDiscount} setApplyDiscount={setApplyDiscount} order={order}/>
+        </BasicModal>
         <div style={{
             display:"none",
         }}>
-            <BillPrint componentRef={componentRef} setShowPrint={setShowPrint} order={order.details} reference={true} />
+            <BillPrint  componentRef={componentRef} setShowPrint={setShowPrint} order={order.details} reference={true} />
+            
         </div>
     </>
   )

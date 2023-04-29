@@ -1,6 +1,10 @@
-import { Stack } from '@mui/material'
-import AuthRoleLogin from 'modules/auth/AuthRoleLogin'
+import { CircularProgress, Stack } from '@mui/material'
 import React from 'react'
+import dynamic from "next/dynamic";
+
+const AuthRoleLogin = dynamic(() => import("modules/auth/AuthRoleLogin"), {
+  loading: () => <CircularProgress />,
+});
 
 const auth = () => {
   return (

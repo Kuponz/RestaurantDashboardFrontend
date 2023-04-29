@@ -1,17 +1,18 @@
 
 import { Box, Paper, Stack, Button, IconButton, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import { useEffect } from "react";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { flexBox } from "theme/defaultFunction";
+import EditIcon from '@mui/icons-material/Edit';
+import { v4 as uuidv4 } from 'uuid';
 
-const MenuCard = ({ items, val, setValue, variableip }) => {
+const MenuCard = ({ items,extraOpen, val, forceUpdate, setValue, variableip, setExtraOpen }) => {
     const [itemVal, setitemVal] = useState({
-        
-        
     });
-    console.log({itemVal})
+
+    // console.log({itemVal})
     useEffect(()=>{
         setitemVal(val.find(vali=>vali.item._id == items._id));
 
@@ -30,6 +31,7 @@ const MenuCard = ({ items, val, setValue, variableip }) => {
                 lg:"30%",
                 xl:"32%"
             },
+            height:"fit-content",
             backgroundColor:theme=>itemVal && itemVal.quantity > 0 ?theme.palette.secondary.main:theme.palette.background.default
         }}
             elevation={6}
@@ -72,27 +74,64 @@ const MenuCard = ({ items, val, setValue, variableip }) => {
                     display: 'flex',
                     justifyContent: 'space-between',
                 }}>
-
                    <Button onClick={()=>{
+                        console.log({items})
+                    if(items?.addons?.length > 0 || items.variations.length > 0){
+                        extraOpen.open = true;
+                        extraOpen.item = items;
+                        extraOpen.quantity = 1;
+                        extraOpen.selected = [
+                            {
+                                variations:[...items?.variations],
+                                addons:[...items?.addons],
+                                id:uuidv4(),
+                            }
+                        ];
+                        setExtraOpen(extraOpen);
+                        console.log({extraOpen})
+                        forceUpdate();
+                    }else{
                         setValue([
                             ...val,
                             {
                                 item:items,
-                                quantity:1
+                                quantity:1,
                             }
                         
                         ])
-                    }} variant="outlined" sx={{...flexBox()}}><AddIcon/>Add</Button>
+                    }
+                    }} variant="outlined" startIcon={<AddIcon/>} sx={{...flexBox()}}>Add</Button>
                 </Box>
                 :
-                <Box sx={{
+                
+                    items?.addons?.length > 0 || items.variations.length > 0?
+                    <>
+                        <IconButton onClick={()=>{
+                            extraOpen.open = true;
+                            extraOpen.item = items;
+                            setExtraOpen(extraOpen);
+                            console.log({extraOpen})
+                            forceUpdate();
+                            
+                        }}
+                        >
+                            <EditIcon/>
+                        </IconButton>
+                    </>
+                    :
+                    <Box sx={{
                     display: 'flex',
                     flexDirection:"column",
                     justifyContent: 'space-between',
                     alignItems:"center",
                     gap:1
                 }}>
-                    <IconButton onClick={()=>variableip(items, "+")}>
+                    <IconButton onClick={()=>{
+                       
+                        variableip(items, "+")
+                       
+                    }}
+                    >
                         <AddIcon/>
                     </IconButton>
                     <Stack sx={{
@@ -104,9 +143,11 @@ const MenuCard = ({ items, val, setValue, variableip }) => {
                         <RemoveIcon/>
                     </IconButton>
 
-                </Box>
+                    </Box>
+                    
+                }
 
-            }
+            
         </Paper>
     </>
     );

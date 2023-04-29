@@ -3,13 +3,15 @@ import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/router";
 import React from "react";
 import { logoutuserfunction } from "store/api/axiosSetup";
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import Link from "next/link";
 
 function stringAvatar(name: string) {
     return {
       sx: {
         bgcolor: stringToColor(name),
       },
-      children: name?`${name?.split(' ')[0][0]}${name?.split(' ')[1][0]}`:"etoPOS",
+      children: name?`${name?.split(' ')[0][0]}`:"etoPOS",
     };
   }
   function stringToColor(string: string) {
@@ -90,6 +92,13 @@ export default function AvatarMenu({userState, logout}) {
             'aria-labelledby': 'basic-button',
           }}
         >
+          {/* <a target="_blank" rel="noreferrer" href="https://wa.me/+918180850827"> */}
+          <Link target="_blank" rel="noreferrer" href="https://wa.me/+918180850827">
+            <MenuItem>
+              Help 
+              <QuestionMarkIcon/>
+          </MenuItem>
+          </Link>
           <MenuItem onClick={handleClose}>User Settings</MenuItem>
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>

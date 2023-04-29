@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;700&display=swap');
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
 html,
 body,
@@ -39,4 +39,14 @@ body,
 
 .css-o4b71y-MuiAccordionSummary-content {
   width: 100%;
+}
+
+@media print {
+  html,
+  body {
+    height: auto; /* Use 100% here to support printing more than a single page*/
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden;
+  }
 }

@@ -24,33 +24,33 @@ const CheckoutModal = ({instrData,isLoading, setInstrData, onClickKOT}) => {
             multiline:true,
             type:"text"
         },
-        {
-            title:"Order Type",
-            value:ORDERTYPE.DINEIN,
-            options:[
-                {
-                    title:ORDERTYPE.CUSTOMIZED,
-                    value:ORDERTYPE.CUSTOMIZED
-                },
-                {
-                    title:ORDERTYPE.DELIVERY,
-                    value:ORDERTYPE.DELIVERY
-                },
-                {
-                    title:ORDERTYPE.DINEIN,
-                    value:ORDERTYPE.DINEIN
-                },
-                {
-                    title:ORDERTYPE.ONLINE,
-                    value:ORDERTYPE.ONLINE
-                },
-                {
-                    title:ORDERTYPE.TAKEAWAY,
-                    value:ORDERTYPE.TAKEAWAY
-                },
-            ],
-            type:"select"
-        }
+        // {
+        //     title:"Order Type",
+        //     value:ORDERTYPE.DINEIN,
+        //     options:[
+        //         {
+        //             title:ORDERTYPE.CUSTOMIZED,
+        //             value:ORDERTYPE.CUSTOMIZED
+        //         },
+        //         {
+        //             title:ORDERTYPE.DELIVERY,
+        //             value:ORDERTYPE.DELIVERY
+        //         },
+        //         {
+        //             title:ORDERTYPE.DINEIN,
+        //             value:ORDERTYPE.DINEIN
+        //         },
+        //         {
+        //             title:ORDERTYPE.ONLINE,
+        //             value:ORDERTYPE.ONLINE
+        //         },
+        //         {
+        //             title:ORDERTYPE.TAKEAWAY,
+        //             value:ORDERTYPE.TAKEAWAY
+        //         },
+        //     ],
+        //     type:"select"
+        // }
     ]
     const handleChange = (event: SelectChangeEvent) => {
         setInstrData({
@@ -107,3 +107,61 @@ const CheckoutModal = ({instrData,isLoading, setInstrData, onClickKOT}) => {
 }
 
 export default CheckoutModal
+
+
+// {[{
+//     title:"Order Type",
+//     value:ORDERTYPE.DINEIN,
+//     options:[
+//         {
+//             title:ORDERTYPE.CUSTOMIZED,
+//             value:ORDERTYPE.CUSTOMIZED
+//         },
+//         {
+//             title:ORDERTYPE.DELIVERY,
+//             value:ORDERTYPE.DELIVERY
+//         },
+//         {
+//             title:ORDERTYPE.DINEIN,
+//             value:ORDERTYPE.DINEIN
+//         },
+//         {
+//             title:ORDERTYPE.ONLINE,
+//             value:ORDERTYPE.ONLINE
+//         },
+//         {
+//             title:ORDERTYPE.TAKEAWAY,
+//             value:ORDERTYPE.TAKEAWAY
+//         },
+//     ],
+//     type:"select"
+// }].map((idet, key)=>(
+//     idet.type == "select"?
+//         <FormControl key={key} variant="filled" sx={{  my:1,
+//             mx:2, minWidth: 120 }}
+//             disabled={isLoading}
+//             >
+            
+//             <InputLabel id="demo-simple-select-filled-label">{idet.title}</InputLabel>
+//             <Select
+//                 labelId="demo-simple-select-filled-label"
+//                 id="demo-simple-select-filled"
+//                 key={key}
+//                 value={instrData.orderType}
+//                 label={idet.title}
+//                 onChange={(event: SelectChangeEvent) => {
+//                     setInstrData({
+//                         ...instrData,
+//                         orderType:event.target.value 
+//                     })
+//                 }}
+//             >
+//                 {idet?.options.map((opt, id)=>(
+//                     <MenuItem key={id} value={opt.value}>{opt.title}</MenuItem>
+
+//                 ))}
+//             </Select>
+//         </FormControl>
+//         :<></>
+// ))
+// }

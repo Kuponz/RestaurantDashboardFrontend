@@ -1,53 +1,86 @@
-import { AppBar, Box, CssBaseline, IconButton, Toolbar, Typography } from '@mui/material';
-import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
-import { useUserStore } from 'store/user/userzustandstore';
-import { flexBox, size } from 'theme/defaultFunction';
-import MenuIcon from '@mui/icons-material/Menu';
-import SideBar from 'common/sidebar/Sidebar';
-import AvatarMenu from 'common/sidebar/Avatar';
-import { userestaurantStore } from 'store/restaurant/restaurantStore';
+import {
+  AppBar,
+  Box,
+  CssBaseline,
+  IconButton,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { useUserStore } from "store/user/userzustandstore";
+import { flexBox, size } from "theme/defaultFunction";
+import MenuIcon from "@mui/icons-material/Menu";
+import SideBar from "common/sidebar/Sidebar";
+import AvatarMenu from "common/sidebar/Avatar";
+import { userestaurantStore } from "store/restaurant/restaurantStore";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { useTheme } from "@emotion/react";
 
-
-
-
-const HomeStructure = ({children}) => {
+const HomeStructure = ({ children }) => {
   const router = useRouter();
   const drawerWidth = 240;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [largeHide, setlargeHide] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const handleDrawerToggleLarge = () => {
+    setlargeHide(!largeHide);
+  };
 
-  const userState = useUserStore(state=>state.user);
-  const logout = useUserStore(state=>state.logout);
-  const restaurant = userestaurantStore(state=>state.restaurant);
-  useEffect(()=>{
-    if(!userState || !userState.login || !userState._id){
+  const userState = useUserStore((state) => state.user);
+  const logout = useUserStore((state) => state.logout);
+  const theme= useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down("sm"));
+  const restaurant = userestaurantStore((state) => state.restaurant);
+  useEffect(() => {
+    if ((!userState || !userState.login || !userState._id || userState.jwtToken == "") && router.route != "/auth") {
+      logout();
       router.push("/auth");
+      console.log({
+        router
+      })
     }
-  },[userState, router])
-  console.log({
-    u:!userState || !userState.login || !userState._id,
-    userState
-  })
+  }, [userState, router]);
+  useEffect(()=>{
+    console.log({matches})
+    if(matches){
+      setlargeHide(true);
+    }else{
+      setlargeHide(false);
+    }
+  },[matches])
   return (
-    <Box sx={{ display: 'flex', height:"100vh", width:"100vw", overflowY:"hidden" }}>
+    <Box
+      sx={{
+        display: "flex",
+        height: "100vh",
+        width: "100vw",
+        overflowY: "hidden",
+      }}
+    >
       <CssBaseline />
       <AppBar
         position="fixed"
         sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
-          padding:{
-            xs:0,
-            md:1
+          width: {
+            sm: largeHide
+              ? `calc(100% - ${drawerWidth}px)`
+              : `calc(100% - ${90}px)`,
+            // sm: `calc(100% - ${drawerWidth}px)`
           },
-          height:{
-            xs:"50px",
-            md:"70px"
-          }
+          ml: { sm: `${drawerWidth}px` },
+          padding: {
+            xs: 0,
+            md: 1,
+          },
+          height: {
+            xs: "55px",
+            md: "70px",
+          },
         }}
       >
         <Toolbar>
@@ -56,47 +89,82 @@ const HomeStructure = ({children}) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { sm: "none" } }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggleLarge}
+            sx={{ mr: 2, display: { xs: "none", sm: "flex" } }}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h3" noWrap component="div" color={"white"}>
             {restaurant?.restaurantInfo?.restaurantName}
           </Typography>
-          <Box sx={{
-            flex:1,
-            ...flexBox("row", "flex-end")
-          }}>
-            <AvatarMenu userState={userState} logout={logout}/>
+
+          <Box
+            sx={{
+              flex: 1,
+              ...flexBox("row", "flex-end"),
+            }}
+          >
+            <IconButton
+              onClick={() => {
+                router.reload();
+              }}
+            >
+              <RefreshIcon />
+            </IconButton>
+            <AvatarMenu userState={userState} logout={logout} />
             {/*  */}
           </Box>
         </Toolbar>
       </AppBar>
-      
       <Box
-        component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
-        aria-label="mailbox folders"
+        sx={{
+          flexShrink: { sm: 0 },
+        }}
       >
-        <SideBar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} handleDrawerToggle={handleDrawerToggle}/>
+        <SideBar
+          largeHide={largeHide}
+          mobileOpen={mobileOpen}
+          setMobileOpen={setMobileOpen}
+          handleDrawerToggle={handleDrawerToggle}
+          user={userState}
+        />
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1,  
-        height:"100vh",
-        width:"100vw",
-        ...flexBox("column"),
-        overflow:"hidden",
-        // border:"12px solid blue"
-       }}
+        sx={{
+          flexGrow: 1,
+          height: "100vh",
+          width: {
+            sm: largeHide
+              ? `calc(100% - ${drawerWidth}px)`
+              : `calc(100% - ${90}px)`,
+            // sm: `calc(100% - ${drawerWidth}px)`
+          },
+          ml: { sm: largeHide
+            ? `${drawerWidth}px`
+            : `${90}px`, 
+          },
+          // width: largeHide? "100%" : "80vw",
+          // ml: { sm: largeHide?"${drawerWidth}px":"90px" },
+          ...flexBox("column"),
+          overflow: "hidden",
+          // border:"12px solid blue"
+        }}
       >
-        <Toolbar/>
+        <Toolbar />
         {children}
-        
       </Box>
     </Box>
-  )
-}
+  );
+};
 
-export default HomeStructure
+export default HomeStructure;

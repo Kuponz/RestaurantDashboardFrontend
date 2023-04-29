@@ -45,6 +45,9 @@ const OrderCards = ({order, open, setOpen, setWatchOrder}:{
     open:Boolean,
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
+    console.log(moment.utc(order?.updatedAt).format("DD/MM/YYYY HH:MM").toString());
+    console.log(order?.updatedAt);
+    console.log( moment.utc(order?.updatedAt).local().startOf('seconds').fromNow());
   return (
     <Paper sx={{
         height:"fit-content",
@@ -63,7 +66,7 @@ const OrderCards = ({order, open, setOpen, setWatchOrder}:{
               <Stack direction={"column"}>
                 <Typography variant="h6" color={"white"}>
                     {
-                        moment.utc(order?.updatedAt).format("DD/MM/YYYY HH:MM").toString()
+                        moment(moment.utc(order?.updatedAt)).local().format("DD/MM/YYYY hh:MM A").toString()
                     }
                     </Typography>
                     <Typography variant="h6" color={"white"}>

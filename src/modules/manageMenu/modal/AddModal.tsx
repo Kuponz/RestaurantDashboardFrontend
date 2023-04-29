@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import ValueForm from "./ValueForm";
 import { useMutation } from "@tanstack/react-query";
 import { createCategory, createItem } from "store/api/axiosSetup";
+import { useRouter } from "next/router";
 
 // {
 //   "categoryName":"Main Course",
@@ -50,7 +51,7 @@ const AddModal = ({
         //   title:"Item Rank"
         // },
         ignoreTaxes: {
-          value: viewOne?.viewObj?.ignoreTaxes ?? false,
+          value: viewOne?.viewObj?.ignoreTaxes ?? true,
           type: "boolean",
           name: "ignoreTaxes",
         },
@@ -86,6 +87,18 @@ const AddModal = ({
           type: "text",
           name: "itemAttributeid",
           title: "Item Attribute id",
+        },
+        variations:{
+          value: viewOne?.viewObj?.variations ?? [],
+          type: "option",
+          name: "variations",
+          title: "Variations",
+        },
+        addons:{
+          value: viewOne?.viewObj?.addons ?? [],
+          type: "option",
+          name: "addons",
+          title: "Addons",
         },
         // "itemdescription":{
         //   value:"",
@@ -135,6 +148,7 @@ const AddModal = ({
       };
     }
   });
+  const router = useRouter();
   const { mutate, isLoading } = useMutation(createCategory, {
     onSuccess: (data, variables, context) => {
       console.log({
@@ -142,12 +156,21 @@ const AddModal = ({
         variables,
         context,
       });
-      restroState.setCategories([
-        ...restroState.restaurant.categories,
-        data.data.data?.categoryResult,
-      ]);
-      // setNewUser(false);
-      setOpen();
+      if(data?.data?.data?.edit){
+        let newData = restroState.restaurant.categories.map(val=>val._id == data.data.data?.categoryResult._id?data.data.data?.categoryResult:val)
+        restroState.setCategories([
+          ...newData
+        ]);
+        setOpen();
+      }else{
+        restroState.setCategories([
+          ...restroState.restaurant.categories,
+          data.data.data?.categoryResult,
+        ]);
+        // setNewUser(false);
+        setOpen();
+      }
+      
     },
     onError(error, variables, context) {
       console.log({ error });
@@ -178,14 +201,15 @@ const AddModal = ({
       restroState.setCategories([...categoryAddedRestro]);
       setOpen();
       if(viewOne?.open){
+        router.reload();
         setErrorOpener({
           ...errorOpener,
           message: "SuccesFully Updated a menu Item",
           open: true,
           severity: "success",
         });
-
       }else{
+        router.reload();
         setErrorOpener({
           ...errorOpener,
           message: "SuccesFully Added",
@@ -220,7 +244,7 @@ const AddModal = ({
           setData={setData}
           key={index}
           values={data[values]}
-          data={values}
+          data={data}
         />
       ))}
       <Button
@@ -242,8 +266,10 @@ const AddModal = ({
               minimumpreparationtime: data.minimumpreparationtime?.value,
               price: data.price?.value,
               itemTax: data.itemTax?.value,
+              variations:data?.variations?.value,
+              addons: data?.addons?.value
             };
-            console.log(sendData);
+            console.log({sendData});
             if(viewOne?.open && viewOne?.viewObj?._id){
               sendData.menuId = viewOne?.viewObj?._id;
               sendData.isEdit = viewOne?.open;
@@ -265,16 +291,28 @@ const AddModal = ({
               });
             }
           } else {
-            sendData = {
-              categoryName: data["categoryName"]?.value,
-              isAvailable: data.isAvailable?.value,
-              categoryRank: data.categoryRank?.value,
-            };
-            console.log(sendData);
-            mutate({
-              sendData,
-              headerAuth: userToken.jwtToken,
-            });
+            let editVal = viewOne?.open ? viewOne?.viewObj?.categoryName != data["categoryName"]?.value : false;
+            console.log(editVal);
+            if(data["categoryName"]?.value != "" && (viewOne?.open? editVal: true)){
+              sendData = {
+                categoryName: data["categoryName"]?.value,
+                isAvailable: data.isAvailable?.value,
+                categoryRank: data.categoryRank?.value,
+                categoryId:viewOne?.viewObj?._id ?? null, 
+                edit:viewOne?.open
+              };
+              console.log(sendData);
+              mutate({
+                sendData,
+                headerAuth: userToken.jwtToken,
+              });
+            }else{
+              if(!editVal && viewOne?.open){
+                alert("No update made in Categeory Name");
+              }else{
+                alert("Enter Category Name");
+              }
+            }
           }
         }}
         variant="contained"
