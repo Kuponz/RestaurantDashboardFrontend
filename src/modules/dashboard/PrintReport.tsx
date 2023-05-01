@@ -72,7 +72,13 @@ const PrintReport = ({
                         Item Name
                       </TableCell>
                       <TableCell align="right" sx={{ fontWeight: 900 }}>
-                        Count
+                        Qty
+                      </TableCell>
+                      <TableCell align="right" sx={{ fontWeight: 900 }}>
+                        Price (₹)
+                      </TableCell>
+                      <TableCell align="right" sx={{ fontWeight: 900 }}>
+                        Total (₹)
                       </TableCell>
                     </TableRow>
                   </TableHead>
@@ -89,6 +95,8 @@ const PrintReport = ({
                         <TableCell align="center">{e.itemName}</TableCell>
 
                         <TableCell align="right">{e.count}</TableCell>
+                        <TableCell align="right">{e.price}</TableCell>
+                        <TableCell align="right">{e.total}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

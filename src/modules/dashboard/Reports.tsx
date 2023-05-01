@@ -157,12 +157,15 @@ const Reports = () => {
               Report === "Counter Cashier" ||
               getOrderData.isLoading ||
               getDiscountData.isLoading ||
+              getTopHistoryData.isLoading ||
               printData
                 ? true
                 : false
             }
             startIcon={
-              getOrderData.isLoading || getDiscountData.isLoading ? (
+              getTopHistoryData.isLoading ||
+              getOrderData.isLoading ||
+              getDiscountData.isLoading ? (
                 <CircularProgress color="inherit" size={18} />
               ) : (
                 <VisibilityIcon />
