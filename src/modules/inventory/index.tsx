@@ -14,7 +14,12 @@ import BasicModal from "common/modalGenerator/Modal";
 import AddModal from "modules/manageMenu/modal/AddModal";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { userestaurantStore } from "store/restaurant/restaurantStore";
-import { deleteItem, getExpense, getWorkMenu } from "store/api/axiosSetup";
+import {
+  deleteItem,
+  getExpense,
+  getExpenseType,
+  getWorkMenu,
+} from "store/api/axiosSetup";
 import { useUserStore } from "store/user/userzustandstore";
 import ExpenseOptions from "test/ExpenseOptions";
 import inventory from "pages/restaurant/inventory";
@@ -35,7 +40,7 @@ const TopBarInventory = () => {
 
   const [inventory, setinventory] = useState([]);
 
-  const { isLoading } = useQuery({
+  const { isLoading: isloadingExpense } = useQuery({
     enabled: !!restroState && !!userToken,
     queryKey: ["getWorkMenu"],
     refetchOnWindowFocus: false,
@@ -46,6 +51,19 @@ const TopBarInventory = () => {
       }),
     onSuccess: (data) => {
       console.log({ data: data.data.data.expenses });
+    },
+  });
+  const { isLoading: isloadingExpenseType } = useQuery({
+    enabled: !!restroState && !!userToken,
+    queryKey: ["getWorkMenu"],
+    refetchOnWindowFocus: false,
+    queryFn: () =>
+      getExpenseType({
+        restaurantId: restroState.restaurant.restaurantInfo._id,
+        headerAuth: userToken.jwtToken,
+      }),
+    onSuccess: (data) => {
+      console.log({ type: data });
     },
   });
 
@@ -65,7 +83,7 @@ const TopBarInventory = () => {
       <TopBar home={true} title={"Inventory"} backUrl={"/"}>
         <ExpenseOptions />
       </TopBar>
-      {isLoading ? (
+      {isloadingExpense ? (
         <>
           <CircularProgress />
         </>

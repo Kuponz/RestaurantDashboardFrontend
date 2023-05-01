@@ -87,6 +87,9 @@ const Reports = () => {
     onSuccess: ({ data }) => {
       SetprintData(data.data);
     },
+    onError(error, variables, context) {
+      console.log({ error, variables, context });
+    },
   });
 
   const handleSubmit = () => {
@@ -94,7 +97,7 @@ const Reports = () => {
     const params = {
       startDate: value.startDate.format("MM/DD/YYYY"),
       endDate: value.endDate.format("MM/DD/YYYY"),
-      headerAuth: value.headerAuth,
+      headerAuth: user.jwtToken,
       restaurantId: value.restaurantId,
     };
 

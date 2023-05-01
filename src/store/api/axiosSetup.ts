@@ -378,7 +378,10 @@ export const getOrderDiscount = async (params) => {
   );
   return response;
 };
-export const getTopHistory = async (params) => {
+export const getTopHistory = async (params: {
+  headerAuth: string;
+  restaurantId: string;
+}) => {
   const response = await authApi.get(
     `order/topHistory?restaurantId=${params.restaurantId}&startDate=${params.startDate}&endDate=${params.endDate}`,
     {
@@ -415,7 +418,7 @@ export const createAndUpdateExpense = async (data: {
   headerAuth: any;
 }) => {
   const response = await authApi.post(
-    "resaturant/createAndUpdateExpense",
+    "restaurant/createAndUpdateExpense",
     data.body,
     {
       headers: {
@@ -429,6 +432,21 @@ export const createAndUpdateExpense = async (data: {
 export const getExpense = async (params) => {
   const response = await authApi.get(
     `restaurant/getExpenseByRestaurantId?restaurantId=${params.restaurantId}`,
+    {
+      headers: {
+        Authorization: "Bearer " + params.headerAuth, // idk what this is but it seems to be common(passing usertoken)
+      },
+    }
+  );
+  return response;
+};
+export const getExpenseType = async (params: {
+  restaurantId: string;
+  headerAuth: string;
+}) => {
+  const response = await authApi.get(
+    `restaurant/getExpenseTypeByRestaurantId?restaurantId=${params.restaurantId}`,
+
     {
       headers: {
         Authorization: "Bearer " + params.headerAuth, // idk what this is but it seems to be common(passing usertoken)

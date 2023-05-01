@@ -56,6 +56,12 @@ const ExpenseOptions = () => {
     },
   });
 
+  const updateCat = useMutation(createAndUpdateExpenseCategory, {
+    onSuccess: (data) => {
+      console.log(data);
+    },
+  });
+
   // console.log(allUserProfile);
 
   // dayjs().toISOString();
@@ -254,7 +260,7 @@ const ExpenseOptions = () => {
                         {user.name}
                         </MenuItem>
                       ))} */}
-                      <MenuItem value={"644fcb010d12ec005b256723"}>
+                      <MenuItem value={"644fdc16eb5a7e005afdd8f6"}>
                         New
                       </MenuItem>
                       {/* //TODO : Work needed here for rendering type after getting type api */}
@@ -302,6 +308,20 @@ const ExpenseOptions = () => {
                   </Button>
                 </>
               )}
+              {/* <Button
+                onClick={() => {
+                  updateCat.mutate({
+                    body: {
+                      expenseTypeId: "644fdc16eb5a7e005afdd8f6",
+                      edit: true,
+                      expenseType: "Some New Name",
+                    },
+                    headerAuth: user.jwtToken,
+                  });
+                }}
+              >
+                Some Update
+              </Button> */}
             </Stack>
           </LocalizationProvider>
         )}
