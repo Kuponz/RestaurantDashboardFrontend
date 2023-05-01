@@ -260,7 +260,7 @@ const ExpenseOptions = () => {
                         {user.name}
                         </MenuItem>
                       ))} */}
-                      <MenuItem value={"644fdc16eb5a7e005afdd8f6"}>
+                      <MenuItem value={"644fe7c48114d90058499520"}>
                         New
                       </MenuItem>
                       {/* //TODO : Work needed here for rendering type after getting type api */}

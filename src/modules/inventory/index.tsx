@@ -2,6 +2,7 @@ import {
   Alert,
   Button,
   CircularProgress,
+  Paper,
   Snackbar,
   Stack,
   Typography,
@@ -38,7 +39,8 @@ const TopBarInventory = () => {
     severity: "error",
   });
 
-  const [inventory, setinventory] = useState([]);
+  const [expense, setexpense] = useState([]);
+  const [expenseType, setexpenseType] = useState([]);
 
   const { isLoading: isloadingExpense } = useQuery({
     enabled: !!restroState && !!userToken,
@@ -50,12 +52,12 @@ const TopBarInventory = () => {
         headerAuth: userToken.jwtToken,
       }),
     onSuccess: (data) => {
+      setexpense(data.data.data.expenses);
       console.log({ data: data.data.data.expenses });
     },
   });
   const { isLoading: isloadingExpenseType } = useQuery({
     enabled: !!restroState && !!userToken,
-    queryKey: ["getWorkMenu"],
     refetchOnWindowFocus: false,
     queryFn: () =>
       getExpenseType({
@@ -63,7 +65,8 @@ const TopBarInventory = () => {
         headerAuth: userToken.jwtToken,
       }),
     onSuccess: (data) => {
-      console.log({ type: data });
+      setexpenseType(data.data.data.getData);
+      console.log({ type: data.data.data.getData });
     },
   });
 
@@ -121,20 +124,6 @@ const TopBarInventory = () => {
               py={1}
             >
               <Typography variant="h4">Type</Typography>
-              {/* <Button
-                                variant="contained"
-                                onClick={() => {
-                                    setOpen(true);
-                                    setisItem(false);
-                                }}
-                                sx={{
-                                    borderRadius: 1,
-                                    mx: 1,
-                                }}
-                            >
-                                <AddIcon />
-                                Add Category
-                            </Button> */}
             </Stack>
             <Stack
               direction={"row"}
@@ -168,7 +157,19 @@ const TopBarInventory = () => {
                     />
                   </>
                 );
+                
               })} */}
+              <Stack gap={2} sx={{ flex: 1 }}>
+                {expenseType?.map((expense: any, index) => (
+                  <Paper
+                    variant="free"
+                    sx={{ p: 2, color: "white" }}
+                    key={index}
+                  >
+                    {expense.expenseType}
+                  </Paper>
+                ))}
+              </Stack>
             </Stack>
           </Stack>
           <Stack
@@ -244,6 +245,11 @@ const TopBarInventory = () => {
                   />
                 ));
               })} */}
+              <Stack sx={{ flex: 1 }} gap={2}>
+                {expense.map((expense: any, index) => (
+                  <Paper key={expense.id}>{}</Paper>
+                ))}
+              </Stack>
             </Stack>
           </Stack>
         </Stack>
