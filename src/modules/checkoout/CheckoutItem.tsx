@@ -27,12 +27,15 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import { v4 as uuidv4 } from "uuid";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Button, IconButton, Stack, TextField } from "@mui/material";
+import { Box, Button, IconButton, Paper, Stack, TextField } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { flexBox } from "theme/defaultFunction";
 import { stringify } from "querystring";
+import BasicModal from "common/modalGenerator/Modal";
+import CheckoutSelectedIteamModal from "./CheckoutSelectedModal";
 export default function SimpleAccordion({
   orderValue,
   setValue,
@@ -44,26 +47,45 @@ export default function SimpleAccordion({
   const specialInstruction = React.useRef("");
   const [_, forceUpdate] = React.useReducer((x) => x + 1, 0);
 
+  const [checkoutitemmodalopen,setcheckoutitemmodelopen] = React.useState(false);
   console.log({ orderValue });
   return (
-    <Accordion
-      TransitionProps={{ unmountOnExit: true }}
-      sx={{
-        width: "100%",
-        // border:"2px solid",
-        ...flexBox("column"),
-      }}
+       <Paper variant="outlined" 
+       //sx={{
+    //     display:"flex",
+    //     justifyContent:"space-between",
+    //     alignItems:"center",
+    //     p:1,
+    //     py:2,
+    //     width:{
+    //         xs:"100%",
+    //         md:"48%",
+    //         lg:"30%",
+    //         xl:"32%"
+    //     },
+    //     height:"fit-content",
+    //     //backgroundColor:theme=>itemVal && itemVal.quantity > 0 ?theme.palette.secondary.main:theme.palette.background.default
+    // }
+  
+    sx={{
+      width: "100%",
+      // border:"2px solid",
+      ...flexBox("column"),
+      display:"flex",
+        justifyContent:"space-between",
+         alignItems:"center",
+         p:1,
+         py:2,
+    }}
+        elevation={6}
     >
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1bh-content"
+      <Stack  aria-controls="panel1bh-content"
         id="panel1bh-header"
         sx={{
           ...flexBox(),
           width: "100%",
-        }}
-      >
-        <Stack
+        }}>
+            <Stack
           sx={{
             width: "100%",
             // border:"2px soid red"
@@ -89,155 +111,26 @@ export default function SimpleAccordion({
               Total &#8377;{" "}
               {String(parseInt(orderValue?.item?.price) * orderValue.quantity)}
             </Typography>
+            <Box sx={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'right',
+                }}>
+                   <Button onClick={()=>{
+                          setcheckoutitemmodelopen(true);
+                    }} variant="outlined" startIcon={<EditIcon/>} sx={{...flexBox()}}>Edit</Button>
+                </Box>
           </Stack>
-        </Stack>
-      </AccordionSummary>
-      <AccordionDetails>
-        <Stack
-          direction={"row"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
-          <IconButton
-            disabled={orderValue?.item?.selected?.length > 0}
-            onClick={async () => {
-              if (orderValue?.item?.selected?.length > 0) {
-                console.log({
-                  v: val[index],
-                });
-                // val[index].item.selected.push(val[index].selected[val[index]?.selected?.length - 1]);
-                console.log({
-                  val: val[index].item.selected[
-                    val[index].item.selected.length - 1
-                  ],
-                });
-                let newValInd = {
-                  ...val[index].item.selected[
-                    val[index].item.selected.length - 1
-                  ],
-                  id: uuidv4(),
-                };
-                console.log({ newValInd });
-                val[index].item.selected.push(newValInd);
-                // val[index].item.selected[val[index].item.selected.length -1].id = await Promise.all(uuidv4());
-                // val[index].item.selected[-1]
-                val[index].quantity += 1;
-                setValue(val);
-                forceUpdate();
-              } else {
-                variableip(orderValue.item, "+");
-              }
-            }}
-            // onClick={()=>{return variableip(orderValue.item, "+")}}
-          >
-            <AddIcon />
-          </IconButton>
-          <Stack
-            sx={{
-              width: "4rem",
-            }}
-          >
-            <TextField
-              value={orderValue.quantity}
-              onChange={(e) => variableip(orderValue.item, "*", e.target.value)}
-            />
-          </Stack>
-          <IconButton
-            onClick={() => {
-              if (orderValue?.item?.selected?.length > 0) {
-                console.log({
-                  v: val[index],
-                });
-                // val[index].item.selected.push(val[index].selected[val[index]?.selected?.length - 1]);
-                console.log({
-                  val: val[index].item.selected[
-                    val[index].item.selected.length - 1
-                  ],
-                });
-                val[index].item.selected.pop();
-                // val[index].item.selected[-1]
-                val[index].quantity -= 1;
-                if (val[index].quantity == 0) {
-                  let newValI = val.filter((valu, valI) => index != valI);
-                  setValue(newValI);
-                  forceUpdate();
-                } else {
-                  setValue(val);
-                  forceUpdate();
-                }
-              } else {
-                variableip(orderValue.item, "-");
-              }
-            }}
-          >
-            <RemoveIcon />
-          </IconButton>
-          {/* <IconButton color="error">
-            <DeleteIcon />
-          </IconButton> */}
-        </Stack>
-        <Stack>
-          <Typography my={0.5}>{orderValue?.item?.itemName}</Typography>
-          <Typography variant="body2" color={"primary"} sx={{}}>
-            {orderValue?.item?.selected?.map((sel) => {
-              return (
-                <>
-                  {sel.variations.length > 0 &&
-                    sel.variations.map((selu, id) => (
-                      <span key={id}>
-                        {
-                          selu?.variationOptions?.find(
-                            (elm) => elm._id == selu.selected
-                          )?.optName
-                        }{" "}
-                        <br />
-                      </span>
-                    ))}
-                  x1 <br />
-                </>
-              );
-            })}
-          </Typography>
+         
+         <BasicModal open={checkoutitemmodalopen} setOpen={setcheckoutitemmodelopen} title={"Checkout Item"}>
+            <CheckoutSelectedIteamModal></CheckoutSelectedIteamModal>
 
-          <Typography color={"primary.main"} my={0.5}>
-            {orderValue?.specialInstruction}
-          </Typography>
+         </BasicModal>
+
         </Stack>
-        <TextField
-          label={"Instructions"}
-          sx={{
-            display: specialOpen ? "flex" : "none",
-            my: 1,
-          }}
-          onChange={(e) => (specialInstruction.current = e.target.value)}
-          rows={7}
-          multiline
-          fullWidth
-        />
-        <Button
-          variant="outlined"
-          sx={{
-            display: specialOpen ? "none" : "flex",
-          }}
-          onClick={() => {
-            setSpecialOpen(true);
-          }}
-        >
-          Add Special Instruction
-        </Button>
-        <Button
-          variant="outlined"
-          sx={{
-            display: specialOpen ? "flex" : "none",
-          }}
-          onClick={() => {
-            setSpecialOpen(false);
-            val[index].specialInstruction = specialInstruction.current;
-          }}
-        >
-          Save
-        </Button>
-      </AccordionDetails>
-    </Accordion>
+        </Stack>
+     </Paper>
+
+
   );
 }
