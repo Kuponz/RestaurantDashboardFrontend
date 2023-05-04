@@ -1,12 +1,12 @@
 import { Button, Divider, Paper, Stack, Typography } from '@mui/material'
 import { OrderItems } from 'modules/orders/OrderItems';
 import moment from 'moment';
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
+import { flexBox } from 'theme/defaultFunction';
 import PrintIcon from '@mui/icons-material/Print';
+import { useReactToPrint } from 'react-to-print';
 import { BillPrint } from 'modules/BillPrint';
 
-import { flexBox } from 'theme/defaultFunction';
-import { useReactToPrint } from 'react-to-print';
 
 const OrderCards = ({order, open, setOpen, setWatchOrder}:{
     order: {
