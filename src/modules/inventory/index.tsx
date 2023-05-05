@@ -196,6 +196,7 @@ const TopBarInventory = () => {
                           mutateExpenseType.mutate({
                             body: {
                               expenseTypeId: expense._id,
+                              assigneeId: userToken._id,
                             },
                             headerAuth: userToken.jwtToken,
                           });
