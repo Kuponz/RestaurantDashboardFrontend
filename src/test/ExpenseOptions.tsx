@@ -20,11 +20,13 @@ import {
   createCategory,
   createAndUpdateExpenseCategory,
   createAndUpdateExpense,
+  getExpenseType,
 } from "store/api/axiosSetup";
 import { userestaurantStore } from "store/restaurant/restaurantStore";
 import { useUserStore } from "store/user/userzustandstore";
 
 const ExpenseOptions = () => {
+  const [expenseType, setexpenseType] = useState([]);
   const [Open, setOpen] = useState(false);
   const [Option, setOption] = useState("");
   const [Selections, setSelections] = useState<any>({
@@ -75,6 +77,21 @@ const ExpenseOptions = () => {
   //   date: Selections.Expense.assignDate.toISOString(),
   //   specialInstruction: Selections.Expense.specialInstructions,
   // });
+
+  const { isLoading: isloadingExpenseType } = useQuery({
+    enabled: !!restaurant && !!user,
+    refetchOnWindowFocus: false,
+    queryFn: () =>
+      getExpenseType({
+        restaurantId: restaurant.restaurantInfo._id,
+        headerAuth: user.jwtToken,
+      }),
+    onSuccess: (data) => {
+      setexpenseType(data.data.data.getData);
+      console.log({ type: data.data.data.getData });
+      // QueryClient.invalidateQueries(["getWorkMenu"]);
+    },
+  });
 
   const handleDateChange = (newValue: Dayjs | null, name: string) => {
     setSelections({
@@ -255,14 +272,11 @@ const ExpenseOptions = () => {
                       {/* <MenuItem value={10}>Ten</MenuItem>
                       <MenuItem value={20}>Twenty</MenuItem>
                       <MenuItem value={30}>Thirty</MenuItem> */}
-                      {/* {allUserProfile?.map((user: any) => (
-                        <MenuItem key={user._id} value={user._id}>
-                        {user.name}
+                      {expenseType?.map((expense: any) => (
+                        <MenuItem key={expense._id} value={expense._id}>
+                          {expense.expenseType}
                         </MenuItem>
-                      ))} */}
-                      <MenuItem value={"644fe7c48114d90058499520"}>
-                        New
-                      </MenuItem>
+                      ))}
                       {/* //TODO : Work needed here for rendering type after getting type api */}
                     </Select>
                   </FormControl>

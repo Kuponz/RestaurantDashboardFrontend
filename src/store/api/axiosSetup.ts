@@ -405,6 +405,28 @@ export const createAndUpdateExpenseCategory = async (data: any) => {
   );
   return response;
 };
+export const deleteExpenseCategory = async (data: any) => {
+  const response = await authApi.post(
+    "restaurant/deleteExpenseType",
+    data.body,
+    {
+      headers: {
+        Authorization: "Bearer " + data.headerAuth, // idk what this is but it seems to be common(passing usertoken)
+      },
+    }
+  );
+  return response;
+};
+
+export const deleteExpense = async (data: any) => {
+  const response = await authApi.post("restaurant/deleteExpense", data.body, {
+    headers: {
+      Authorization: "Bearer " + data.headerAuth, // idk what this is but it seems to be common(passing usertoken)
+    },
+  });
+  return response;
+};
+
 export const createAndUpdateExpense = async (data: {
   body: {
     edit: boolean;
