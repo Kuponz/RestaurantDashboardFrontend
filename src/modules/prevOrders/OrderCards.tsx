@@ -1,4 +1,4 @@
-import { Button, Divider, Paper, Stack, Typography } from '@mui/material'
+import { Button, Divider, IconButton, Paper, Stack, Typography } from '@mui/material'
 import { OrderItems } from 'modules/orders/OrderItems';
 import moment from 'moment';
 import React, { useRef, useState } from 'react';
@@ -106,9 +106,10 @@ const OrderCards = ({order, open, setOpen, setWatchOrder}:{
                 <Stack direction={"row"} sx={{
                     ...flexBox("row", "space-between")
                 }}>
-                    <Typography variant='h5'>Total : {order.orderAmount.total}</Typography>
-                    <Typography variant='button' color={"primary.main"} onClick={handlePrint}><PrintIcon/>
+                    <Typography variant='h5'>Total : {order.orderAmount.total}
                     </Typography>
+                    <IconButton variant='button' color={"primary.main"} onClick={handlePrint}><PrintIcon/>
+                    </IconButton>
                     
                     <Typography variant='button' 
                     onClick={()=>{
