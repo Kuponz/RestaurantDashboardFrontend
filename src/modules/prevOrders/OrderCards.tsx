@@ -1,8 +1,12 @@
-import { Button, Divider, Paper, Stack, Typography } from '@mui/material'
+import { Button, Divider, IconButton, Paper, Stack, Typography } from '@mui/material'
 import { OrderItems } from 'modules/orders/OrderItems';
 import moment from 'moment';
-import React from 'react'
+import React, { useRef, useState } from 'react';
 import { flexBox } from 'theme/defaultFunction';
+import PrintIcon from '@mui/icons-material/Print';
+import { useReactToPrint } from 'react-to-print';
+import { BillPrint } from 'modules/BillPrint';
+
 
 const OrderCards = ({order, open, setOpen, setWatchOrder}:{
     order: {
@@ -45,9 +49,24 @@ const OrderCards = ({order, open, setOpen, setWatchOrder}:{
     open:Boolean,
     setOpen: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
-    console.log(moment.utc(order?.updatedAt).format("DD/MM/YYYY HH:MM").toString());
-    console.log(order?.updatedAt);
-    console.log( moment.utc(order?.updatedAt).local().startOf('seconds').fromNow());
+    
+    const [showPrint, setShowPrint] = useState(false);
+    let componentRef = useRef(null);
+    const handlePrintPart2 = useReactToPrint({
+        content: () => componentRef.current,
+      });
+    const handlePrint = async () => {
+        // const data = await render(
+        //     <Printer type="epson">
+        //         <BillPrint componentRef={componentRef} order={order?.details} setShowPrint={setShowPrint} reference={false}/>
+        //     </Printer>
+        // );
+        setShowPrint(true);
+        handlePrintPart2();
+           
+    }  
+
+
   return (
     <Paper sx={{
         height:"fit-content",
@@ -87,7 +106,11 @@ const OrderCards = ({order, open, setOpen, setWatchOrder}:{
                 <Stack direction={"row"} sx={{
                     ...flexBox("row", "space-between")
                 }}>
-                    <Typography variant='h5'>Total : {order.orderAmount.total}</Typography>
+                    <Typography variant='h5'>Total : {order.orderAmount.total}
+                    </Typography>
+                    <IconButton variant='button' color={"primary.main"} onClick={handlePrint}><PrintIcon/>
+                    </IconButton>
+                    
                     <Typography variant='button' 
                     onClick={()=>{
                         setWatchOrder({...order});
@@ -95,11 +118,21 @@ const OrderCards = ({order, open, setOpen, setWatchOrder}:{
                     }}
                     color={"primary.main"} sx={{
                         cursor:"pointer"
-                    }}>.. Read More</Typography>  
+                    }}>.. Read More</Typography>
+
                 </Stack>
             </Stack>
+     
+            <div style={{
+            display:"none",
+        }}>
+            <BillPrint  componentRef={componentRef} setShowPrint={setShowPrint} order={order} reference={true} />
+            
+        </div>
+
         </Paper>
       </Paper>
+        
   )
 }
 

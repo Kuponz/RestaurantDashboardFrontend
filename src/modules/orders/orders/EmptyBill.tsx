@@ -32,6 +32,8 @@ const EmptyBill = ({order, userDetails}) => {
         //     </Printer>
         // );
         setShowPrint(true);
+        console.log("data is :");
+        console.log(componentRef.current);
         handlePrintPart2();
            
     }  
@@ -123,8 +125,7 @@ const EmptyBill = ({order, userDetails}) => {
         <div style={{
             display:"none",
         }}>
-            <BillPrint  componentRef={componentRef} setShowPrint={setShowPrint} order={order.details} reference={true} />
-            
+            <BillPrint  componentRef={componentRef} setShowPrint={setShowPrint} order={order.details} reference={true} />    
         </div>
     </>
   )
