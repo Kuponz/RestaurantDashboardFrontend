@@ -87,6 +87,9 @@ const Reports = () => {
     onSuccess: ({ data }) => {
       SetprintData(data.data);
     },
+    onError(error, variables, context) {
+      console.log({ error, variables, context });
+    },
   });
 
   const handleSubmit = () => {
@@ -94,7 +97,7 @@ const Reports = () => {
     const params = {
       startDate: value.startDate.format("MM/DD/YYYY"),
       endDate: value.endDate.format("MM/DD/YYYY"),
-      headerAuth: value.headerAuth,
+      headerAuth: user.jwtToken,
       restaurantId: value.restaurantId,
     };
 
@@ -157,12 +160,15 @@ const Reports = () => {
               Report === "Counter Cashier" ||
               getOrderData.isLoading ||
               getDiscountData.isLoading ||
+              getTopHistoryData.isLoading ||
               printData
                 ? true
                 : false
             }
             startIcon={
-              getOrderData.isLoading || getDiscountData.isLoading ? (
+              getTopHistoryData.isLoading ||
+              getOrderData.isLoading ||
+              getDiscountData.isLoading ? (
                 <CircularProgress color="inherit" size={18} />
               ) : (
                 <VisibilityIcon />

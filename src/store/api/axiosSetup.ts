@@ -2,7 +2,7 @@ import axios from "axios";
 import { GenericResponse } from "./types";
 
 // const BASE_URL = "http://qaetopos.azurewebsites.net/"; //QA URL
- const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
+const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
 // const BASE_URL = "http://localhost:5000/"; //LocalHost Url
 
 const authApi = axios.create({
@@ -378,9 +378,101 @@ export const getOrderDiscount = async (params) => {
   );
   return response;
 };
-export const getTopHistory = async (params) => {
+export const getTopHistory = async (params: {
+  headerAuth: string;
+  restaurantId: string;
+}) => {
   const response = await authApi.get(
     `order/topHistory?restaurantId=${params.restaurantId}&startDate=${params.startDate}&endDate=${params.endDate}`,
+    {
+      headers: {
+        Authorization: "Bearer " + params.headerAuth, // idk what this is but it seems to be common(passing usertoken)
+      },
+    }
+  );
+  return response;
+};
+
+export const createAndUpdateExpenseCategory = async (data: {
+  body: any;
+  headerAuth: any;
+}) => {
+  const response = await authApi.post(
+    "restaurant/createAndUpdateExpenseType",
+    data.body,
+    {
+      headers: {
+        Authorization: "Bearer " + data.headerAuth, // idk what this is but it seems to be common(passing usertoken)
+      },
+    }
+  );
+  return response;
+};
+export const deleteExpenseCategory = async (data: any) => {
+  const response = await authApi.post(
+    "restaurant/deleteExpenseType",
+    data.body,
+    {
+      headers: {
+        Authorization: "Bearer " + data.headerAuth, // idk what this is but it seems to be common(passing usertoken)
+      },
+    }
+  );
+  return response;
+};
+
+export const deleteExpense = async (data: any) => {
+  const response = await authApi.post("restaurant/deleteExpense", data.body, {
+    headers: {
+      Authorization: "Bearer " + data.headerAuth, // idk what this is but it seems to be common(passing usertoken)
+    },
+  });
+  return response;
+};
+
+export const createAndUpdateExpense = async (data: {
+  body: {
+    edit: boolean;
+    assigneeId: string;
+    restaurantId: string;
+    expenseType: string;
+    amount: number;
+    date: Date;
+    specialInstruction?: string;
+  };
+  headerAuth: any;
+}) => {
+  const response = await authApi.post(
+    "restaurant/createAndUpdateExpense",
+    data.body,
+    {
+      headers: {
+        Authorization: "Bearer " + data.headerAuth, // idk what this is but it seems to be common(passing usertoken)
+      },
+    }
+  );
+  return response;
+};
+
+export const getExpense = async (params) => {
+  const response = await authApi.get(
+    `restaurant/getExpenseByRestaurantId?restaurantId=${params.restaurantId}`,
+    {
+      headers: {
+        Authorization: "Bearer " + params.headerAuth, // idk what this is but it seems to be common(passing usertoken)
+      },
+    }
+  );
+  return response;
+};
+
+export const getExpenseType = async (params: {
+  restaurantId: string;
+  headerAuth: string;
+}) => {
+  const response = await authApi.get(
+    `restaurant/getExpenseTypeByRestaurantId?restaurantId=${params.restaurantId}`,
+
     {
       headers: {
         Authorization: "Bearer " + params.headerAuth, // idk what this is but it seems to be common(passing usertoken)

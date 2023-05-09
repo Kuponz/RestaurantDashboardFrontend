@@ -1,10 +1,13 @@
 import Head from "next/head";
 import { Waiter } from "modules/table";
 import HomeStructure from "modules/home/HomeStructure";
-import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
+import EastOutlinedIcon from "@mui/icons-material/EastOutlined";
 import { Button, Stack, Typography } from "@mui/material";
 import { flexBox } from "theme/defaultFunction";
 import { useRouter } from "next/router";
+import BasicModal from "common/modalGenerator/Modal";
+import ExpenseOptions from "test/ExpenseOptions";
+import TopBarInventory from "modules/inventory/index";
 
 export default function inventory() {
   const router = useRouter();
@@ -23,7 +26,7 @@ export default function inventory() {
         {/* Auth Stuff Here */}
         {/* <Waiter /> */}
         <HomeStructure>
-        <Typography variant="h2">Stay Tuned</Typography>
+          {/* <Typography variant="h2">Stay Tuned</Typography>
           <Typography variant="body2">Construction in Progress!</Typography>
           <Stack direction={"column"} sx={{
               py:5,
@@ -33,8 +36,10 @@ export default function inventory() {
               <Button variant={"outlined"} onClick={()=>{
                   router.push("/restaurant/table")
               }} sx={{...flexBox(), gap:1}}>Book Tables <EastOutlinedIcon/></Button>
-          </Stack>
+          </Stack> */}
 
+          {/* <ExpenseOptions /> */}
+          <TopBarInventory />
         </HomeStructure>
       </div>
     </>
