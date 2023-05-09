@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import BasicModal from "common/modalGenerator/Modal";
 import dayjs, { type Dayjs } from "dayjs";
 import React, { useState } from "react";
@@ -40,6 +40,8 @@ const ExpenseOptions = () => {
   });
   const [allUserProfile, setAllUserProfile] = useState([]);
 
+  const queryClient = useQueryClient();
+
   const restaurant = userestaurantStore((state) => state.restaurant);
   const user = useUserStore((state) => state.user);
 
@@ -47,20 +49,14 @@ const ExpenseOptions = () => {
     enabled: !!restaurant.restaurantInfo,
     queryKey: ["getWorkUsers"],
     refetchOnWindowFocus: false,
+
     queryFn: () =>
       getWorkUsers({
         restaurantId: restaurant.restaurantInfo._id,
         headerAuth: user.jwtToken,
       }),
     onSuccess: (data) => {
-      // console.log({data:data?.data?.data})
       setAllUserProfile(data?.data?.data?.staff);
-    },
-  });
-
-  const updateCat = useMutation(createAndUpdateExpenseCategory, {
-    onSuccess: (data) => {
-      console.log(data);
     },
   });
 
@@ -81,6 +77,7 @@ const ExpenseOptions = () => {
   const { isLoading: isloadingExpenseType } = useQuery({
     enabled: !!restaurant && !!user,
     refetchOnWindowFocus: false,
+    queryKey: ["getExpenseType"],
     queryFn: () =>
       getExpenseType({
         restaurantId: restaurant.restaurantInfo._id,
@@ -109,12 +106,16 @@ const ExpenseOptions = () => {
           name: "",
         },
       });
+      queryClient.invalidateQueries({ queryKey: ["getExpenseType"] });
+      setOpen(false);
     },
   });
 
   const createExpense = useMutation(createAndUpdateExpense, {
     onSuccess: (data) => {
       console.log(data);
+      queryClient.invalidateQueries({ queryKey: ["getExpense"] });
+      setOpen(false);
     },
   });
 
@@ -182,7 +183,7 @@ const ExpenseOptions = () => {
                 </>
               ) : (
                 <>
-                  <TextField
+                  {/* <TextField
                     label="Expense Name"
                     value={Selections.Expense?.name}
                     onChange={(e) => {
@@ -195,7 +196,7 @@ const ExpenseOptions = () => {
                       });
                     }}
                     variant="filled"
-                  />
+                  /> */}
                   <TextField
                     label="Cost (₹)"
                     value={Selections.Expense?.cost}
@@ -215,7 +216,7 @@ const ExpenseOptions = () => {
                   <MobileDatePicker
                     label="Date"
                     inputFormat="DD/MM/YYYY"
-                    value={dayjs(Selections.Expense.startDate)}
+                    value={dayjs(Selections.Expense.assignDate)}
                     onChange={(newValue) =>
                       handleDateChange(newValue, "assignDate")
                     }

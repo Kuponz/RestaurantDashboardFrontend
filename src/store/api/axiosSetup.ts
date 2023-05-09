@@ -393,7 +393,10 @@ export const getTopHistory = async (params: {
   return response;
 };
 
-export const createAndUpdateExpenseCategory = async (data: any) => {
+export const createAndUpdateExpenseCategory = async (data: {
+  body: any;
+  headerAuth: any;
+}) => {
   const response = await authApi.post(
     "restaurant/createAndUpdateExpenseType",
     data.body,
@@ -462,6 +465,7 @@ export const getExpense = async (params) => {
   );
   return response;
 };
+
 export const getExpenseType = async (params: {
   restaurantId: string;
   headerAuth: string;

@@ -2,10 +2,15 @@ import {
   Alert,
   Button,
   CircularProgress,
+  FormControl,
   IconButton,
+  InputLabel,
+  MenuItem,
   Paper,
+  Select,
   Snackbar,
   Stack,
+  TextField,
   Typography,
 } from "@mui/material";
 import TopBar from "common/topBar/TopBar";
@@ -14,9 +19,15 @@ import ManageMenuCard from "modules/manageMenu/ManageCategoryCard";
 import AddIcon from "@mui/icons-material/Add";
 import BasicModal from "common/modalGenerator/Modal";
 import AddModal from "modules/manageMenu/modal/AddModal";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import {
+  QueryClient,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { userestaurantStore } from "store/restaurant/restaurantStore";
 import {
+  createAndUpdateExpense,
   deleteExpense,
   deleteExpenseCategory,
   deleteItem,
@@ -28,10 +39,21 @@ import { useUserStore } from "store/user/userzustandstore";
 import ExpenseOptions from "test/ExpenseOptions";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { createAndUpdateExpenseCategory } from "store/api/axiosSetup";
+import {
+  createAndUpdateExpenseCategory,
+  getWorkUsers,
+} from "store/api/axiosSetup";
+import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 const TopBarInventory = () => {
-  // const [open, setOpen] = useState(false);
+  const [edit, setEdit] = useState({
+    open: false,
+    title: "",
+    data: {},
+  });
+  const queryClient = useQueryClient();
 
   const userToken = useUserStore((state) => state.user);
   const restroState = userestaurantStore((state) => state);
@@ -41,7 +63,7 @@ const TopBarInventory = () => {
 
   const { isLoading: isloadingExpense } = useQuery({
     enabled: !!restroState && !!userToken,
-    queryKey: ["getWorkMenu"],
+    queryKey: ["getExpense"],
     refetchOnWindowFocus: false,
     queryFn: () =>
       getExpense({
@@ -50,15 +72,22 @@ const TopBarInventory = () => {
       }),
     onSuccess: (data) => {
       setexpense(data.data.data.expenses);
-      console.log({ data: data.data.data.expenses });
     },
   });
 
-  console.log(restroState);
+  const handleDateChange = (newValue: Dayjs | null, name: string) => {
+    setEdit({
+      ...edit,
+      data: { ...edit.data, [name]: newValue },
+    });
+  };
 
-  const { isLoading: isloadingExpenseType } = useQuery({
+  const [allUserProfile, setAllUserProfile] = useState([]);
+
+  const { isLoading: isloadingExpenseType, data } = useQuery({
     enabled: !!restroState && !!userToken,
     refetchOnWindowFocus: false,
+    queryKey: ["getExpenseType"],
     queryFn: () =>
       getExpenseType({
         restaurantId: restroState.restaurant.restaurantInfo._id,
@@ -66,20 +95,49 @@ const TopBarInventory = () => {
       }),
     onSuccess: (data) => {
       setexpenseType(data.data.data.getData);
+    },
+  });
 
-      console.log({ type: data.data.data.getData });
-      // QueryClient.invalidateQueries(["getWorkMenu"]);
+  const { isLoading, isError, error } = useQuery({
+    enabled: !!restroState.restaurant.restaurantInfo,
+    queryKey: ["getWorkUsers"],
+    refetchOnWindowFocus: false,
+
+    queryFn: () =>
+      getWorkUsers({
+        restaurantId: restroState.restaurant.restaurantInfo._id,
+        headerAuth: userToken.jwtToken,
+      }),
+    onSuccess: (data) => {
+      setAllUserProfile(data?.data?.data?.staff);
     },
   });
 
   const mutateExpenseType = useMutation(deleteExpenseCategory, {
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getExpenseType"] });
     },
   });
   const mutateExpense = useMutation(deleteExpense, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getExpense"] });
+    },
+  });
+
+  const updateExp = useMutation(createAndUpdateExpense, {
     onSuccess: (data) => {
-      console.log(data);
+      queryClient.invalidateQueries({
+        queryKey: ["getExpense"],
+      });
+      setEdit({ open: false, title: "", data: {} });
+    },
+  });
+  const updateCat = useMutation(createAndUpdateExpenseCategory, {
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["getExpenseType", "getExpense"],
+      });
+      setEdit({ open: false, title: "", data: {} });
     },
   });
 
@@ -154,24 +212,6 @@ const TopBarInventory = () => {
                 gap: 2,
               }}
             >
-              {/* {restroState?.restaurant?.categories?.map((category, index) => {
-                return (
-                  <>
-                    <ManageMenuCard
-                      key={index}
-                      setisItem={setisItem}
-                      setViewOne={setViewOne}
-                      viewOne={viewOne}
-                      deleteMutate={deleteMutate}
-                      isCategory={true}
-                      menuVal={category}
-                      setOpen={setOpen}
-                      userToken={userToken}
-                    />
-                  </>
-                );
-                
-              })} */}
               <Stack gap={2} sx={{ flex: 1 }}>
                 {expenseType?.map((expense: any, index) => (
                   <Paper
@@ -204,7 +244,15 @@ const TopBarInventory = () => {
                       >
                         <DeleteIcon />
                       </IconButton>
-                      <IconButton disabled>
+                      <IconButton
+                        onClick={() => {
+                          setEdit({
+                            open: true,
+                            title: "Category",
+                            data: expense,
+                          });
+                        }}
+                      >
                         <EditIcon />
                       </IconButton>
                     </Stack>
@@ -237,20 +285,6 @@ const TopBarInventory = () => {
               py={1}
             >
               <Typography variant="h4">Expense details</Typography>
-              {/* <Button
-                                variant="contained"
-                                onClick={() => {
-                                    setOpen(true);
-                                    setisItem(true);
-                                }}
-                                sx={{
-                                    borderRadius: 1,
-                                    mx: 1,
-                                }}
-                            >
-                                <AddIcon />
-                                Add Menu
-                            </Button> */}
             </Stack>
             <Stack
               direction={"row"}
@@ -268,24 +302,6 @@ const TopBarInventory = () => {
                 gap: 2,
               }}
             >
-              {/* {restroState?.restaurant?.categories?.map((category, index) => {
-                return category?.menu.map((menuVal) => (
-                  <ManageMenuCard
-                    key={index}
-                    setViewOne={setViewOne}
-                    viewOne={viewOne}
-                    isCategory={false}
-                    userToken={userToken}
-                    setisItem={setisItem}
-                    setOpen={setOpen}
-                    menuVal={{
-                      ...menuVal,
-                      categoryName: category?.categoryName,
-                    }}
-                    deleteMutate={deleteMutate}
-                  />
-                ));
-              })} */}
               <Stack sx={{ flex: 1 }} gap={2}>
                 {expense.map((expense: any, index) => (
                   <Paper
@@ -313,7 +329,15 @@ const TopBarInventory = () => {
                       >
                         <DeleteIcon />
                       </IconButton>
-                      <IconButton disabled>
+                      <IconButton
+                        onClick={() => {
+                          setEdit({
+                            open: true,
+                            title: "Expense",
+                            data: expense,
+                          });
+                        }}
+                      >
                         <EditIcon />
                       </IconButton>
                     </Stack>
@@ -324,36 +348,168 @@ const TopBarInventory = () => {
           </Stack>
         </Stack>
       )}
-      {/* <BasicModal
-        open={open}
+      <BasicModal
+        open={edit.open}
         setOpen={() => {
-          setisItem(false);
-          setViewOne({
-            viewObj: {},
-            open: false,
-          });
-          setOpen(false);
+          setEdit({ ...edit, open: false });
         }}
-        title={isItem ? "Item" : "Category"}
+        title={edit.title}
       >
-        <AddModal
-          viewOne={viewOne}
-          errorOpener={errorOpener}
-          setErrorOpener={setErrorOpener}
-          isItem={isItem}
-          userToken={userToken}
-          restroState={restroState}
-          setOpen={() => {
-            setisItem(false);
-            setViewOne({
-              viewObj: {},
-              open: false,
-            });
-            setOpen(false);
-          }}
-        />
+        {false ? (
+          <CircularProgress />
+        ) : (
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <Stack gap={2}>
+              {edit.title === "Category" ? (
+                <>
+                  <TextField
+                    label="Category Name"
+                    value={edit.data?.expenseType}
+                    onChange={(e) => {
+                      setEdit({
+                        ...edit,
+                        data: { ...edit.data, expenseType: e.target.value },
+                      });
+                    }}
+                    variant="filled"
+                  />
+                  <Button
+                    disabled={updateCat.isLoading}
+                    onClick={() => {
+                      updateCat.mutate({
+                        body: {
+                          edit: true,
+                          restaurantId:
+                            restroState.restaurant.restaurantInfo._id,
+                          expenseTypeId: edit.data._id,
+                          expenseType: edit.data.expenseType,
+                        },
+                        headerAuth: userToken.jwtToken,
+                      });
+                    }}
+                  >
+                    {updateCat.isLoading ? (
+                      <CircularProgress size={25} />
+                    ) : (
+                      "Update Category"
+                    )}
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <TextField
+                    label="Cost (₹)"
+                    value={edit.data.amount}
+                    type="number"
+                    onChange={(e) => {
+                      setEdit({
+                        ...edit,
+                        data: {
+                          ...edit.data,
+                          amount: e.target.value,
+                        },
+                      });
+                    }}
+                    variant="filled"
+                  />
+                  {/* Why This? */}
+                  <MobileDatePicker
+                    label="Date"
+                    inputFormat="DD/MM/YYYY"
+                    value={dayjs(edit.data.date)}
+                    onChange={(newValue) => handleDateChange(newValue, "date")}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+                  <FormControl fullWidth>
+                    <InputLabel>Assign</InputLabel>
+                    <Select
+                      value={edit.data.assigneeId}
+                      onChange={(e) => {
+                        setEdit({
+                          ...edit,
+                          data: {
+                            ...edit.data,
+                            assigneeId: e.target.value,
+                          },
+                        });
+                      }}
+                      label="Assign"
+                    >
+                      {allUserProfile?.map((user: any) => (
+                        <MenuItem key={user._id} value={user._id}>
+                          {user.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl fullWidth>
+                    <InputLabel>Type</InputLabel>
+                    <Select
+                      value={edit.data.expenseType?._id}
+                      onChange={(e) => {
+                        setEdit({
+                          ...edit,
+                          data: {
+                            ...edit.data,
+                            expenseType: {
+                              ...edit.data.expenseType,
+                              _id: e.target.value,
+                            },
+                          },
+                        });
+                      }}
+                      label="Assign"
+                    >
+                      {expenseType?.map((expense: any) => (
+                        <MenuItem key={expense._id} value={expense._id}>
+                          {expense.expenseType}
+                        </MenuItem>
+                      ))}
+                      {/* //TODO : Work needed here for rendering type after getting type api */}
+                    </Select>
+                  </FormControl>
+                  <TextField
+                    label="Special Instructions"
+                    variant="filled"
+                    value={edit.data.specialInstruction}
+                    onChange={(e) => {
+                      setEdit({
+                        ...edit,
+                        data: {
+                          ...edit.data,
+                          specialInstruction: e.target.value,
+                        },
+                      });
+                    }}
+                  />
+                  <Button
+                    disabled={updateExp.isLoading}
+                    onClick={() => {
+                      updateExp.mutate({
+                        body: {
+                          edit: true,
+                          assigneeId: edit.data.assigneeId,
+                          restaurantId:
+                            restroState.restaurant.restaurantInfo._id,
+                          expenseType: edit.data.expenseType._id,
+                          expenseId: edit.data._id,
+                          amount: edit.data.amount,
+                          date: dayjs(edit.data.date).toISOString(),
+                          specialInstruction: edit.data.specialInstruction,
+                        },
+                        headerAuth: userToken.jwtToken,
+                      });
+                    }}
+                  >
+                    Update
+                  </Button>
+                </>
+              )}
+            </Stack>
+          </LocalizationProvider>
+        )}
       </BasicModal>
-      <Snackbar
+      {/* <Snackbar
         open={errorOpener.open}
         autoHideDuration={6000}
         onClose={() => {
@@ -361,7 +517,7 @@ const TopBarInventory = () => {
         }}
       >
         <Alert severity={errorOpener.severity}>{errorOpener.message}</Alert>
-      </Snackbar> */}
+      </Snackbar>  */}
     </Stack>
   );
 };
