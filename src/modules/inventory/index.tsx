@@ -154,7 +154,7 @@ const TopBarInventory = () => {
         overflow: "hidden",
       }}
     >
-      <TopBar home={true} title={"Inventory"} backUrl={"/"}>
+      <TopBar home={true} title={"Expense Manager"} backUrl={"/"}>
         <ExpenseOptions />
       </TopBar>
       {isloadingExpense ? (

@@ -73,12 +73,12 @@ export default function SideBar({handleDrawerToggle,largeHide, mobileOpen, setMo
             acess:["OWNER", "CAPTAIN", "CHEF"]
 
         },
-        // {
-        //     title:"Inventory",
-        //     icons:<InventoryIcon/>,
-        //     url:"/restaurant/inventory",
-        //     acess:["OWNER", "CAPTAIN"]
-        // },
+        {
+            title:"Inventory",
+            icons:<InventoryIcon/>,
+            url:"/restaurant/inventory",
+            acess:["OWNER", "CAPTAIN"]
+        },
         {
             title:"Printer Settings",
             icons:<PrintIcon/>,
