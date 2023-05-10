@@ -121,8 +121,10 @@ const ExpenseOptions = () => {
 
   return (
     <>
-      <Stack direction={"row"}>
+      <Stack direction={"row"} gap={2}>
         <Button
+          variant="outlined"
+          sx={{}}
           onClick={() => {
             setOption("Category");
             setOpen(true);
@@ -131,6 +133,8 @@ const ExpenseOptions = () => {
           Add Category
         </Button>
         <Button
+          variant="outlined"
+          sx={{}}
           onClick={() => {
             setOption("Expense");
             setOpen(true);

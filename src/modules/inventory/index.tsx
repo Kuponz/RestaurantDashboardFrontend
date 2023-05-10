@@ -46,6 +46,7 @@ import {
 import { LocalizationProvider, MobileDatePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs, { Dayjs } from "dayjs";
+import moment from "moment";
 
 const TopBarInventory = () => {
   const [edit, setEdit] = useState({
@@ -169,7 +170,10 @@ const TopBarInventory = () => {
             md: "row",
           }}
           sx={{
-            overflow: "hidden",
+            overflowY: {
+              xs: "auto",
+              md: "hidden",
+            },
           }}
         >
           <Stack
@@ -191,6 +195,10 @@ const TopBarInventory = () => {
               px={{
                 xs: 0,
                 md: 2,
+              }}
+              mx={{
+                xs:0.25,
+                md:1
               }}
               py={1}
             >
@@ -268,7 +276,6 @@ const TopBarInventory = () => {
                 md: "45%",
               },
               height: {
-                xs: "45%",
                 md: "100%",
               },
               flex: 1,
@@ -313,7 +320,14 @@ const TopBarInventory = () => {
                       alignItems: "center",
                     }}
                   >
-                    <span>{expense.expenseType?.expenseType}</span>
+                    <Stack direction={{
+                      xs:"column",
+                      md:"row"
+                    }} gap={2}>
+                      <Typography variant={"body1"} >{String(expense.expenseType?.expenseType).toUpperCase()}</Typography>
+                      <Typography variant={"body1"} color={"red"}>-₹ {expense.amount}</Typography>
+                      <Typography variant={"body1"} color={"primary"}>{ moment(moment.utc(expense.date)).local().format("DD/MM/YYYY hh:MM A").toString()}</Typography>
+                    </Stack>
                     <Stack
                       direction={"row"}
                       gap={2}

@@ -23,7 +23,8 @@ export default function Payment(prop) {
                     lg: "25%",
                     xl: "32%"
                 },
-                backgroundColor: tokens().greenAccent[200],
+                backgroundColor: prop?.negative? tokens().redAccent[500]: tokens().greenAccent[200],
+                
             }}
                 elevation={2}
             >
@@ -35,12 +36,13 @@ export default function Payment(prop) {
                     height: "100%"
                 }}>
                     <Stack>
-                        <Typography variant="h5" color={tokens().grey[500]}>
+                        <Typography variant="h5" color={prop?.negative?"white":tokens().grey[500]}>
                             {prop.title}</Typography>
                         <Typography variant="body2" sx={{
                             fontSize: "18px",
                             pt: 1,
-                            color: theme => theme.palette.secondary.main,
+
+                            color: theme => prop?.negative?"white":theme.palette.secondary.main,
                         }} >
                             {prop.isRupee && "₹ "} {prop.payment}
 

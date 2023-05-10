@@ -247,6 +247,12 @@ const Sales = () => {
                               isRupee={true}
                               payment={orders?.totalPayment?.OTHERS}
                             />
+                            <Payment
+                              title="EXPENSES"
+                              isRupee={true}
+                              payment={orders?.totalPayment?.expenses}
+                              negative={true}
+                            />
                           </Stack>
                         ) : (
                           <Stack
