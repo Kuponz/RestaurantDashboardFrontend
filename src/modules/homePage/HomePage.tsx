@@ -21,6 +21,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Facebook, Google, Instagram, LinkedIn } from "@mui/icons-material";
+import { useMutation } from "@tanstack/react-query";
+import { loginUserFn } from "store/api/axiosSetup";
+import { useUserStore } from "store/user/userzustandstore";
 
 const drawerWidth = 240;
 
@@ -39,7 +42,19 @@ export default function HomePage(props: Props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const userState = useUserStore(state => state);
 
+  const { mutate, isLoading } = useMutation(loginUserFn, {
+    onSuccess: (data, variables, context) => {
+
+      console.log({
+        data: data.data.data?.userLogged,
+        variables,
+        context,
+      })
+      userState.setUser(data.data.data?.userLogged)
+    },
+  })
   const drawer = (
     <div>
       <Stack
@@ -161,11 +176,26 @@ export default function HomePage(props: Props) {
             </Typography>
             <Button
               variant="outlined"
+              disabled={isLoading}
               onClick={() => {
                 router.push("/auth");
               }}
             >
               Login
+            </Button>
+            <Button
+            disabled={isLoading}
+              variant="contained"
+              sx={{ backgroundColor: "black" }}
+              onClick={() => {
+                mutate({
+                  mobileNumber: "9999999991",
+                  pin: "123456",
+                  showPin: false,
+                })
+              }}
+            >
+              DEMO
             </Button>
           </Stack>
           <Stack
@@ -227,13 +257,13 @@ export default function HomePage(props: Props) {
         }}
       >
         <Toolbar />
-        <Grid container py={5} gap={2}>
+        <Grid container py={5} gap={2} height={"90vh"}>
           <Grid item xs={12} sm={5} sx={{ ...flexBox() }}>
             <Box
               sx={{
                 position: "relative",
-                width: "15rem",
-                height: "15rem",
+                width: "100%",
+                height: "20rem",
               }}
             >
               <Image
@@ -245,13 +275,68 @@ export default function HomePage(props: Props) {
             </Box>
           </Grid>
           <Grid item xs={12} sm={6} sx={{ ...flexBox("column") }} gap={2}>
-            <Typography variant="h3" component={"div"}>
+            <Typography variant="h2" component={"div"}>
               Introducing etoPOS
             </Typography>
             <Typography paragraph textAlign={"center"}>
               A Powerful yet Simple POS for all your daily Business Need to keep
               your focus towards Customer
             </Typography>
+          </Grid>
+        </Grid>
+        <Grid container py={5} gap={2} height={"90vh"}>
+          <Grid item xs={12} sm={6} sx={{ ...flexBox("column") }} gap={2}>
+            <Typography variant="h2" component={"div"} textAlign={"center"}>
+            Trusted by 25+ Restaurant Partners
+            </Typography>
+            <Typography paragraph textAlign={"center"}>
+              We proudly are trustes by 25+ local Restaurants and have processed more than 5000+ orders till date
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={5} sx={{ ...flexBox() }}>
+            <Box
+              sx={{
+                position: "relative",
+                width: "100%",
+                height: "20rem",
+                gap:1,
+                ...flexBox(),
+                flexWrap:"wrap"
+              }}
+            >
+              {[
+                {
+                  src:"https://madoverpizza.com/img/logo.png",
+                  name:"MOP"
+                },
+                {
+                  src:"https://madoverpizza.com/img/logo.png",
+                  name:"MOP"
+                },
+                {
+                  src:"https://madoverpizza.com/img/logo.png",
+                  name:"MOP"
+                },
+                {
+                  src:"https://madoverpizza.com/img/logo.png",
+                  name:"MOP"
+                },
+                {
+                  src:"https://madoverpizza.com/img/logo.png",
+                  name:"MOP"
+                },
+                {
+                  src:"https://madoverpizza.com/img/logo.png",
+                  name:"MOP"
+                },
+                {
+                  src:"https://madoverpizza.com/img/logo.png",
+                  name:"MOP"
+                },
+              ].map((v, i)=>(
+                  <img src={v.src} key={i} alt={v.name} />
+              ))}..... Many more
+            </Box>
           </Grid>
         </Grid>
         <Grid container py={5} gap={2}>
@@ -273,8 +358,8 @@ export default function HomePage(props: Props) {
             <Box
               sx={{
                 position: "relative",
-                width: "15rem",
-                height: "15rem",
+                width: "100%",
+                height: "20rem",
               }}
             >
               <Image
@@ -298,21 +383,21 @@ export default function HomePage(props: Props) {
           {" "} Help Line
         </Typography>
         <Paper variant="outlined" sx={{
-          p:2
+          p: 2
         }}>
           <Stack direction={{
-            xs:"column",
-            sm:"row"
+            xs: "column",
+            sm: "row"
           }} justifyContent={"space-between"} alignItems={"center"} gap={2}>
             <Stack>
               <Typography textAlign={"center"}><Link href="/">etopos.tech</Link> ©2023</Typography>
               <Typography textAlign={"center"}>All Rights Reserved</Typography>
             </Stack>
             <Stack direction={"row"} gap={2}>
-              <LinkedIn color="primary"/>
-              <Instagram color="primary"/>
-              <Google color="primary"/>
-              <Facebook color="primary"/>
+              <LinkedIn color="primary" />
+              <Instagram color="primary" />
+              <Google color="primary" />
+              <Facebook color="primary" />
             </Stack>
           </Stack>
         </Paper>
