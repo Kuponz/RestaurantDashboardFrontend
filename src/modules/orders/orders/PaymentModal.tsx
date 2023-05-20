@@ -20,6 +20,7 @@ import {
 import { Fragment, useEffect, useState } from "react";
 import { flexBox } from "theme/defaultFunction";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { v4 as uuidv4 } from "uuid";
 
 const PaymentModal = ({
   order,
@@ -151,7 +152,16 @@ const PaymentModal = ({
   // }
 
   const [splitList, setsplitList] = useState([
-    { id: 0, paidVia: "UPI", amount: order.orderAmount.total },
+    {
+      id: uuidv4(),
+      paidVia: "UPI",
+      amount: (order.orderAmount.total / 2).toFixed(3),
+    },
+    {
+      id: uuidv4(),
+      paidVia: "CASH",
+      amount: (order.orderAmount.total / 2).toFixed(3),
+    },
   ]);
 
   useEffect(() => {
@@ -161,15 +171,36 @@ const PaymentModal = ({
         splitPayment: splitList,
       });
     }
-
-    // return () => {
-    //   second;
-    // };
   }, [splitList]);
 
-  console.log({ paymentDetails });
+  // const [currentCost, setcurrentCost] = useState<number>();
 
-  console.log(splitList);
+  // if (currentCost! < order.orderAmount.total) {
+  //   console.log("Value is Lower by ", order.orderAmount.total - currentCost!);
+  //   setcurrentCost(order.orderAmount.total);
+  //   let value: number = order.orderAmount.total;
+  //   splitList.forEach((element) => {
+  //     return (value -= element.amount);
+  //   });
+  //   setsplitList([
+  //     ...splitList,
+  //     {
+  //       id: splitList.length,
+  //       paidVia: "UPI",
+  //       amount: value.toFixed(3),
+  //     },
+  //   ]);
+  // }
+
+  // useEffect(() => {
+  //   let value = 0;
+  //   splitList.forEach((element) => {
+  //     return (value += parseFloat(element.amount));
+  //   });
+  //   setcurrentCost(value);
+  // }, [splitList]);
+
+  //   console.log(currentCost);
 
   return (
     <Stack>
@@ -271,24 +302,26 @@ const PaymentModal = ({
               </Stack>
             </Fragment>
           ))}
-          <Button
-            onClick={() => {
-              let value: number = order.orderAmount.total;
-              splitList.forEach((element) => {
-                return (value -= element.amount);
-              });
-              setsplitList([
-                ...splitList,
-                {
-                  id: splitList.length,
-                  paidVia: "UPI",
-                  amount: value.toFixed(3),
-                },
-              ]);
-            }}
-          >
-            Split More
-          </Button>
+          <Stack justifyContent={"center"} alignItems={"center"}>
+            <Button
+              onClick={() => {
+                let value: number = order.orderAmount.total;
+                splitList.forEach((element) => {
+                  return (value -= element.amount);
+                });
+                setsplitList([
+                  ...splitList,
+                  {
+                    id: uuidv4(),
+                    paidVia: "UPI",
+                    amount: value.toFixed(3),
+                  },
+                ]);
+              }}
+            >
+              Split More
+            </Button>
+          </Stack>
         </Stack>
       )}
       {/* <Stack sx={{
@@ -345,7 +378,7 @@ const PaymentModal = ({
             if (alignment === "SPLITPAYMENT") {
               let value = 0;
               splitList.forEach((element) => {
-                return (value += parseFloat(element.amount));
+                return (value += Number(element.amount));
               });
               //  ! NOTE: Don't Type check by !== because js types sucks -> '099' != 99 for some reason and i don wanna debug this
               if (value != order.orderAmount.total) {
