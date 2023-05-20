@@ -173,35 +173,6 @@ const PaymentModal = ({
     }
   }, [splitList]);
 
-  // const [currentCost, setcurrentCost] = useState<number>();
-
-  // if (currentCost! < order.orderAmount.total) {
-  //   console.log("Value is Lower by ", order.orderAmount.total - currentCost!);
-  //   setcurrentCost(order.orderAmount.total);
-  //   let value: number = order.orderAmount.total;
-  //   splitList.forEach((element) => {
-  //     return (value -= element.amount);
-  //   });
-  //   setsplitList([
-  //     ...splitList,
-  //     {
-  //       id: splitList.length,
-  //       paidVia: "UPI",
-  //       amount: value.toFixed(3),
-  //     },
-  //   ]);
-  // }
-
-  // useEffect(() => {
-  //   let value = 0;
-  //   splitList.forEach((element) => {
-  //     return (value += parseFloat(element.amount));
-  //   });
-  //   setcurrentCost(value);
-  // }, [splitList]);
-
-  //   console.log(currentCost);
-
   return (
     <Stack>
       <Typography color={"primary.main"} textAlign={"center"} variant="h3">
