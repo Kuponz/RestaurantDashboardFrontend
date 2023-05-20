@@ -41,7 +41,14 @@ const Orders = ({ order, print = false, isKot = false }) => {
             },
           }}
         >
-          <Typography variant="body1">Item</Typography>
+          <Text
+              style={{
+                fontFamily: "monospace",
+                fontSize:"14px",
+                fontWeight:500
+              }}>
+                Item
+              </Text>
         </Stack>
         <Stack
           direction={"row"}
@@ -52,9 +59,25 @@ const Orders = ({ order, print = false, isKot = false }) => {
         >
           <Stack direction={"row"} gap={{ xs: 0.25, sm: 1 }}>
             {!isKot && <Typography variant="body1">Rate</Typography>}
-            <Typography variant="body1"> Qty</Typography>
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "monospace",
+                fontSize:"14px",
+                fontWeight:500
+              }}>
+                Qty
+              </Text>
           </Stack>
-          {!isKot && <Typography variant="body1">Amt</Typography>}
+          {!isKot && <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "monospace",
+                fontSize:"14px",
+                fontWeight:500
+              }}>
+                Amt
+              </Text>}
         </Stack>
       </Stack>
       <hr style={{ borderTop: "dotted 1px", width: "100%" }} />
@@ -95,10 +118,24 @@ const Orders = ({ order, print = false, isKot = false }) => {
                   py={0}
                 >
                   {/* {console.log({call:callfortitle(data), data})} */}
-                  <Text>{callfortitle(data)}</Text>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontFamily: "monospace",
+                      fontSize:"14px",
+                      fontWeight:500
+                    }}>
+                    {callfortitle(data)}
+                  </Text>
                   <Stack direction={"row"}>
                     <span>- ₹</span>
-                    <Text>{order?.orderAmount[data]}</Text>
+                    
+                    <Text style={{
+                      textAlign: "center",
+                      fontFamily: "monospace",
+                      fontSize:"14px",
+                      fontWeight:500
+                    }}>{order?.orderAmount[data]}</Text>
                   </Stack>
                 </Stack>
               ) : (
@@ -115,9 +152,19 @@ const Orders = ({ order, print = false, isKot = false }) => {
                 py={0}
               >
                 {/* {console.log({call:callfortitle(data), data})} */}
-                <Text>{callfortitle(data)}</Text>
+                <Text style={{
+                      textAlign: "center",
+                      fontFamily: "monospace",
+                      fontSize:"14px",
+                      fontWeight:500
+                    }}>{callfortitle(data)}</Text>
                 <Stack direction={"row"}>
-                  <Text>
+                  <Text style={{
+                      textAlign: "center",
+                      fontFamily: "monospace",
+                      fontSize:"14px",
+                      fontWeight:500
+                    }}>
                     {(data == "total" ||
                     data == "orderGst" ||
                     data == "orderExcludeGSTValue" ||
@@ -147,24 +194,27 @@ const Orders = ({ order, print = false, isKot = false }) => {
                   justifyContent: "space-between",
                 }}
               >
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontWeight: "bold",
+                
+                <Text
+                  style={{
                     textAlign: "center",
+                    fontFamily: "monospace",
+                    fontSize:"18px",
+                    fontWeight:900
                   }}
                 >
                   Grand Total:
-                </Typography>
-                <Typography
-                  variant="h4"
-                  sx={{
-                    fontWeight: "bold",
-                    textAlign: "center",
-                  }}
+                </Text>
+                <Text
+                style={{
+                  textAlign: "center",
+                    fontFamily: "monospace",
+                    fontSize:"18px",
+                    fontWeight:900
+                }}
                 >
                   ₹{order?.orderAmount?.total}
-                </Typography>
+                </Text>
               </Stack>
             </Stack>
           )}

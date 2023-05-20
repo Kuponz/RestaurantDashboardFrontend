@@ -28,33 +28,84 @@ export const BillPrint = ({order, reference=false, componentRef, setShowPrint}) 
           p:0.25
         }}>
           <Stack>
-            <Typography variant="h3" textAlign={"center"} pt={1}>{restaurant.restaurantInfo?.print?.billing?.restaurantName || restaurant.restaurantInfo?.restaurantName}</Typography>
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "monospace",
+                fontSize:"20px",
+                fontWeight:700
+              }}
+            >
+              {restaurant.restaurantInfo?.print?.billing?.restaurantName || restaurant.restaurantInfo?.restaurantName}
+            </Text>
             {
               restaurant.restaurantInfo?.print?.billing?.restaurantShorts != "" &&
-              <Typography variant="body1" textAlign={"center"} pt={0.25} pb={0}>{restaurant.restaurantInfo?.print?.billing?.restaurantShorts}</Typography>
+              <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "monospace",
+                fontSize:"16px",
+                fontWeight:500
+              }}>
+                {restaurant.restaurantInfo?.print?.billing?.restaurantShorts}
+              </Text>
             }
           </Stack>
           {
             restaurant.restaurantInfo?.print?.billing?.restaurantAddress != "" &&
-            <Typography variant="body1" textAlign={"center"}  pt={0.0} pb={0}>{restaurant.restaurantInfo?.print?.billing?.restaurantAddress}</Typography>
-          }
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "monospace",
+                fontSize:"14px",
+                fontWeight:500
+              }}>
+                {restaurant.restaurantInfo?.print?.billing?.restaurantShorts}
+              </Text>
+         }
           {
             restaurant.restaurantInfo?.print?.billing?.restaurantMobileNumber != "" &&
-            <Typography variant="body1" textAlign={"center"}>Mo: {restaurant.restaurantInfo?.print?.billing?.restaurantMobileNumber}</Typography>
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "monospace",
+                fontSize:"14px",
+                fontWeight:500
+              }}>
+                Mo: {restaurant.restaurantInfo?.print?.billing?.restaurantMobileNumber}
+              </Text>
           }
           <Divider color="black"></Divider>
           <Stack direction={"row"} flexWrap={"wrap"} justifyContent={"space-between"} alignItems={"center"}>
-            <Typography px = {{
-              xs: 0,
-              md: 2,
-            }}>Order No: {order?._id.slice(order?._id.length - 3,order?._id.length )}</Typography>
-            <Typography px = {{
-              xs: 0,
-              md: 2,
-            }}>Tbl No: {order?.table?.TableName}</Typography>
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "monospace",
+                fontSize:"14px",
+                fontWeight:500
+              }}>
+                Order No: {order?._id.slice(order?._id.length - 3,order?._id.length )}
+              </Text>
+              <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "monospace",
+                fontSize:"14px",
+                fontWeight:500
+              }}>
+                Tbl No: {order?.table?.TableName}
+              </Text>
             
           </Stack>
-          <Typography px ={0} textAlign={"center"}>{moment(order?.createdAt).format('DD-MMM-YYYY h:mm A')}</Typography>
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "monospace",
+                fontSize:"14px",
+                fontWeight:500
+              }}>
+                {moment(order?.createdAt).format('DD-MMM-YYYY h:mm A')}
+              </Text>
         </Stack>
         <Stack sx={{
           p:0.25
