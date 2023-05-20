@@ -3,6 +3,17 @@ import React from "react";
 
 export const SeperateOrder = ({ orderVal, isKot }) => {
   // console.log({orderVal})
+
+  const getComplimentaryItemCount=(order)=>{
+    let quantity=0;
+    order.complimentary.map((value)=>{
+      if(value.isComplimentary)
+      {
+        quantity +=1;
+      }
+    })
+    return quantity;
+  }
   return (
     <Stack
       sx={{
@@ -86,6 +97,22 @@ export const SeperateOrder = ({ orderVal, isKot }) => {
               )}
           </Stack>
         </Stack>
+
+        {orderVal?.isComplimentary ? 
+            <>
+            <Stack
+            sx={{
+              width: "50%",
+            }}
+          >
+            <Typography variant="h5" color="#ff0000" >{getComplimentaryItemCount(orderVal)} Free</Typography>
+           
+          </Stack>
+          </>
+         
+        : <></>}
+       
+        
         <Stack direction={"column"}>
           {!isKot && <Typography>₹{orderVal?.cost}</Typography>}
           {!isKot &&
