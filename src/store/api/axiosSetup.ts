@@ -2,8 +2,8 @@ import axios from "axios";
 import { GenericResponse } from "./types";
 
 // const BASE_URL = "http://qaetopos.azurewebsites.net/"; //QA URL
-// const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
-const BASE_URL = "https://etoposbe.azurewebsites.net/"; //Main Current URL
+const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
+// const BASE_URL = "https://etoposbe.azurewebsites.net/"; //Main Current URL
 // const BASE_URL = "http://localhost:5000/"; //LocalHost Url
 // const BASE_URL = "https://qabeetopos.azurewebsites.net/"; //idk
 // const BASE_URL = "https://qabetopos.up.railway.app/"; //idk
