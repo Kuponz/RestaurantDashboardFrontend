@@ -110,12 +110,14 @@ const Addons = ({ setExtraOpen, val, setValue, forceUpdate, extraOpen }) => {
             </Button>
           </Stack>
           {/* {console.log({vari})} */}
-          {vari.variations?.map((variNa, ke) => (
+          {vari?.variations?.map((variNa, ke) => (
             <Stack key={ke}>
               <FormLabel id="demo-radio-buttons-group-label">
                 {variNa.variationName}
               </FormLabel>
+              {/* Vairation */}
               <SelectForm
+                isAddon={false}
                 vari={vari}
                 variNa={variNa}
                 extraOpen={extraOpen}

@@ -219,7 +219,6 @@ const Display = ({ val, setValue, variableip, menuInfo, setmenuInfo }) => {
                     {/* <MenuCard items={menuItems} /> */}
                 </Stack>
             </Stack>
-            {console.log({extraOpen})}
             <BasicModal title={"Addons"} open={extraOpen?.open} setOpen={(val)=>{
                 extraOpen.open = val;
                 extraOpen.item = {};

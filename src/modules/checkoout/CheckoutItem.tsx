@@ -176,7 +176,7 @@ export default function SimpleAccordion({
             </Typography>
             <Typography sx={{ color: "text.secondary" }}>
               Total &#8377;{" "}
-              {String(parseInt(orderValue?.item?.price) * orderValue.quantity)}
+              {String(parseInt(orderValue?.item?.price) * orderValue?.quantity)}
             </Typography>
           </Stack>
         </Stack>

@@ -56,6 +56,7 @@ export const Waiter = () => {
       queryFn: () => getTables(
         userDetails?.jwtToken, userDetails?.restaurantLinked
       ),
+      refetchIntervalInBackground:true,
       onSuccess: (data) => {
         restroDetails.setFloors(data?.data?.data)
       }

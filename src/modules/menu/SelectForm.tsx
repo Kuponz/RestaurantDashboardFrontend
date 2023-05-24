@@ -1,31 +1,28 @@
-import { MenuItem, Select } from "@mui/material";
-import React, { useEffect, useState } from "react";
 
-const SelectForm = ({ vari, variNa, extraOpen, setExtraOpen, forceUpdate }) => {
+import { Checkbox, FormControlLabel, MenuItem, Radio, RadioGroup, Select } from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { flexBox } from "theme/defaultFunction";
+
+const SelectForm = ({ vari, variNa, isAddon, extraOpen, setExtraOpen, forceUpdate }) => {
   let someOpen = structuredClone(extraOpen);
   const [current, setcurrent] = useState(extraOpen);
 
   useEffect(() => {
     setcurrent(someOpen);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [extraOpen]);
-// ! This is Some Fucked Up Logic But it works
+  // ! This is Some Fucked Up Logic But it works
   return (
-    <Select
+    <RadioGroup
       variant="filled"
-      labelId="demo-simple-select-label"
-      id="demo-simple-select"
       value={variNa?.selected}
       label={variNa.variationName || "Variation"}
+      aria-labelledby="demo-radio-buttons-group-label"
+      name="radio-buttons-group"
+      sx={{
+        ...flexBox("row", "flex-start")
+      }}
       onChange={(e) => {
-        // console.log(e.target.value);
-        // extraOpen.selected[k].variations[ke].selected = e.target.value;
-        // setExtraOpen(extraOpen);
-        // forceUpdate();
-        // console.log({variNa, hs:extraOpen.selected})
-        //   cl(extraOpen)
-        //   setExtraOpen(extraOpen);
-        //   forceUpdate();
         console.log({ variNa, hs: extraOpen.selected, vari });
         someOpen.selected = current.selected.map((seli) => {
           if (seli.id == vari.id) {
@@ -44,13 +41,13 @@ const SelectForm = ({ vari, variNa, extraOpen, setExtraOpen, forceUpdate }) => {
       }}
     >
       {variNa?.variationOptions?.map((varOps, ko) => (
-        <MenuItem
-          onClick={(e) => {}}
+        <FormControlLabel
           key={ko}
-          value={varOps._id}
-        >{`${varOps.optName} | ₹${varOps.price} `}</MenuItem>
+          value={varOps._id} 
+          control={<Radio />} 
+          label={`${varOps.optName} | ₹${varOps.price} `} />
       ))}
-    </Select>
+    </RadioGroup>
   );
 };
 
