@@ -25,7 +25,7 @@ const PrintReport = ({
   if (Report === "Top History")
     return (
       <>
-        {printData ? (
+        {printData && printData?.data ? (
           <>
             <Stack>
               <Stack
@@ -83,7 +83,7 @@ const PrintReport = ({
                     </TableRow>
                   </TableHead>
                   <TableBody sx={{ pageBreakAfter: "auto" }}>
-                    {printData.data.map((e, i) => (
+                    {printData?.data?.map((e, i) => (
                       <TableRow
                         key={i}
                         sx={{
@@ -163,7 +163,7 @@ const PrintReport = ({
                 </TableRow>
               </TableHead>
               <TableBody sx={{ pageBreakAfter: "auto" }}>
-                {printData.report.map((e, i) => (
+                {printData?.report?.map((e, i) => (
                   <TableRow
                     key={i}
                     sx={{
@@ -202,26 +202,26 @@ const PrintReport = ({
                 <Stack gap={1}>
                   <Typography>
                     <strong>GST Total:</strong> ₹
-                    {Math.round(printData.totalGST * 100) / 100}
-                    {/* {printData.totalGST.toFixed(2)} */}
+                    {Math.round(printData?.totalGST * 100) / 100}
+                    {/* {printData?.totalGST.toFixed(2)} */}
                   </Typography>
                   <Typography>
                     <strong>Total:</strong> ₹
-                    {Math.round(printData.totalCollection * 100) / 100}
-                    {/* {printData.totalCollection.toFixed(2)} */}
+                    {Math.round(printData?.totalCollection * 100) / 100}
+                    {/* {printData?.totalCollection.toFixed(2)} */}
                   </Typography>
                 </Stack>
               ) : (
                 <Stack gap={1}>
                   <Typography>
                     <strong>Total Discount:</strong> ₹
-                    {Math.round(printData.totalDiscount * 100) / 100}
-                    {/* {printData.totalDiscount.toFixed(2)} */}
+                    {Math.round(printData?.totalDiscount * 100) / 100}
+                    {/* {printData?.totalDiscount.toFixed(2)} */}
                   </Typography>
                   <Typography>
                     <strong>Total Recived:</strong> ₹
-                    {Math.round(printData.totalReceived * 100) / 100}
-                    {/* {printData.totalReceived.toFixed(2)} */}
+                    {Math.round(printData?.totalReceived * 100) / 100}
+                    {/* {printData?.totalReceived.toFixed(2)} */}
                   </Typography>
                 </Stack>
               )}
