@@ -1,9 +1,11 @@
+
 import { Stack, Typography } from "@mui/material";
 import React from "react";
 import { Text } from "react-thermal-printer";
 
 export const SeperateOrder = ({ orderVal, isKot }) => {
   // console.log({orderVal})
+
 
   const getComplimentaryItemCount=(order)=>{
     let quantity=0;
@@ -132,7 +134,7 @@ export const SeperateOrder = ({ orderVal, isKot }) => {
                 ))
               )}
           </Stack>
-        </Stack>
+          </Stack>
         {orderVal?.isComplimentary ? 
             <>
             <Stack
