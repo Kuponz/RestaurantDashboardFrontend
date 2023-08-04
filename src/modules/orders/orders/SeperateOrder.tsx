@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import React from "react";
 import { Text } from "react-thermal-printer";
 
@@ -65,7 +65,7 @@ export const SeperateOrder = ({ orderVal, isKot }) => {
           justifyContent: isKot ? "flex-end" : "space-between",
         }}
       >
-        {<Stack direction={"row"} justifyContent={"flex-end"} gap={{ xs: 0.25, sm: 1 }}>
+        <Stack direction={"row"} justifyContent={"flex-end"} gap={{ xs: 0.25, sm: 1 }}>
           {!isKot &&  (
             <Stack>
               {(orderVal.selected?.length > 0 && Number(orderVal?.menuId?.price) != 0) &&
