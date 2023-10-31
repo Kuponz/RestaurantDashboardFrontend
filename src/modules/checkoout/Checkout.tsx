@@ -82,7 +82,8 @@ const Checkout = ({
       restaurantId: restaurant?.restaurantInfo?._id,
       tableId: tableId,
       oldOrderId,
-      billing
+      billing,
+      timeCreated: new Date().valueOf(),
     };
     console.log({
       token: user?.jwtToken,

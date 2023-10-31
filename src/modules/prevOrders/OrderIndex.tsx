@@ -245,8 +245,10 @@ const OrderIndex = () => {
             //     ],
             //     "totalPages": 1
             // }
+
+            const reverseOrder = state.data.data.orders.reverse();
             setValue({...value, pageCounts:state?.data?.data?.totalPages});
-            setOrder(state.data.data.orders);
+            setOrder(reverseOrder);
         }
     })
     useEffect(()=>{

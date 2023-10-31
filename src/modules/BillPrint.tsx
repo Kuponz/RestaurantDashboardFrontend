@@ -104,7 +104,7 @@ export const BillPrint = ({order, reference=false, componentRef, setShowPrint}) 
                 fontSize:"14px",
                 fontWeight:500
               }}>
-                {moment(order?.createdAt).format('DD-MMM-YYYY h:mm A')}
+                {moment(order?.timeCreated ? order?.timeCreated : order?.createdAt).format('DD-MMM-YYYY h:mm A')}
               </Text>
         </Stack>
         <Stack sx={{

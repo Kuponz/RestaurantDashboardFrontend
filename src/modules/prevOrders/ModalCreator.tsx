@@ -6,12 +6,27 @@ const ModalCreator = ({ setWatchOrder, watchOrder, open, setOpen }) => {
   return (
     <>
       <Stack direction={"column"}>
-        <Typography variant="h5" width={{
-          xs:"100%",
-          md:"45%"
+
+        <Stack direction={"row"} py={0.25} justifyContent={"space-between"} sx={{
+          width:"100%",
+          flexWrap:"wrap"
         }}>
-          Table: {watchOrder.table.TableName}
-        </Typography>
+          <Typography variant="h5" width={{
+            xs:"100%",
+            md:"45%"
+          }}>
+            Table: {watchOrder.table.TableName}
+          </Typography>
+
+          <Typography variant="h5" width={{
+            xs:"100%",
+            md:"45%"
+          }}>
+          {watchOrder.orderStatus}
+          </Typography>
+
+        </Stack>
+
         <Stack direction={"row"} py={0.25} justifyContent={"space-between"} sx={{
           width:"100%",
           flexWrap:"wrap"
@@ -67,7 +82,7 @@ const ModalCreator = ({ setWatchOrder, watchOrder, open, setOpen }) => {
             xs:"100%",
             md:"45%"
           }}>
-            Waiter: {watchOrder.createdUser.name}
+            Waiter: {watchOrder?.createdUser?.name}
           </Typography>
           
         </Stack>
@@ -82,7 +97,17 @@ const ModalCreator = ({ setWatchOrder, watchOrder, open, setOpen }) => {
           }}>
             Payment Mode: {watchOrder.paymentStatus ? watchOrder?.paymentDetails?.paidVia : "NONE"}
           </Typography>
-         
+          {
+            watchOrder.orderStatus === "CANCELLED" ? (
+              <Typography variant="body2" width={{
+                xs:"100%",
+                md:"45%"
+              }}>
+                Reason for Cancellation: {watchOrder.specialInstruction ?  watchOrder.specialInstruction : "NONE"}
+              </Typography>)
+              :
+              null
+          }
         </Stack>
 
 
