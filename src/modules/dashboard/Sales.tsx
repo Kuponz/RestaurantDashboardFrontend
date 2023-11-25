@@ -177,9 +177,9 @@ const Sales = () => {
                     <SalesBox
                       setOpen={setOpen}
                       open={open}
-                      title="Total Completed Orders"
+                      title="Total Orders"
                       name={"totalOrders"}
-                      orders={orders?.totalOrders?.completedOrders}
+                      orders={orders?.totalOrders?.completedOrders + orders?.totalOrders?.cancelledOrders + orders?.totalOrders?.orderCurrentlyRunning}
                     />
                   </Stack>
                   <Stack

@@ -160,6 +160,9 @@ const PrintReport = ({
                   <TableCell align="right" sx={{ fontWeight: 900 }}>
                     Recived Amt.
                   </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 900 }}>
+                    Order Status
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody sx={{ pageBreakAfter: "auto" }}>
@@ -191,6 +194,9 @@ const PrintReport = ({
                       {Math.round(e.received * 100) / 100}
                       {/* {e.received.toFixed(2)} */}
                       {/* {e.received} */}
+                    </TableCell>
+                    <TableCell align="right">
+                      {e.orderStatus}
                     </TableCell>
                   </TableRow>
                 ))}
