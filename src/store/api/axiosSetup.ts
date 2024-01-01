@@ -4,11 +4,11 @@ import { GenericResponse } from "./types";
 // const BASE_URL = "http://qaetopos.azurewebsites.net/"; //QA URL
 // const BASE_URL = "https://backendetopos.azurewebsites.net/"; //Main URL
 // const BASE_URL = "https://etoposbe.azurewebsites.net/"; //Main Current URL
-// const BASE_URL = "https://etoposnewtest.azurewebsites.net/"; //Main Current URL
+const BASE_URL = "https://etoposnewtest.azurewebsites.net/"; //Main Current URL
 // const BASE_URL = "https://testforfe.azurewebsites.net/"; //Test Current URL
 
 
-const BASE_URL = "http://localhost:5000/"; //LocalHost Url
+// const BASE_URL = "http://localhost:5000/"; //LocalHost Url
 // const BASE_URL = "https://qabeetopos.azurewebsites.net/"; //idk
 // const BASE_URL = "https://qabetopos.up.railway.app/"; //idk
 
@@ -484,6 +484,81 @@ export const getExpenseType = async (params: {
     {
       headers: {
         Authorization: "Bearer " + params.headerAuth, // idk what this is but it seems to be common(passing usertoken)
+      },
+    }
+  );
+  return response;
+};
+
+export const uploadUserInfo = async (userinfo) => {
+  const response = await authApi.post(
+    "order/uploadUserInfo",
+    userinfo,
+    {
+      headers: {
+        Authorization: "Bearer " + userinfo.token, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+};
+
+export const checkUserExistance = async (userinfo) => {
+  const response = await authApi.post(
+    "order/checkConsumerExist",
+    userinfo,
+    {
+      headers: {
+        Authorization: "Bearer " + userinfo.token, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+};
+
+export const deleteConsumer = async (props) => {
+  // console.log({props, userData:props.userObj.userData});
+  const response = await authApi.post(
+    "consumer/deleteConsumer",
+    {
+      userData: {
+        restaurantId: props.restaurantId,
+        mobileNumber: props.mobileNumber,
+      },
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+};
+
+export const editConsumer = async (props) => {
+  // console.log({props, userData:props.userObj.userData});
+  const response = await authApi.post(
+    "consumer/editConsumer",
+    {
+      userData: {
+        ...props.userData,
+      },
+    },
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
+      },
+    }
+  );
+  return response;
+};
+
+export const getAllConsumers = async (props) => {
+  const response = await authApi.get(
+    `consumer/getAllConsumer?restaurantId=${props.restaurantId}`,
+    {
+      headers: {
+        Authorization: "Bearer " + props.headerAuth, //the token is a variable which holds the token
       },
     }
   );

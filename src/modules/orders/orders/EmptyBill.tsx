@@ -10,17 +10,65 @@ import { BillPrint } from 'modules/BillPrint';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import moment from 'moment';
 import PrintIcon from '@mui/icons-material/Print';
+import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded';
 import BasicModal from 'common/modalGenerator/Modal';
 import ApplyDiscount from './ApplyDiscount';
-
+import UserDetailsModal from './UserDetailsModal';
+import { userestaurantStore } from "store/restaurant/restaurantStore";
+import { uploadUserInfo } from "store/api/axiosSetup";
+import { useMutation } from "@tanstack/react-query";
+import { ToastContainer, toast } from 'react-toastify';
 
 const EmptyBill = ({order, userDetails}) => {
     const router = useRouter();
     const [showPrint, setShowPrint] = useState(false);
+    const [openAD, setOpenAD] = useState(false);
+    const restaurant = userestaurantStore((state) => state.restaurant);
     const [applyDiscount, setApplyDiscount] = useState({
         open:false,
         discount:""
     })
+
+    const [userInfo, setUserInfo] = useState({
+        name: "",
+        mobileNumber: "",
+        isSameWhatsappNumber: false,
+        balanceAmount: 0,
+        dateOfBirth: "",
+      });
+
+    const { mutate, isLoading } = useMutation(uploadUserInfo, {
+        onSuccess: (data, variables, context) => {
+        // alert("User Info Added Successfully");
+        toast.success("User Info Added Successfully");
+        console.log("The data is :");
+        console.log({
+            data: data.data,
+            variables,
+        });
+        setOpenAD(false);
+        },
+        onError: (error, variables, context) => {
+        console.log({ error });
+        toast.error("Error in Adding User Info");
+        // alert("Error in Adding User Info");
+        },
+    });
+
+      const onSubmitUserInfo = (e) => {
+        e.preventDefault();
+        console.log({userInfo,order,restaurant,userDetails});
+
+        let userCompleteInfo = {
+            ...userInfo,
+            restaurantId: restaurant.restaurantInfo._id,
+            orderId: order.details._id,
+            token: userDetails.jwtToken,
+        }
+        console.log(userCompleteInfo);
+        mutate(userCompleteInfo);
+      };
+
     let componentRef = useRef(null);
     const handlePrintPart2 = useReactToPrint({
         content: () => componentRef.current,
@@ -62,6 +110,7 @@ const EmptyBill = ({order, userDetails}) => {
                 <Typography variant="h3">Bill</Typography>
             </Stack>
             <Stack direction={"row"} gap={2} justifyContent={"center"} alignItems={"center"}>
+                <Button onClick={()=>{setOpenAD(true)}} startIcon={<PersonAddAltRoundedIcon/>} variant={"contained"} sx={{color: 'white',backgroundColor: '#F4CE14','&:hover': {backgroundColor: '#F99417',color: 'white !important'}}}>Add UserInfo</Button>
                 <Button onClick={handlePrint} startIcon={<PrintIcon/>} variant={"contained"} sx={{}}>Bill</Button>
             </Stack>
         </Stack>
@@ -122,6 +171,14 @@ const EmptyBill = ({order, userDetails}) => {
         }}>
             <ApplyDiscount userDetails={userDetails} applyDiscount={applyDiscount} setApplyDiscount={setApplyDiscount} order={order}/>
         </BasicModal>
+
+        <BasicModal open={openAD} setOpen={setOpenAD} title={"Add User Details"}>
+        <UserDetailsModal
+          userDetails={userInfo}
+          setUserDetails={setUserInfo}
+          onSubmitUserInfo={onSubmitUserInfo}
+        />
+      </BasicModal>
         <div style={{
             display:"none",
         }}>

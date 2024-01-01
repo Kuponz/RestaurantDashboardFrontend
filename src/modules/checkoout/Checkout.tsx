@@ -34,8 +34,6 @@ const Checkout = ({
 }) => {
   const router = useRouter();
   const [instrData, setInstrData] = useState({
-    name: "",
-    mobileNumber: "",
     specialInstruction: "",
     orderType: ORDERTYPE.DINEIN,
   });
@@ -229,7 +227,7 @@ const Checkout = ({
             }}
             disabled={ isLoading}
           >
-            Add More
+            Add Instructions
           </Button>
         </Stack>
         <Stack
@@ -273,7 +271,7 @@ const Checkout = ({
           </Button>
         </Stack>
       </Stack>
-      <BasicModal open={openAD} setOpen={setOpenAD} title={"Add Details"}>
+      <BasicModal open={openAD} setOpen={setOpenAD} title={"Add Instructions"}>
         <CheckoutModal
           isLoading={isLoading}
           instrData={instrData}

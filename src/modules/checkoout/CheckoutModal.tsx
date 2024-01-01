@@ -6,19 +6,6 @@ const CheckoutModal = ({instrData,isLoading, setInstrData, onClickKOT}) => {
 
     const ipDetail=[
         {
-            title:"Name",
-            name:"name",
-            multiline:false,
-            type:"text"
-        },
-        {
-            title:"Mobile Number",
-            name:"mobileNumber",
-            multiline:false,
-            type:"number"
-            
-        },
-        {
             title:"Special Instruction",
             name:"specialInstruction",
             multiline:true,
