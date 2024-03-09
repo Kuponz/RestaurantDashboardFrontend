@@ -18,11 +18,12 @@ import {
   import { userestaurantStore } from "store/restaurant/restaurantStore";
   import { getAllConsumers, deleteConsumer,editConsumer } from "store/api/axiosSetup";
   import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from "next/router";
 
   const ManageCustomersHome = () => {
     const restaurant = userestaurantStore((state) => state.restaurant);
     const user = useUserStore((state) => state.user);
-
+    const router = useRouter();
     const { isLoading, isError, data, error } = useQuery({
       enabled: !!restaurant.restaurantInfo,
       queryKey: ["getAllConsumers"],
@@ -33,9 +34,14 @@ import {
           headerAuth: user.jwtToken,
         }),
       onSuccess: (data) => {
-        // console.log({data:data?.data?.data})
+        console.log({data:data?.data?.data})
         setAllUserProfile(data?.data?.data?.consumers);
       },
+      onError: (error) => {
+        console.log({ error });
+        setAllUserProfile([]);
+        router.back();
+      }
     });
     const [edit, setEdit] = useState(false);
     const [open, setOpen] = useState(false);
@@ -74,13 +80,14 @@ import {
         console.log("The data after updation is :");
         const temp = data?.data?.data;
         console.log({ temp });
-        let allP = allUserProfile.map((elm) => {
+        let allP = allUserProfile? 
+        allUserProfile?.map((elm) => {
           if (elm._id == data?.data?.data?.updatedConsumer?._id) {
             return data?.data?.data?.updatedConsumer;
           } else {
             return elm;
           }
-        });
+        }):[];
         setAllUserProfile(allP);
         setEdit(false);
         setOpen(false);
@@ -100,6 +107,7 @@ import {
     // }, []);
 
     // console.log(user);
+    console.log({allUserProfile})
     return (
       <Stack
         sx={{

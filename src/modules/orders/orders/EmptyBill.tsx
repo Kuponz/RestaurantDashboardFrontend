@@ -177,6 +177,7 @@ const EmptyBill = ({order, userDetails}) => {
           userDetails={userInfo}
           setUserDetails={setUserInfo}
           onSubmitUserInfo={onSubmitUserInfo}
+          isLoading={isLoading}
         />
       </BasicModal>
         <div style={{

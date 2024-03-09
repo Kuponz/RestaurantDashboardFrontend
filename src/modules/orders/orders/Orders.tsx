@@ -9,6 +9,12 @@ const Orders = ({ order, print = false, isKot = false }) => {
   const restaurant = userestaurantStore(
     (state) => state.restaurant.restaurantInfo
   );
+
+
+  console.log("in order\n\n");
+  console.log(order);
+
+
   return (
     <Stack
       sx={{

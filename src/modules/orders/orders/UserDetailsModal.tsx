@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, FormControlLabel, Checkbox } from '@mui/material';
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Stack, TextField, FormControlLabel, Checkbox, CircularProgress } from '@mui/material';
 import { userestaurantStore } from "store/restaurant/restaurantStore";
 import { useMutation } from "@tanstack/react-query";
 import { checkUserExistance } from "store/api/axiosSetup";
@@ -10,13 +10,12 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
-const UserDetailsModal = ({ userDetails, setUserDetails, onSubmitUserInfo }) => {
+const UserDetailsModal = ({ userDetails, setUserDetails, onSubmitUserInfo, isLoading }) => {
     const [existingUser, setExistingUser] = useState(true);
-
     const restaurant = userestaurantStore((state) => state.restaurant);
     const user = useUserStore((state) => state.user);
     
-    const { mutate, isLoading } = useMutation(checkUserExistance, {
+    const { mutate, loader=isLoading } = useMutation(checkUserExistance, {
         onSuccess: (data, variables, context) => {
         console.log("The data is :");
         console.log({
@@ -64,7 +63,7 @@ const UserDetailsModal = ({ userDetails, setUserDetails, onSubmitUserInfo }) => 
                 dateOfBirth: null,
             });
         }
-    }, [userDetails.mobileNumber]);
+    }, [userDetails.mobileNumber, mutate, restaurant.restaurantInfo._id, user?.jwtToken, setUserDetails]);
 
     const userDetailsFields = [
         {
@@ -114,55 +113,59 @@ const UserDetailsModal = ({ userDetails, setUserDetails, onSubmitUserInfo }) => 
 
     return (
         <Stack gap={2}>
-            {userDetailsFields.map((field, index) => (
-                <div key={index}>
-                    {field.type === "checkbox" ? (
-                        <FormControl sx={{ my: 1, mx: 2, minWidth: 120 }}>
-                            <FormControlLabel
-                                control={<Checkbox
-                                    checked={userDetails[field.name]}
-                                    onChange={(e) => handleChange(e, field)}
-                                    name={field.name}
-                                    color="primary"
-                                    disabled={field.disabled}
-                                />}
-                                label={field.title}
-                            />
-                        </FormControl>
-                    ) :  field.type === "date" ? (
-                        <Stack >
-                            <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                <MobileDatePicker
+            {(isLoading || loader)?
+            <CircularProgress/>
+            :<>
+                {userDetailsFields.map((field, index) => (
+                    <div key={index}>
+                        {field.type === "checkbox" ? (
+                            <FormControl sx={{ my: 1, mx: 2, minWidth: 120 }}>
+                                <FormControlLabel
+                                    control={<Checkbox
+                                        checked={userDetails[field.name]}
+                                        onChange={(e) => handleChange(e, field)}
+                                        name={field.name}
+                                        color="primary"
+                                        disabled={field.disabled}
+                                    />}
                                     label={field.title}
-                                    inputFormat="MM/DD/YYYY"
-                                    value={userDetails[field.name] || null}
-                                    onChange={(newValue) => handleChange({ target: { value: newValue } }, field)}
-                                    renderInput={(params) => <TextField {...params} />}
-                                    disabled={field.disabled}
                                 />
-                        </LocalizationProvider>
-                        </Stack>
-                    ) : (
-                        <TextField
-                            // sx={{ my: 1}}
-                            key={index}
-                            value={userDetails[field.name]}
-                            onChange={(e) => handleChange(e, field)}
-                            variant='filled'
-                            label={field.title}
-                            type={field.type}
-                            multiline={field.multiline}
-                            rows={field.multiline ? 5 : 1}
-                            fullWidth
-                            disabled={field.disabled}
-                        />
-                    )}
-                </div>
-            ))}
+                            </FormControl>
+                        ) :  field.type === "date" ? (
+                            <Stack >
+                                <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                    <MobileDatePicker
+                                        label={field.title}
+                                        inputFormat="MM/DD/YYYY"
+                                        value={userDetails[field.name] || null}
+                                        onChange={(newValue) => handleChange({ target: { value: newValue } }, field)}
+                                        renderInput={(params) => <TextField {...params} />}
+                                        disabled={field.disabled}
+                                    />
+                            </LocalizationProvider>
+                            </Stack>
+                        ) : (
+                            <TextField
+                                // sx={{ my: 1}}
+                                key={index}
+                                value={userDetails[field.name]}
+                                onChange={(e) => handleChange(e, field)}
+                                variant='filled'
+                                label={field.title}
+                                type={field.type}
+                                multiline={field.multiline}
+                                rows={field.multiline ? 5 : 1}
+                                fullWidth
+                                disabled={field.disabled}
+                            />
+                        )}
+                    </div>
+                ))}
 
-            <Button sx={{ m: 1, mx: 2 }} variant='contained' onClick={e => onSubmitUserInfo(e)}>
-                Submit
-            </Button>
+                <Button sx={{ m: 1, mx: 2 }} variant='contained' onClick={e => onSubmitUserInfo(e)}>
+                    Submit
+                </Button>
+            </>}
         </Stack>
     );
 };
