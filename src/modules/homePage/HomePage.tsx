@@ -103,7 +103,7 @@ export default function HomePage(props: Props) {
     window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: "flex", height:"100vh", width:"100vw" }}>
+    <Box sx={{ display: "flex", height:"100vh", overflowX:"hidden" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -245,9 +245,9 @@ export default function HomePage(props: Props) {
         component="main"
         sx={{
           flexGrow: 1,
-          width: { sm: `calc(100%)` },
           height: `100vh`,
           overflowY: "auto",
+          overflowX: "hidden",
         }}
       >
         <Toolbar />
@@ -256,15 +256,24 @@ export default function HomePage(props: Props) {
             backgroundSize: "cover",
             backgroundPosition: "center",
             position:"sticky",
-            width:"100%",
+            width:{
+              xs:"100vw",
+              sm:"100vw"
+            },
             height:"100vh",
+            p:{
+              xs:5
+            }
           }}>
           <Grid item xs={12} sm={5} sx={{ ...flexBox() }}>
             <Box
               sx={{
                 position: "relative",
                 width: "100%",
-                height: "20rem",
+                height: {
+                  xs: "10rem",
+                  sm: "20rem",
+                },
               }}
             >
               <Image
@@ -275,10 +284,13 @@ export default function HomePage(props: Props) {
               />
             </Box>
           </Grid>
-          <Grid item xs={12} sm={6} sx={{ ...flexBox("column") }} gap={2}>
+          <Grid item xs={12} sm={6} sx={{ ...flexBox("column"), p:3 }} gap={2}>
             <Typography variant="h1" component={"div"} sx={{
               color:"white",
-              fontSize:"5rem",
+              fontSize:{
+                xs:"3rem",
+                sm:"5rem",
+              },
               textAlign:"center",
             }}>
               Introducing etoPOS
@@ -341,7 +353,7 @@ export default function HomePage(props: Props) {
           </Grid>
         </Grid>
         <Grid container py={5} gap={2}>
-          <Grid item xs={12} sm={7} sx={{ ...flexBox("column") }} gap={2}>
+          <Grid item xs={12} sm={7} sx={{ ...flexBox("column"), zIndex:10, height:"7rem" }} gap={2}>
             <Typography variant="h3" component={"div"} textAlign={"center"}>
               Pricing Starts at ₹250/Month
             </Typography>
@@ -369,6 +381,11 @@ export default function HomePage(props: Props) {
               <img
                 src={"https://posphilly.com/wp-content/uploads/2022/11/Screenshot_2022-11-07_at_11-25-01_spoton_pos_-_Google_Search-removebg-preview1.png"}
                 alt="POS Logo"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                }}
               />
             </Box>
           </Grid>
