@@ -84,14 +84,14 @@ const OrderCards = ({order, open, setOpen, setWatchOrder}:{
               </Typography>
               <Stack direction={"column"}>
                 <Typography variant="h6" color={"white"}>
-                    {
-                        moment(moment.utc(order?.createdAt)).local().format("DD/MM/YYYY hh:MM A").toString()
-                    }
-                    </Typography>
-                    <Typography variant="h6" color={"white"}>
-                    {
-                    moment.utc(order?.createdAt).local().startOf('seconds').fromNow()
-                    }
+                {
+                    moment(order?.timeCreated ? order?.timeCreated : order?.createdAt).local().format("DD/MM/YYYY hh:mm A").toString()
+                }
+                </Typography>
+                <Typography variant="h6" color={"white"}>
+                {
+                    moment(order?.timeCreated ? order?.timeCreated : order?.createdAt).local().startOf('seconds').fromNow()
+                }
                 </Typography>
               </Stack>
           </Stack>
