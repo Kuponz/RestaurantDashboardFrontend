@@ -63,33 +63,6 @@ export default function Home() {
       </Stack>
     );
   }
-
-  // if (userDetails?.role == "WAITER") {
-  //   return (
-  //     <Stack sx={{ ...flexBox(), ...size("100vh", "100vw") }}>
-  //       <Button
-  //         onClick={() => {
-  //           router.push("/restaurant/table");
-  //         }}
-  //       >
-  //         Book Table
-  //       </Button>
-  //     </Stack>
-  //   );
-  // }
-  // if (userDetails?.role == "CHEF") {
-  //   return (
-  //     <Stack sx={{ ...flexBox(), ...size("100vh", "100vw") }}>
-  //       <Button
-  //         onClick={() => {
-  //           router.push("/restaurant/currentOrder");
-  //         }}
-  //       >
-  //         Current Orders
-  //       </Button>
-  //     </Stack>
-  //   );
-  // }
   return (
     <>
       <Head>
@@ -137,7 +110,3 @@ export default function Home() {
     </>
   );
 }
-
-//   <Typography variant="h2">Welcome to etoPOS</Typography>
-//   <Typography p={1} pb={3} variant="body2">Construction in Progress</Typography>
-//   <Button variant="contained" onClick={()=>{router.push("/restaurant/table")}}>Book Table</Button>
