@@ -1,24 +1,3 @@
-// import { ArrowDownwardOutlined } from '@mui/icons-material'
-// import { Button, Stack, Typography } from '@mui/material'
-// import React from 'react'
-
-// const CheckoutItem = () => {
-//   return (
-//     <Stack direction={"row"} justifyContent={"space-between"} alignItems={"center"}>
-//         <Typography sx={{
-//             overflowWrap:"anywhere",
-//             width:"70%"
-//         }}>CheeseCheeseCheeseCheeseCheeseCheeseCheeseCheeseCheeseCheese</Typography>
-//         <Typography sx={{
-//             overflowWrap:"normal",
-//             width:"30%"
-//         }}> x 235000000</Typography>
-//         <Button variant='outlined' color='error'> <ArrowDownwardOutlined/></Button>
-//     </Stack>
-//   )
-// }
-
-// export default CheckoutItem
 
 import * as React from "react";
 import Accordion from "@mui/material/Accordion";
@@ -69,21 +48,6 @@ while(val[index].quantity<val[index].complimentary.length)
 }
   return (
     <Paper 
-         //sx={{
-      //     display:"flex",
-      //     justifyContent:"space-between",
-      //     alignItems:"center",
-      //     p:1,
-      //     py:2,
-      //     width:{
-      //         xs:"100%",
-      //         md:"48%",
-      //         lg:"30%",
-      //         xl:"32%"
-      //     },
-      //     height:"fit-content",
-      //     //backgroundColor:theme=>itemVal && itemVal.quantity > 0 ?theme.palette.secondary.main:theme.palette.background.default
-      // }
     
       sx={{
         width: "100%",

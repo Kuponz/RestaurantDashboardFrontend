@@ -4,6 +4,7 @@ import {
   CssBaseline,
   IconButton,
   Toolbar,
+  Tooltip,
   Typography,
   useMediaQuery,
 } from "@mui/material";
@@ -17,6 +18,7 @@ import AvatarMenu from "common/sidebar/Avatar";
 import { userestaurantStore } from "store/restaurant/restaurantStore";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { useTheme } from "@emotion/react";
+import { Home } from "@mui/icons-material";
 
 const HomeStructure = ({ children }) => {
   const router = useRouter();
@@ -40,9 +42,6 @@ const HomeStructure = ({ children }) => {
     if ((!userState || !userState.login || !userState._id || userState.jwtToken == "") && router.route != "/auth") {
       logout();
       router.push("/auth");
-      console.log({
-        router
-      })
     }
   }, [userState, router]);
   useEffect(()=>{
@@ -84,12 +83,13 @@ const HomeStructure = ({ children }) => {
         }}
       >
         <Toolbar>
+          
           <IconButton
             color="inherit"
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 0, display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
@@ -102,7 +102,30 @@ const HomeStructure = ({ children }) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h3" noWrap component="div" color={"white"}>
+          <Tooltip title={"Home"} sx={{
+            display:{
+              sm:"none",
+            },
+            bgcolor:"white",
+            color:"primary.main",
+            justifyContent:"center",
+            alignItems:"center",
+            boxShadow: 2,
+            borderRadius: "50%",
+            mr:2
+
+          }}>
+            <IconButton onClick={() => router.push("/")}>
+              <Home />
+            </IconButton>
+          </Tooltip>
+          <Typography sx={{
+            fontSize: {
+              xs: "1rem",
+              sm: "1.5rem",
+            },
+            fontWeight: "bold",
+          }} noWrap component="div" color={"white"}>
             {restaurant?.restaurantInfo?.restaurantName}
           </Typography>
 

@@ -44,10 +44,11 @@ export default function Home() {
     queryFn: () =>
       getRestaurantById(userDetails?.jwtToken, userDetails?.restaurantLinked),
     onSuccess: (data) => {
-      console.log({ data: data?.data?.data });
-      console.log(userDetails);
       setRestaurantDetails(data?.data?.data?.restaurantInfo);
     },
+    refetchInterval: false,
+    refetchIntervalInBackground: false,
+    refetchOnWindowFocus: false,
     onerror: (data) => {
       console.log({ data });
     },

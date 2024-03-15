@@ -15,28 +15,33 @@ const FloorWiseTable = ({restroDetails, infoSelected}) => {
   useEffect(()=>{
     setuseData(floorData())
   },[floorData])
-  {console.log({floorData2:floorData()})}
   return (
     <>
     {useData?.map((floorData)=>(
-      <>
-      <Stack sx={{width:"100%", height:"fit-content"}}>
+      <Stack key={floorData?._id} sx={{width:"100%", height:"fit-content"}} direction={"column"} flexWrap={"wrap"} py={{
+        xs:1,
+        sm:2,
+        md:5
+      }} gap={5}>
+      <Stack>
         <Divider sx={{
           width:"100%"
         }}>
           {floorData?.floorName}
         </Divider>
       </Stack>
-      {floorData?.tables?.length != 0 ? 
-      
-      floorData?.tables?.map((tableData, index)=>(<CustomCard key={index} tableData={tableData}/>))
-      
-      :
-      <Typography variant='h4'>
-        No Tables Added!
-      </Typography>
-      }
-    </>
+      <Stack direction={"row"} flexWrap={"wrap"} gap={3}>
+        {floorData?.tables?.length != 0 ? 
+        
+        floorData?.tables?.map((tableData, index)=>(<CustomCard key={index} tableData={tableData}/>))
+        
+        :
+        <Typography variant='h4'>
+          No Tables Added!
+        </Typography>
+        }
+      </Stack>
+    </Stack>
     )
     )}
     </>

@@ -50,13 +50,11 @@ const Checkout = ({
       });
       setOrder(data?.data?.data?.orderStatus);
       if (data?.data?.data?.orderStatus && data?.data?.data?.orderStatus?._id) {
-        if(data?.data?.data?.orderStatus?.orderStatus == "BILLING"){
+        if (data?.data?.data?.orderStatus?.orderStatus == "BILLING") {
           router.push(
             `/restaurant/table/bill?tableId=${data?.data?.data?.tableStatus?._id}&orderId=${data?.data?.data?.orderStatus?._id}`
           );
-          
-        }else{
-          
+        } else {
           router.push(
             `/restaurant/table/order?orderId=${data?.data?.data?.orderStatus?._id}`
           );
@@ -67,7 +65,7 @@ const Checkout = ({
       console.log({ error });
     },
   });
-  const onClickKOT = (e, billing=false) => {
+  const onClickKOT = (e, billing = false) => {
     e.preventDefault();
     val.map((orderVal) => {
       orderVal.menuId = orderVal.item._id;
@@ -86,20 +84,19 @@ const Checkout = ({
     console.log({
       token: user?.jwtToken,
       orderDetail,
-      billing
-    })
+      billing,
+    });
     mutate({
       token: user?.jwtToken,
-      orderDetail
+      orderDetail,
     });
   };
 
-  
   return (
     <Stack
       p={{
         xs: 0,
-        sm:0,
+        sm: 0,
         md: 2,
       }}
       sx={{
@@ -136,34 +133,39 @@ const Checkout = ({
           px: 2,
         }}
       >
-        {val?.map((orderValue, key) =>{
-          if(!val[key].isComplimentary || val[key].complimentary.length==0) // this is if already the compliment structure is not there. then create new.
-          {
-          val[key].isComplimentary=false;
-          val[key].complimentary=[];
-          for(let i=1;i<=orderValue.quantity;i++)
-          {
-          val[key].complimentary.push({id:i,isComplimentary:false});
+        {val?.map((orderValue, key) => {
+          if (!val[key].isComplimentary || val[key].complimentary.length == 0) {
+            // this is if already the compliment structure is not there. then create new.
+            val[key].isComplimentary = false;
+            val[key].complimentary = [];
+            for (let i = 1; i <= orderValue.quantity; i++) {
+              val[key].complimentary.push({ id: i, isComplimentary: false });
+            }
+          } else if (val[key].complimentary.length != val[key].quantity) {
+            for (
+              let i = val[key].complimentary.length;
+              i <= orderValue.quantity;
+              i++
+            ) {
+              val[key].complimentary.push({
+                id: i + 1,
+                isComplimentary: false,
+              });
+            }
           }
-        }else if(val[key].complimentary.length != val[key].quantity)
-        {
-          for(let i=val[key].complimentary.length;i<=orderValue.quantity;i++)
-          {
-          val[key].complimentary.push({id:i+1,isComplimentary:false});
-          }
-        }
-        
-        return(
-  <CheckoutItem
-            key={key}
-            val={val}
-            index={key}
-            setValue={setValue}
-            orderValue={orderValue}
-            variableip={variableip}
-          />    
-  );})}
-        </Stack>
+
+          return (
+            <CheckoutItem
+              key={key}
+              val={val}
+              index={key}
+              setValue={setValue}
+              orderValue={orderValue}
+              variableip={variableip}
+            />
+          );
+        })}
+      </Stack>
       <Stack>
         <Stack
           direction={"row"}
@@ -244,21 +246,21 @@ const Checkout = ({
               }
               // router.push("/restaurant/table/order")
             }}
-            disabled={ isLoading}
+            disabled={isLoading}
           >
             Add Instructions
           </Button>
         </Stack>
         <Stack
           direction={{
-            xs:"row",
-            md:"column",
-            lg:"row"
+            xs: "row",
+            md: "column",
+            lg: "row",
           }}
           sx={{
             justifyContent: "space-between",
             p: 1,
-            gap:1
+            gap: 1,
           }}
         >
           <Button
@@ -286,7 +288,7 @@ const Checkout = ({
             onClick={(e) => onClickKOT(e)}
             disabled={val.length <= 0 || isLoading}
           >
-            {isLoading ? <CircularProgress /> : "KOT"}          
+            {isLoading ? <CircularProgress /> : "KOT"}
           </Button>
         </Stack>
       </Stack>

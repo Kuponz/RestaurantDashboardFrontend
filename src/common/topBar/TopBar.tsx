@@ -19,10 +19,7 @@ const TopBar = ({
     <Stack
       paddingBottom={"0.5rem"}
       
-      direction={{
-        xs: "column",
-        sm: "row",
-      }}
+      direction={"row"}
       gap={1}
       sx={{
         justifyContent: {
@@ -41,9 +38,19 @@ const TopBar = ({
         direction={"row"}
         justifyContent={"center"}
         alignItems={"center"}
-        w={"100%"}
       >
-        <Tooltip title={home ? "Home" : "Back"}>
+        <Tooltip title={home ? "Home" : "Back"} sx={{
+          display:{
+            xs:"none",
+            sm:"flex",
+          },
+          bgcolor:"primary.main",
+          color:"white",
+          justifyContent:"center",
+          alignItems:"center",
+          boxShadow: 2,
+          borderRadius: "50%",
+        }}>
           <IconButton onClick={() => router.push(backUrl)}>
             {home ? <HomeIcon /> : <KeyboardBackspaceIcon />}
           </IconButton>
@@ -53,13 +60,20 @@ const TopBar = ({
             variant="h4"
             sx={{
               px: 2,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              width:{
+                xs:"5rem",
+                sm:"100%"
+              }
             }}
           >
             {title}
           </Typography>
         ) : null}
       </Stack>
-      <Stack>{children}</Stack>
+      <Stack flex={1}>{children}</Stack>
     </Stack>
   );
 };

@@ -7,15 +7,6 @@ import moment from "moment";
 
 const CustomCard = ({ tableData }) => {
   const router = useRouter();
-  // const dummyData={
-  //     status:"VACANT",
-  //     order:{
-  //         total:"$500",
-  //         items:5,
-  //     },
-  //     tableName:"Table Number 3",
-  //     tableId:"13384"
-  // }
   const varaint = {
     "VACANT": "outlined",
     "ORDERING": "inprogress",
@@ -26,26 +17,21 @@ const CustomCard = ({ tableData }) => {
   const [count, setCount] = useState(moment(new Date()));
   const timeDiff = (createdAt) => {
     var now = moment(new Date()); //todays date
-    var end = moment(createdAt); // another date
+    var end = moment(new Date(createdAt)); // another date
     var duration = moment.duration(now.diff(end));
-    // console.log({
-    //   now,
-    //   end,
-    //   duration,
-    // });
     var days = moment.utc(duration.asMilliseconds()).format("HH:mm:ss");
-    // console.log(moment(duration).hour(), moment(duration).minutes(), moment(duration).second())
     return days;
   };
   const varaintSelection = tableData.status
 
   useEffect(() => {
-    const timer = setTimeout(
-      () => setCount(timeDiff(tableData?.createdAt)),
-      1e3
-    );
-    return () => clearTimeout(timer);
-  });
+    if(tableData?.status === 'OCCUPIED'){
+      const interval = setInterval(() => {
+        setCount(timeDiff(tableData?.updatedAt || tableData?.createdAt));
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [tableData?.status, tableData]);
 
   return (
     <Tooltip title={varaintSelection}>

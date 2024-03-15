@@ -109,33 +109,6 @@ export const Waiter = () => {
       <BasicModal title={"Representations"} open={openModel} setOpen={setOpenModel}>
         <ModalSupport />
       </BasicModal>
-      {/* <div className={styles.base}> */}
-      {/* <Paper> */}
-      {/* <Button variant="contained">Table Reservation</Button>
-        <Button variant="contained">
-          <PersonIcon />
-        </Button> */}
-
-      {/* <BottomNavigation
-        showLabels
-        sx={{ height: "100%",backgroundColor:"#f8fafc" }}
-        // value={value}
-        // onChange={(event, newValue) => {
-        //   setValue(newValue);
-        // }
-      >
-        <BottomNavigationAction
-          label="Reservation"
-          icon={<RestaurantMenuIcon sx={{ fontSize: "2rem" }} />}
-        />
-        <BottomNavigationAction
-          label="User Profile"
-          icon={<PersonIcon sx={{ fontSize: "2rem" }} />}
-        />
-        <BottomNavigationAction label="User Profile" icon={<PersonIcon />} />
-      </BottomNavigation> */}
-      {/* </div> */}
-      {/* </Paper> */}
     </div>
   );
 };
