@@ -34,8 +34,6 @@ const Checkout = ({
 }) => {
   const router = useRouter();
   const [instrData, setInstrData] = useState({
-    name: "",
-    mobileNumber: "",
     specialInstruction: "",
     orderType: ORDERTYPE.DINEIN,
   });
@@ -82,7 +80,8 @@ const Checkout = ({
       restaurantId: restaurant?.restaurantInfo?._id,
       tableId: tableId,
       oldOrderId,
-      billing
+      billing,
+      timeCreated: new Date().valueOf(),
     };
     console.log({
       token: user?.jwtToken,
@@ -94,6 +93,8 @@ const Checkout = ({
       orderDetail
     });
   };
+
+  
   return (
     <Stack
       p={{
@@ -135,17 +136,34 @@ const Checkout = ({
           px: 2,
         }}
       >
-        {val?.map((orderValue, key) => (
-          <CheckoutItem
+        {val?.map((orderValue, key) =>{
+          if(!val[key].isComplimentary || val[key].complimentary.length==0) // this is if already the compliment structure is not there. then create new.
+          {
+          val[key].isComplimentary=false;
+          val[key].complimentary=[];
+          for(let i=1;i<=orderValue.quantity;i++)
+          {
+          val[key].complimentary.push({id:i,isComplimentary:false});
+          }
+        }else if(val[key].complimentary.length != val[key].quantity)
+        {
+          for(let i=val[key].complimentary.length;i<=orderValue.quantity;i++)
+          {
+          val[key].complimentary.push({id:i+1,isComplimentary:false});
+          }
+        }
+        
+        return(
+  <CheckoutItem
             key={key}
             val={val}
             index={key}
             setValue={setValue}
             orderValue={orderValue}
             variableip={variableip}
-          />
-        ))}
-      </Stack>
+          />    
+  );})}
+        </Stack>
       <Stack>
         <Stack
           direction={"row"}
@@ -228,7 +246,7 @@ const Checkout = ({
             }}
             disabled={ isLoading}
           >
-            Add More
+            Add Instructions
           </Button>
         </Stack>
         <Stack
@@ -272,7 +290,7 @@ const Checkout = ({
           </Button>
         </Stack>
       </Stack>
-      <BasicModal open={openAD} setOpen={setOpenAD} title={"Add Details"}>
+      <BasicModal open={openAD} setOpen={setOpenAD} title={"Add Instructions"}>
         <CheckoutModal
           isLoading={isLoading}
           instrData={instrData}

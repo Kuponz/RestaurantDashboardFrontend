@@ -41,7 +41,8 @@ const ManageMenuHome = () => {
         headerAuth: userToken.jwtToken,
       }),
     onSuccess: (data) => {
-      console.log({ data: data?.data?.data });
+      console.log("The categories in ManageMenuHome are:");
+      console.log({ data: data?.data?.data?.category });
       restroState.setCategories(data?.data?.data?.category);
     },
     onError(err) {
@@ -77,6 +78,12 @@ const ManageMenuHome = () => {
       })
     }
   })
+  const centerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh', // Adjust the height as needed
+  };
   return (
     <Stack
       sx={{
@@ -93,7 +100,9 @@ const ManageMenuHome = () => {
       <TopBar title={"Manage Menu"} home={true} backUrl={"/"} />
       {isLoading ? (
         <>
-          <CircularProgress />
+            <div style={centerStyle}>
+              <CircularProgress />
+            </div>
         </>
       ) : (
         <Stack

@@ -5,9 +5,13 @@ import EastOutlinedIcon from '@mui/icons-material/EastOutlined';
 import { Button, Stack, Typography } from "@mui/material";
 import { flexBox } from "theme/defaultFunction";
 import { useRouter } from "next/router";
-
+import ManageCustomersHome from "modules/manageConsumer/ManageCustomersHome";
+import { useUserStore } from "store/user/userzustandstore";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function manageCustomers() {
   const router = useRouter();
+  const user = useUserStore((state) => state.user);
   return (
     <>
       <Head>
@@ -23,18 +27,15 @@ export default function manageCustomers() {
         {/* Auth Stuff Here */}
         {/* <Waiter /> */}
         <HomeStructure>
-        <Typography variant="h2">Stay Tuned</Typography>
-          <Typography variant="body2">Construction in Progress!</Typography>
-          <Stack direction={"column"} sx={{
-              py:5,
-
-          }}>
-              <Typography pb={3}>Payments isn't out yet but Table ordering is!! Book Table: </Typography>
-              <Button variant={"outlined"} onClick={()=>{
-                  router.push("/restaurant/table")
-              }} sx={{...flexBox(), gap:1}}>Book Tables <EastOutlinedIcon/></Button>
+          <ToastContainer />
+        {
+          user.role == "OWNER"?
+          <ManageCustomersHome/>  
+          :
+          <Stack>
+            <Typography>Not Authorized</Typography>
           </Stack>
-
+        }
         </HomeStructure>
       </div>
     </>

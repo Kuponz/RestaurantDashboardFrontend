@@ -1,8 +1,9 @@
 import { Divider, Paper, Stack, Tooltip, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React,{ useEffect, useRef, useState } from 'react'
 import { flexBox } from 'theme/defaultFunction'
 import { tokens } from 'theme/theme'
+import moment from "moment";
 
 const CustomCard = ({ tableData }) => {
   const router = useRouter();
@@ -21,7 +22,31 @@ const CustomCard = ({ tableData }) => {
     "OCCUPIED": "reserved",
     "BILLING": "free"
   }
+
+  const [count, setCount] = useState(moment(new Date()));
+  const timeDiff = (createdAt) => {
+    var now = moment(new Date()); //todays date
+    var end = moment(createdAt); // another date
+    var duration = moment.duration(now.diff(end));
+    // console.log({
+    //   now,
+    //   end,
+    //   duration,
+    // });
+    var days = moment.utc(duration.asMilliseconds()).format("HH:mm:ss");
+    // console.log(moment(duration).hour(), moment(duration).minutes(), moment(duration).second())
+    return days;
+  };
   const varaintSelection = tableData.status
+
+  useEffect(() => {
+    const timer = setTimeout(
+      () => setCount(timeDiff(tableData?.createdAt)),
+      1e3
+    );
+    return () => clearTimeout(timer);
+  });
+
   return (
     <Tooltip title={varaintSelection}>
       <Paper
@@ -57,7 +82,7 @@ const CustomCard = ({ tableData }) => {
         >
           <Typography variant='caption' sx={{
             color: varaintSelection == "VACANT" ? tokens().grey[300] : "white"
-          }}>{tableData.status}</Typography>
+          }}>{tableData.status  === 'OCCUPIED' ? String(count) :tableData.status }</Typography>
         </Stack>
       </Paper>
     </Tooltip>

@@ -66,7 +66,6 @@ const OrderCards = ({order, open, setOpen, setWatchOrder}:{
            
     }  
 
-
   return (
     <Paper sx={{
         height:"fit-content",
@@ -77,21 +76,22 @@ const OrderCards = ({order, open, setOpen, setWatchOrder}:{
             lg:"30%"
         }
     }}>
-        <Paper elevation={0} variant="free" sx={{ p:2}}>
+        <Paper elevation={0} variant={order.orderStatus === 'CANCELLED' ? "reserved" : "free"} sx={{p: 2}}>
           <Stack direction="row" justifyContent={"space-between"}>
               <Typography variant="h4" fontWeight={600} color="white">
                 {order?._id.slice(order?._id.length- 5,order?._id.length )}
+                <Typography variant="h5" fontWeight={400} color="white">{order?.orderStatus === 'CANCELLED' ? 'CANCELLED':'' }</Typography>
               </Typography>
               <Stack direction={"column"}>
                 <Typography variant="h6" color={"white"}>
-                    {
-                        moment(moment.utc(order?.updatedAt)).local().format("DD/MM/YYYY hh:MM A").toString()
-                    }
-                    </Typography>
-                    <Typography variant="h6" color={"white"}>
-                    {
-                    moment.utc(order?.updatedAt).local().startOf('seconds').fromNow()
-                    }
+                {
+                    moment(order?.timeCreated ? order?.timeCreated : order?.createdAt).local().format("DD/MM/YYYY hh:mm A").toString()
+                }
+                </Typography>
+                <Typography variant="h6" color={"white"}>
+                {
+                    moment(order?.timeCreated ? order?.timeCreated : order?.createdAt).local().startOf('seconds').fromNow()
+                }
                 </Typography>
               </Stack>
           </Stack>

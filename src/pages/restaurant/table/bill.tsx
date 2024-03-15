@@ -8,7 +8,8 @@ import { getorderById } from 'store/api/axiosSetup'
 import { useorderStore } from 'store/order/orderStore'
 import { userestaurantStore } from 'store/restaurant/restaurantStore'
 import { useUserStore } from 'store/user/userzustandstore'
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Bill = () => {
     const router = useRouter();
   const query  = router.query;
@@ -36,6 +37,7 @@ const Bill = () => {
     },[order.details, router])
   return (
     <HomeStructure>
+        <ToastContainer/>
         { isLoading ? 
             <Stack sx={{
                 height:"100vh",
